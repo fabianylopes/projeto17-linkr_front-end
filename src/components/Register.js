@@ -7,20 +7,21 @@ import LeftInitial from "./utils/LeftInitial";
 
 function Register(){
 
-    const [userInfo, setDataUserToRegister] = useState({email:'', name:'', username:'', password:'', picture_url:''});
-    const [buttonState, setButtonState] = useState({activate:false, name:'Cadastrar'});
+    const [userInfo, setDataUserToRegister] = useState({email:'', username:'', password:'', picture_url:''});
+    const [buttonState, setButtonState] = useState({activate:false, name:'Sign Up'});
     const navigate = useNavigate();
 
     useEffect(()=>{
-        const{name, email, username, password} = userInfo;  
-        console.log('entrou')
-        if(email!== '' && password !== '' && username !== ''){ 
-            setButtonState({...buttonState, activate:false});
-        }else{
-            setButtonState({...buttonState, activate:true});
-        }
 
+        const{ email, username, password, picture_url } = userInfo;  
+    
+        if(email!== '' && password !== '' && username !== '' && picture_url !== ''){ 
+            setButtonState({...buttonState, activate:true});
+        }else setButtonState({...buttonState, activate:false});
+        
     }, [userInfo]);
+
+    console.log(buttonState);
 
     function tryCadastrar(event){
         
@@ -28,11 +29,12 @@ function Register(){
 
         setButtonState({...buttonState, activate:false})
 
-        api.post('/sing-up', userInfo)
+        api.post('/sign-up', userInfo)
             .then(response => { navigate('/')})
             .catch(error => { 
-                console.log('Erro ao cadastrar: ', error);
-                setButtonState({...buttonState, activate:true});
+                setButtonState({...buttonState, activate:true})
+                alert(error.response.data)
+                
             });
     }
 
@@ -42,14 +44,14 @@ function Register(){
         <Main>
             <LeftInitial/>
 
-            <Div button={buttonState.activate}>
+            <Div button={!buttonState.activate}>
                     
                 <form onSubmit={tryCadastrar}>
                     <input required type={"email"} placeholder="e-mail" onChange={(e)=>{setDataUserToRegister({...userInfo, email:e.target.value})}}></input>
                     <input required type={"password"} placeholder="password" onChange={(e)=>{setDataUserToRegister({...userInfo, password:e.target.value})}}></input>
                     <input required type={"text"} placeholder="username" onChange={(e)=>{setDataUserToRegister({...userInfo, username:e.target.value})}}></input>
                     <input required type={"url"} placeholder="picture url" onChange={(e)=>{setDataUserToRegister({...userInfo, picture_url:e.target.value})}}></input>
-                    <button disabled={buttonState.activate}>Sign Up</button>
+                    <button disabled={!buttonState.activate}>{buttonState.name}</button>
 
                 </form>
 
@@ -92,7 +94,6 @@ const Div = styled.div`
         font-size: 18px;
         line-height: 40px;
         color: #9F9F9F;
-
     }
     h1{
         
@@ -107,7 +108,7 @@ const Div = styled.div`
         height: 45px;
         border-radius: 5px;
         padding: 5px;
-        background: ${props=> props.button ? '#1877F2': 'lightgreen'};
+        background: ${props=> props.button ? '#363636': '#1877F2'};
         
         font-size: 20px;
         line-height: 23px;
