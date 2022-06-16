@@ -1,22 +1,19 @@
-import { IoIosArrowDown } from "react-icons/io";
+import Header from "../Header/index.js";
+import PostBox from "../PostBox/index.js";
+import Posts from "../Posts/index.js";
 
-import Paragrafo from "../utils/Paragrafo.js";
-import Imagem from "../utils/Imagem.js";
-
-import { Container } from "./style.js";
-import imagemPerfil from '../../img/image-perfil.png';
+import { Container, Title } from "./style.js";
 
 function Timeline() {
     return (  
-        <Container>
-            <header>
-                <Paragrafo conteudo="linkr"/>
-                <figure>
-                    <IoIosArrowDown className="icon"/>
-                    <Imagem imagem={imagemPerfil} alt="Foto perfil"/>
-                </figure>
-            </header>
-        </Container>
+        <>
+            <Container>
+                <Header/>
+                <Title>timeline</Title>
+                <PostBox/>
+                <Posts/>
+            </Container>
+        </>
     );
 }
 

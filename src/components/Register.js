@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -15,16 +14,17 @@ function Register(){
     const navigate = useNavigate();
 
     useEffect(()=>{
-        
         if(token) navigate('/timeline');
 
         const{ email, username, password, picture_url } = userInfo;  
-        
+
         if(email!== '' && password !== '' && username !== '' && picture_url !== ''){ 
             setButtonState({...buttonState, activate:true});
         }else setButtonState({...buttonState, activate:false});
         
     }, [userInfo]);
+
+    console.log(buttonState);
 
     function tryCadastrar(event){
         
@@ -93,7 +93,7 @@ const Div = styled.div`
         background-color: #FFFFFF;
     }
     input::placeholder{
-      
+    
         font-size: 18px;
         line-height: 40px;
         color: #9F9F9F;
@@ -125,7 +125,6 @@ const Div = styled.div`
         line-height: 18px;
         color: #FFFFFF;
         margin-top: 25px;
-        
     }
     h2:hover{
         color: grey;
@@ -163,6 +162,5 @@ const Main = styled.main`
         margin: 0;
     }
 `
-
 
 export default Register;

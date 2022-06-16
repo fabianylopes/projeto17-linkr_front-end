@@ -2,12 +2,13 @@ import { useState } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 import '../css/reset.css';
 import '../css/style.css';
 import Login from "./Login";
 import Register from "./Register";
 import Timeline from "./TelaMain";
+import Trending from "./Trending";
+import Hashtag from "./Hashtag";
 
 import TokenContext from "./utils/context/TokenContext";
 
@@ -24,11 +25,12 @@ function App(){
                     <Route path="/" element={<Login/>} />
                     <Route path="/sign-up" element={<Register/>} />
                     <Route path="/timeline" element={<Timeline/>} />
+                    <Route path="/hashtag" element={<Trending/>} />
+                    <Route path="/hashtag/:hashtag" element={<Hashtag/>} />
                 </Routes>
             </BrowserRouter>
 
         </TokenContext.Provider>
-       
     );
 }
 
