@@ -1,20 +1,23 @@
-import axios from "axios";
-import { useState, useEffect} from "react";
+import { useState, useEffect, useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "./utils/api/api";
+import TokenContext from "./utils/context/TokenContext";
 import LeftInitial from "./utils/LeftInitial";
 
 function Login(){
 
-    const [userInfo, setDataUserToRegister] = useState({email:'', password:''});
-    const [buttonState, setButtonState] = useState({activate:false, name:'Sign In'});
+    const { token, setToken } = useContext(TokenContext);
     const navigate = useNavigate();
+    
+    const [ userInfo, setDataUserToRegister ] = useState({email:'', password:''});
+    const [ buttonState, setButtonState ] = useState({activate:false, name:'Sign In'});
 
     useEffect(()=>{
 
+        if(token) navigate('/timeline') 
+
         const{ email, password } = userInfo;  
-    
         if(email!== '' && password !== '' ){ 
             setButtonState({...buttonState, activate:true});
         }else setButtonState({...buttonState, activate:false});
@@ -34,7 +37,12 @@ function Login(){
             setButtonState({...buttonState, activate:false})
 
             api.post('/sign-in', userInfo)
-                .then(response => { navigate('/timeline')})
+                .then(res => {
+
+                    localStorage.setItem('token', `${res.data}`)
+                    setToken(`${res.data}`)                   
+                    navigate('/timeline')})
+
                 .catch(error => { 
                     setButtonState({...buttonState, activate:true})
                     alert(error.response.data)  
@@ -43,7 +51,7 @@ function Login(){
     }
 
     return(
-    <>
+        <>
         <Main>
             <LeftInitial />
 
@@ -61,7 +69,7 @@ function Login(){
                 </Link>
             </Div>
         </Main>
-    </>
+        </>
 
     )
 

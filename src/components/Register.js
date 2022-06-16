@@ -1,27 +1,30 @@
 import axios from "axios";
-import { useState, useEffect} from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import api from "./utils/api/api";
+import TokenContext from "./utils/context/TokenContext";
 import LeftInitial from "./utils/LeftInitial";
 
 function Register(){
 
+    const { token } = useContext(TokenContext);
     const [userInfo, setDataUserToRegister] = useState({email:'', username:'', password:'', picture_url:''});
     const [buttonState, setButtonState] = useState({activate:false, name:'Sign Up'});
     const navigate = useNavigate();
 
     useEffect(()=>{
+        
+        if(token) navigate('/timeline');
 
         const{ email, username, password, picture_url } = userInfo;  
-    
+        
         if(email!== '' && password !== '' && username !== '' && picture_url !== ''){ 
             setButtonState({...buttonState, activate:true});
         }else setButtonState({...buttonState, activate:false});
         
     }, [userInfo]);
-
-    console.log(buttonState);
 
     function tryCadastrar(event){
         
