@@ -3,7 +3,6 @@ import styled from "styled-components";
 const Box = styled.div`
     width: 301px;
     height: 406px;
-    padding: 10px 16px;
     background-color: #171717;
     border-radius: 16px;
 `
@@ -15,6 +14,7 @@ const Title = styled.h1`
     font-size: 27px;
     line-height: 40px;
     color: #FFFFFF;
+    margin:12px 16px;
 `
 
 const Line = styled.div`
@@ -24,7 +24,7 @@ const Line = styled.div`
 `
 
 const Hashtags = styled.div`
-
+    padding: 16px 16px;
 `
 
 const Hashtag = styled.h2`
@@ -35,6 +35,8 @@ const Hashtag = styled.h2`
     line-height: 23px;
     letter-spacing: 0.05em;
     color: #FFFFFF;
+    padding-bottom: 5px;
+    cursor: pointer;
 `
 
 export {
