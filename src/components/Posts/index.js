@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import ReactHashtag from '@mdnm/react-hashtag';
 
 import imagemPerfil from '../../img/image-perfil.png';
 import image from '../../img/image.png';
-import { Container, Box, Image, Content, User, Description, Link, Title, Subtitle, Url, Texts } from './style';
+import { Container, Box, Image, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import api from '../../services/api';
 
 export default function Posts() {
@@ -27,7 +28,15 @@ export default function Posts() {
                         </Image>
                         <Content>                                   
                             <User>Juvenal Juvêncio</User>
-                            <Description>{description}</Description>
+                            <Description>
+
+                                <ReactHashtag
+                                    renderHashtag={(hashtagValue) => <Hashtag>{hashtagValue}</Hashtag>}
+                                >
+                                    {description}
+                                </ReactHashtag>
+                    
+                            </Description>
                             <Link>
                                 <Texts>
                                     <Title>Como aplicar o Material UI em um projeto React</Title>

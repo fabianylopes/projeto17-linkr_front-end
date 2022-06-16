@@ -57,7 +57,11 @@ const HashtagList = styled.h2`
     letter-spacing: 0.05em;
     color: #FFFFFF;
     padding-bottom: 5px;
+    
+    :hover {
+    color: #1877f2;
     cursor: pointer;
+  }
 `
 
 export {

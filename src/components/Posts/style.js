@@ -1,5 +1,15 @@
 import styled from "styled-components";
 
+const Hashtag = styled.span`
+    font-weight: 700;
+    color: #FFFFFF;
+
+  :hover {
+    color: #1877f2;
+    cursor: pointer;
+  }
+`
+
 const Container = styled.div`
 
 `
@@ -88,6 +98,7 @@ const Texts = styled.div`
 `
 
 export { 
+    Hashtag,
     Container,
     Box, 
     Image, 
