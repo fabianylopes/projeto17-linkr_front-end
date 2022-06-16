@@ -1,23 +1,36 @@
+import { useState } from "react";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import '../css/reset.css';
+import '../css/style.css';
+import Login from "./Login";
+import Register from "./Register";
 import Timeline from "./TelaMain";
 import Trending from "./Trending";
 import Hashtag from "./Hashtag";
 
-import '../css/reset.css';
-import '../css/style.css';
-import Register from "./Register";
+import TokenContext from "./utils/context/TokenContext";
 
 function App(){
+
+    const LocalToken = localStorage.getItem('token');
+    const [token, setToken] = useState(LocalToken);
+    
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/sign-up" element={<Register/>} />
-                <Route path="/timeline" element={<Timeline/>} />
-                <Route path="/hashtag" element={<Trending/>} />
-                <Route path="/hashtag/:hashtag" element={<Hashtag/>} />
-            </Routes>
-        </BrowserRouter>
+        <TokenContext.Provider value={{token, setToken}} >
+
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Login/>} />
+                    <Route path="/sign-up" element={<Register/>} />
+                    <Route path="/timeline" element={<Timeline/>} />
+                    <Route path="/hashtag" element={<Trending/>} />
+                    <Route path="/hashtag/:hashtag" element={<Hashtag/>} />
+                </Routes>
+            </BrowserRouter>
+
+        </TokenContext.Provider>
     );
 }
 
