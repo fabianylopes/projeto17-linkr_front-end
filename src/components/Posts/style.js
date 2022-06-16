@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+const Container = styled.div`
+
+`
+
 const Box = styled.div`
     width: 611px;
     height: 276px;
@@ -18,6 +22,7 @@ const Content = styled.div`
    display: flex;
    flex-direction: column;
    justify-content: space-between;
+   
 `
 
 const User = styled.h1`
@@ -83,6 +88,7 @@ const Texts = styled.div`
 `
 
 export { 
+    Container,
     Box, 
     Image, 
     Content, 

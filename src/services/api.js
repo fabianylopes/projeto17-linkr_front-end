@@ -7,6 +7,11 @@ function getHashtags(){
     return promise;
 }
 
-const api = { getHashtags };
+function getPosts(){
+    const promise = axios.get(`${BASE_URL}/timeline`);
+    return promise;
+}
+
+const api = { getHashtags, getPosts };
 
 export default api;
