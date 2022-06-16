@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import ReactHashtag from '@mdnm/react-hashtag';
+import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 
-import imagemPerfil from '../../img/image-perfil.png';
+//import urlMetadata from 'url-metadata';
+
 import image from '../../img/image.png';
-import { Container, Box, Image, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
+import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import api from '../../services/api';
 
 export default function Posts() {
 
     const [postsList, setPostList] = useState([]);
+    const [liked, setliked] = useState(false);
 
     useEffect(() => seePosts(), []);
 
@@ -17,17 +20,26 @@ export default function Posts() {
         api.getPosts().then((response) => setPostList(response.data)).catch((error) => console.log(error));
     }
 
+
     return (
         <Container>
-            {postsList.map(({id, description, url}) => {
+            {postsList.map(({id, username, picture, description, url, likes}) => {
                 return (
 
                     <Box key={id}>
                         <Image>
-                            <img src={imagemPerfil} alt="Foto perfil"/>
+                            <img src={picture} alt="Foto perfil"/>
+
+                            {liked ? 
+                            <IoMdHeart className="icon-liked" onClick={() => setliked(!liked)}/> 
+                            : 
+                            <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
+                            }
+                            
+                            <Likes>{likes} likes</Likes>
                         </Image>
                         <Content>                                   
-                            <User>Juvenal Juvêncio</User>
+                            <User>{username}</User>
                             <Description>
 
                                 <ReactHashtag

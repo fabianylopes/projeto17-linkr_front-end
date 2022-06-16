@@ -31,17 +31,18 @@ const Bar = styled.div`
             width: 30%;
             height: 50px;
             display: flex;
-            justify-content: space-evenly;
             align-items: center;
 
             .icon{
                 font-size: 24px;
                 color: #FFFFFF;
                 font-weight: bold;
+                cursor: pointer;
             }
             img{
                 width: 41px;
                 height: 41px;
+                margin-left: 14px;
                 border-radius: 50%;
             }
         }

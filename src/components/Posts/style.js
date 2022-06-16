@@ -5,7 +5,7 @@ const Hashtag = styled.span`
     color: #FFFFFF;
 
   :hover {
-    color: #1877f2;
+    color: #1877F2;
     cursor: pointer;
   }
 `
@@ -26,6 +26,49 @@ const Box = styled.div`
 
 const Image = styled.div`
     margin-right: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .icon{
+        font-size: 20px;
+        color: #FFFFFF;
+        font-weight: 700;
+        margin-bottom: 4px;
+        cursor: pointer;
+        
+    }  
+    .icon-liked{
+        font-size: 20px;
+        color: #AC0000;
+        font-weight: 700;
+        margin-bottom: 4px;
+        cursor: pointer;
+    
+    }
+
+    img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 20px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+`
+
+const Likes = styled.h4`
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+    color: #FFFFFF;
+`
+
+const Icon = styled.img`
+    width: 20px;
+    height: 18px;
 `
 
 const Content = styled.div`
@@ -101,6 +144,8 @@ export {
     Hashtag,
     Container,
     Box, 
+    Icon,
+    Likes,
     Image, 
     Content, 
     User, 
