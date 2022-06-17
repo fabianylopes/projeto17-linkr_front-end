@@ -13,8 +13,9 @@ import api from "../utils/api/api.js";
 
 export default function Header() {
 
-  
+  const navigate = useNavigate();
 
+  
 
   return (
     <Bar>
