@@ -11,10 +11,10 @@ export const Title = styled.h1`
 
 export const Container = styled.section`
     width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
+    min-height: 100vh;
+    padding-top: 15vh;
+    padding-bottom: 10vh;
+    
     background-color: #333333;
 
     display: flex;

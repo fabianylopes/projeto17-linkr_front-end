@@ -26,6 +26,10 @@ const Box = styled.div`
     height: 406px;
     background-color: #171717;
     border-radius: 16px;
+
+    //position: sticky;
+  
+    
 `
 
 const Title = styled.h1`

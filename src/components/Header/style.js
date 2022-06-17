@@ -11,6 +11,7 @@ const Bar = styled.div`
 
     position: fixed;
     top: 0;
+    z-index: 2;
 
     p{
         width: 40%;

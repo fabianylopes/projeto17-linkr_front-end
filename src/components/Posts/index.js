@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 
@@ -7,8 +8,12 @@ import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import image from '../../img/image.png';
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import api from '../../services/api';
+import HashtagContext from '../utils/context/HashtagContext';
 
 export default function Posts() {
+    const navigate = useNavigate();
+
+    const { setHash } = useContext(HashtagContext);
 
     const [postsList, setPostList] = useState([]);
     const [liked, setliked] = useState(false);
@@ -18,6 +23,11 @@ export default function Posts() {
     function seePosts(){
 
         api.getPosts().then((response) => setPostList(response.data.posts)).catch((error) => console.log(error));
+    }
+
+    function seeHashtag(hash){
+        setHash(hash);
+        navigate(`/hashtag/${hash.substr(1)}`)
     }
 
 
@@ -43,7 +53,7 @@ export default function Posts() {
                             <Description>
 
                                 <ReactHashtag
-                                    renderHashtag={(hashtagValue) => <Hashtag>{hashtagValue}</Hashtag>}
+                                    renderHashtag={(hashtagValue) => <Hashtag onClick={() => seeHashtag(hashtagValue)}>{hashtagValue}</Hashtag>}
                                 >
                                     {description}
                                 </ReactHashtag>
