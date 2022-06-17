@@ -14,9 +14,10 @@ import TokenContext from "./utils/context/TokenContext";
 
 function App(){
 
-    const LocalToken = localStorage.getItem('token');
-    const [token, setToken] = useState(LocalToken);
-    
+    const localToken = JSON.parse(localStorage.getItem('infoUsers'));
+    console.log(localToken);
+    const [token, setToken] = useState(localToken);
+
     return (
         <TokenContext.Provider value={{token, setToken}} >
 

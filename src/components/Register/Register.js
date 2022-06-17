@@ -14,6 +14,7 @@ function Register(){
     const navigate = useNavigate();
 
     useEffect(()=>{
+
         if(token) navigate('/timeline');
 
         const{ email, username, password, picture_url } = userInfo;  
@@ -23,8 +24,6 @@ function Register(){
         }else setButtonState({...buttonState, activate:false});
         
     }, [userInfo]);
-
-    console.log(buttonState);
 
     function tryCadastrar(event){
         
@@ -42,11 +41,9 @@ function Register(){
     }
 
     return(
-
         <>
         <Main>
             <LeftInitial/>
-
             <Div button={!buttonState.activate}>
                     
                 <form onSubmit={tryCadastrar}>
@@ -55,19 +52,16 @@ function Register(){
                     <input required type={"text"} placeholder="username" onChange={(e)=>{setDataUserToRegister({...userInfo, username:e.target.value})}}></input>
                     <input required type={"url"} placeholder="picture url" onChange={(e)=>{setDataUserToRegister({...userInfo, picture_url:e.target.value})}}></input>
                     <button disabled={!buttonState.activate}>{buttonState.name}</button>
-
                 </form>
 
                 <Link to={"/"}>
                     <h2>Switch back to log in</h2>
                 </Link>
+
             </Div>
         </Main>
         </>
-
     )
-
-
 }
 
 const Div = styled.div`

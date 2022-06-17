@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { Text, Boxes, LeftColumn, Box, Title, Line, Hashtags, HashtagList } from './style';
 import { Container } from '../TelaMain/style';
 import api from '../../services/api';
 import Header from '../Header';
 import Posts from '../Posts';
+import HashtagContext from '../utils/context/HashtagContext';
 
 export default function Hashtag() {
+
+    const { hash } = useContext(HashtagContext);
 
     const [hashtagsList, setHastagList] = useState([]);
 
@@ -21,7 +24,7 @@ export default function Hashtag() {
     return (
         <Container>
             <Header/>
-            <Text>#React</Text>
+            <Text>{hash}</Text>
             <Boxes>
             <LeftColumn>
                 <Posts/>

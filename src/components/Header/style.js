@@ -12,7 +12,6 @@ const Bar = styled.div`
     position: fixed;
     top: 0;
    
-
     p{
         width: 40%;
         height: 50px;
@@ -86,8 +85,10 @@ const Menu = styled.div`
         font-style: normal;
         font-weight: 700;
         color: #363636;
+        cursor: pointer;
+
+
     }
 
 `
-
 export { Bar, Menu }

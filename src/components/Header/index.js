@@ -7,7 +7,7 @@ import imagemPerfil from '../../img/image-perfil.png';
 import { Bar, Menu } from "./style.js";
 import { useContext } from "react";
 import TokenContext from "../utils/context/TokenContext.js";
-import { useEffect } from "react/cjs/react.production.min";
+import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api/api.js";
 
@@ -15,14 +15,16 @@ export default function Header() {
 
   const navigate = useNavigate();
 
+  const { token, setToken } = useContext(TokenContext);
   
+  useEffect(()=> {if(!token) navigate('/')} , [token]);
 
   return (
     <Bar>
         <Paragrafo conteudo="linkr"/>
         <figure>
-            <Logout  />
-            <Imagem imagem={imagemPerfil} alt="Foto perfil"/>
+            <Logout setToken={setToken} />
+            <Imagem imagem={token ? token.image: imagemPerfil} alt="Foto perfil"/>
         </figure>
     </Bar>
   )
@@ -30,25 +32,27 @@ export default function Header() {
 
 function Logout({setToken}){
 
-  const navigate = useNavigate();
-
   function logout(){
 
-    const token = localStorage.getItem('token');
+    const { token } = JSON.parse(localStorage.getItem('infoUsers'))
 
-    const config = {headers: {Authorization: `Bearer ${token}`}};
-    
-    
-
+    api.put('/logout', {token})
+      .then(res =>{
+        localStorage.removeItem('infoUsers');
+        setToken(null);
+      })
+      .catch(erro => {
+        console.log('erro ao fazer o logout', erro);
+      
+      })
   }
 
   return(
     <>
-     
-
       <Menu className="menu" >
 
         <IoIosArrowDown className="icon"/>
+
         <nav className="nav">
           <button onClick={()=>logout()}>logout</button>
         </nav>
@@ -56,6 +60,5 @@ function Logout({setToken}){
       </Menu>
     </>
  
-
   )
 }

@@ -15,9 +15,9 @@ function Login(){
 
     useEffect(()=>{
 
-        if(token) navigate('/timeline') 
-
-        const{ email, password } = userInfo;  
+        if(token) navigate('/timeline');
+        
+        const{ email, password } = userInfo; 
         if(email!== '' && password !== '' ){ 
             setButtonState({...buttonState, activate:true});
         }else setButtonState({...buttonState, activate:false});
@@ -38,14 +38,16 @@ function Login(){
 
             api.post('/sign-in', userInfo)
                 .then(res => {
+                    const savedInfoUsers = JSON.stringify(res.data);
+                    localStorage.setItem('infoUsers', savedInfoUsers);
+                    setToken(res.data);     
+                    setDataUserToRegister([res]);
 
-                    localStorage.setItem('token', `${res.data}`)
-                    setToken(`${res.data}`)                   
-                    navigate('/timeline')})
+                })
 
                 .catch(error => { 
-                    setButtonState({...buttonState, activate:true})
-                    alert(error.response.data)  
+                    setButtonState({...buttonState, activate:true});
+                    alert(error.response.data);  
             });
         } 
     }
