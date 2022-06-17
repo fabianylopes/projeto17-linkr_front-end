@@ -2,9 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
-import api from "./utils/api/api";
-import TokenContext from "./utils/context/TokenContext";
-import LeftInitial from "./utils/LeftInitial";
+import api from "../utils/api/api";
+import TokenContext from "../utils/context/TokenContext";
+import LeftInitial from "../utils/LeftInitial";
 
 function Register(){
 

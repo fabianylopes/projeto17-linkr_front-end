@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import '../css/reset.css';
 import '../css/style.css';
-import Login from "./Login";
-import Register from "./Register";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
 import Timeline from "./TelaMain";
 import Trending from "./Trending";
 import Hashtag from "./Hashtag";

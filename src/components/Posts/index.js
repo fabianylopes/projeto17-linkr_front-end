@@ -12,7 +12,7 @@ export default function Posts() {
 
     const [postsList, setPostList] = useState([]);
     const [liked, setliked] = useState(false);
-
+    console.log(postsList);
     useEffect(() => seePosts(), []);
 
     function seePosts(){
@@ -65,5 +65,3 @@ export default function Posts() {
         </Container>
   )
 }
-
-
