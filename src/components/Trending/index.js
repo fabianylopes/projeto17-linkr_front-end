@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { Text, Boxes, LeftColumn, Box, Title, Line, Hashtags, HashtagList } from './style';
 import { Container } from '../TelaMain/style';
@@ -6,8 +6,13 @@ import api from '../../services/api';
 import Header from '../Header';
 import PostBox from '../PostBox';
 import Posts from '../Posts';
+import HashtagContext from '../utils/context/HashtagContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Trending() {
+  const navigate = useNavigate()
+
+  const { setHash } = useContext(HashtagContext);
 
   const [hashtagsList, setHastagList] = useState([]);
 
@@ -15,6 +20,11 @@ export default function Trending() {
 
   function hashtags(){
     api.getHashtags().then((response) => setHastagList(response.data)).catch((error) => console.log(error));
+  }
+
+  function seeHashtag(hash){
+    setHash(hash);
+    navigate(`/hashtag/${hash.substr(1)}`)
   }
 
   return (
@@ -33,9 +43,9 @@ export default function Trending() {
               
               {hashtagsList.map(({name, id}) => {
                 return (
-                  <a href={`/hashtag/${name.substr(1)}`}>
+                  <div onClick={() => seeHashtag(name)}>
                     <HashtagList key={id}>{name}</HashtagList>
-                  </a>
+                  </div>
                   );
                 })}
 

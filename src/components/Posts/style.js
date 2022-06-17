@@ -11,7 +11,9 @@ const Hashtag = styled.span`
 `
 
 const Container = styled.div`
-
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 `
 
 const Box = styled.div`
@@ -36,7 +38,7 @@ const Image = styled.div`
         font-weight: 700;
         margin-bottom: 4px;
         cursor: pointer;
-        
+
     }  
     .icon-liked{
         font-size: 20px;
