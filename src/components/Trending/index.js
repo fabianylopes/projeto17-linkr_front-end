@@ -16,11 +16,21 @@ export default function Trending() {
 
   const [hashtagsList, setHastagList] = useState([]);
 
+
   useEffect(() => hashtags(), []);
 
   function hashtags(){
-    api.getHashtags().then((response) => setHastagList(response.data)).catch((error) => console.log(error));
+    api.getHashtags().then(handleSuccess).catch((error) => console.log(error));
   }
+
+    console.log(hashtagsList)
+
+    function handleSuccess(response){
+      const hashtags = response.data;
+
+      setHastagList(hashtags.filter((h, i) => hashtags.indexOf(h) === i));
+
+    }
 
   function seeHashtag(hash){
     setHash(hash);
@@ -41,10 +51,10 @@ export default function Trending() {
             <Line></Line>
             <Hashtags>
               
-              {hashtagsList.map(({name, id}) => {
+              {hashtagsList.map((name, i) => {
                 return (
                   <div onClick={() => seeHashtag(name)}>
-                    <HashtagList key={id}>{name}</HashtagList>
+                    <HashtagList key={i}>{name}</HashtagList>
                   </div>
                   );
                 })}

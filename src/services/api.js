@@ -17,7 +17,12 @@ function getPosts(){
     return promise;
 }
 
+function getHashtagPosts(){
+    const promise = axios.get(`${BASE_URL}/posts`);
+    return promise;
+}
 
-const api = { getHashtags, getHashtag, getPosts };
+
+const api = { getHashtags, getHashtag, getPosts, getHashtagPosts };
 
 export default api;

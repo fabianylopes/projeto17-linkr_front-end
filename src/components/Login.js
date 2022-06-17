@@ -2,8 +2,8 @@ import { useState, useEffect, useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "./utils/api/api";
-import TokenContext from "./utils/context/TokenContext";
-import LeftInitial from "./utils/LeftInitial";
+import TokenContext from "../utils/context/TokenContext";
+import LeftInitial from "../utils/LeftInitial";
 
 function Login(){
 
@@ -15,9 +15,9 @@ function Login(){
 
     useEffect(()=>{
 
-        if(token) navigate('/timeline') 
-
-        const{ email, password } = userInfo;  
+        if(token) navigate('/timeline');
+        
+        const{ email, password } = userInfo; 
         if(email!== '' && password !== '' ){ 
             setButtonState({...buttonState, activate:true});
         }else setButtonState({...buttonState, activate:false});
@@ -38,14 +38,16 @@ function Login(){
 
             api.post('/sign-in', userInfo)
                 .then(res => {
+                    const savedInfoUsers = JSON.stringify(res.data);
+                    localStorage.setItem('infoUsers', savedInfoUsers);
+                    setToken(res.data);     
+                    setDataUserToRegister([res]);
 
-                    localStorage.setItem('token', `${res.data}`)
-                    setToken(`${res.data}`)                   
-                    navigate('/timeline')})
+                })
 
                 .catch(error => { 
-                    setButtonState({...buttonState, activate:true})
-                    alert(error.response.data)  
+                    setButtonState({...buttonState, activate:true});
+                    alert(error.response.data);  
             });
         } 
     }
@@ -83,12 +85,10 @@ const Div = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     flex-direction: column;
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 700;
-
     input{
         margin-top: 15px;
         width: 300px;
@@ -109,7 +109,6 @@ const Div = styled.div`
         line-height: 50px;
         color: #FFFFFF;
     }
-
     button{
         margin-top: 15px;
         width: 310px;
@@ -140,7 +139,6 @@ const Div = styled.div`
         justify-content: center;
         flex-direction: column;
     }
-
     @media (max-width: 400px) {
         
         width: 100%;
@@ -151,16 +149,13 @@ const Div = styled.div`
             height: 35px;
         }
     }
-
 `
 const Main = styled.main`
-
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
     background-color: black;
-
     @media (max-width: 400px) {
         
         flex-direction: column;
