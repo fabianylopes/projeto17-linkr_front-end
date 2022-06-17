@@ -33,12 +33,13 @@ const Bar = styled.div`
             height: 50px;
             display: flex;
             align-items: center;
-
+        
             .icon{
                 font-size: 24px;
                 color: #FFFFFF;
                 font-weight: bold;
                 cursor: pointer;
+               
             }
             img{
                 width: 41px;
@@ -46,8 +47,49 @@ const Bar = styled.div`
                 margin-left: 14px;
                 border-radius: 50%;
             }
+          
+   
         }
     
 `
 
-export { Bar }
+const Menu = styled.div`
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+
+    @keyframes logout {
+        0% {opacity: 0%; top:30%;}
+        100% {opacity:100%; top:40%}
+    }
+    nav{
+        position: absolute;
+        left: 65%;
+        display: none;
+        background-color: aliceblue;
+        border-radius: 5px ;
+        margin-top: 20px;
+        padding: 5px;
+        width: 90px ;
+    }
+    
+    &:hover nav{
+        display: block;
+        animation-name: logout;
+        animation-duration: 0.3s;
+    }
+    button{
+        background-color: inherit;
+        font-family: 'Oswald';
+        font-style: normal;
+        font-weight: 700;
+        color: #363636;
+        cursor: pointer;
+
+
+    }
+
+`
+export { Bar, Menu }

@@ -31,8 +31,10 @@ export default function Posts() {
     }
 
 
+
     return (
         <Container>
+   
             {postsList.map(({id, username, picture, description, url, likes}) => {
                 return (
 
@@ -65,9 +67,9 @@ export default function Posts() {
                                     <Subtitle>Hey! I have moved this tutorial to my personal blog. Same content, new location. Sorry about making you click through to another page.</Subtitle>
                                     <Url>{url}</Url>
                                 </Texts>
+
                                 <img src={image} alt="Foto link"/>
                             </Link>
-
                         </Content>
                     </Box>
                 );
@@ -75,5 +77,3 @@ export default function Posts() {
         </Container>
   )
 }
-
-
