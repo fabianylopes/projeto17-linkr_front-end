@@ -17,7 +17,7 @@ export default function Posts() {
 
     function seePosts(){
 
-        api.getPosts().then((response) => setPostList(response.data)).catch((error) => console.log(error));
+        api.getPosts().then((response) => setPostList(response.data.posts)).catch((error) => console.log(error));
     }
 
 
