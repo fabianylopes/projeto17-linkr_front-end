@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import '../css/reset.css';
 import '../css/style.css';
-import Login from "./Login";
-import Register from "./Register";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
 import Timeline from "./TelaMain";
 import Trending from "./Trending";
 import Hashtag from "./Hashtag";
@@ -15,11 +15,13 @@ import HashtagContext from "./utils/context/HashtagContext";
 
 function App(){
 
-    const LocalToken = localStorage.getItem('token');
-    const [token, setToken] = useState(LocalToken);
+    const localToken = JSON.parse(localStorage.getItem('infoUsers'));
+    console.log(localToken);
+    const [token, setToken] = useState(localToken);
+
 
     const [hash, setHash] = useState('')
-    
+
     return (
         <TokenContext.Provider value={{token, setToken}} >
             <HashtagContext.Provider value={{hash, setHash}}>

@@ -1,72 +1,79 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
-import api from "./utils/api/api";
-import TokenContext from "./utils/context/TokenContext";
-import LeftInitial from "./utils/LeftInitial";
+import api from "../utils/api/api";
+import TokenContext from "../utils/context/TokenContext";
+import LeftInitial from "../utils/LeftInitial";
 
-function Register(){
+function Login(){
 
-    const { token } = useContext(TokenContext);
-    const [userInfo, setDataUserToRegister] = useState({email:'', username:'', password:'', picture_url:''});
-    const [buttonState, setButtonState] = useState({activate:false, name:'Sign Up'});
+    const { token, setToken } = useContext(TokenContext);
     const navigate = useNavigate();
+    
+    const [ userInfo, setDataUserToRegister ] = useState({email:'', password:''});
+    const [ buttonState, setButtonState ] = useState({activate:false, name:'Sign In'});
 
     useEffect(()=>{
+
         if(token) navigate('/timeline');
-
-        const{ email, username, password, picture_url } = userInfo;  
-
-        if(email!== '' && password !== '' && username !== '' && picture_url !== ''){ 
+        
+        const{ email, password } = userInfo; 
+        if(email!== '' && password !== '' ){ 
             setButtonState({...buttonState, activate:true});
         }else setButtonState({...buttonState, activate:false});
         
     }, [userInfo]);
 
-    console.log(buttonState);
-
-    function tryCadastrar(event){
+    function tryLogin(event){
         
         event.preventDefault();
 
-        setButtonState({...buttonState, activate:false})
+        //validação extra de segurança, pois os campos estão como required
+        //entretanto alguns usuários consegue desativar o required direto no html
+        if(userInfo.email === '' || userInfo.password === ''){
+            alert('preencha os dois campos');
+        }
+        else{
+            setButtonState({...buttonState, activate:false})
 
-        api.post('/sign-up', userInfo)
-            .then(response => { navigate('/')})
-            .catch(error => { 
-                setButtonState({...buttonState, activate:true})
-                alert(error.response.data)
-                
+            api.post('/sign-in', userInfo)
+                .then(res => {
+                    const savedInfoUsers = JSON.stringify(res.data);
+                    localStorage.setItem('infoUsers', savedInfoUsers);
+                    setToken(res.data);     
+                    setDataUserToRegister([res]);
+
+                })
+
+                .catch(error => { 
+                    setButtonState({...buttonState, activate:true});
+                    alert(error.response.data);  
             });
+        } 
     }
 
     return(
-
         <>
         <Main>
-            <LeftInitial/>
+            <LeftInitial />
 
             <Div button={!buttonState.activate}>
                     
-                <form onSubmit={tryCadastrar}>
+                <form onSubmit={tryLogin}>
                     <input required type={"email"} placeholder="e-mail" onChange={(e)=>{setDataUserToRegister({...userInfo, email:e.target.value})}}></input>
                     <input required type={"password"} placeholder="password" onChange={(e)=>{setDataUserToRegister({...userInfo, password:e.target.value})}}></input>
-                    <input required type={"text"} placeholder="username" onChange={(e)=>{setDataUserToRegister({...userInfo, username:e.target.value})}}></input>
-                    <input required type={"url"} placeholder="picture url" onChange={(e)=>{setDataUserToRegister({...userInfo, picture_url:e.target.value})}}></input>
                     <button disabled={!buttonState.activate}>{buttonState.name}</button>
 
                 </form>
 
-                <Link to={"/"}>
-                    <h2>Switch back to log in</h2>
+                <Link to={"/sign-up"}>
+                    <h2>First time? Create an account!</h2>
                 </Link>
             </Div>
         </Main>
         </>
 
     )
-
 
 }
 
@@ -93,7 +100,7 @@ const Div = styled.div`
         background-color: #FFFFFF;
     }
     input::placeholder{
-    
+      
         font-size: 18px;
         line-height: 40px;
         color: #9F9F9F;
@@ -112,7 +119,6 @@ const Div = styled.div`
         border-radius: 5px;
         padding: 5px;
         background: ${props=> props.button ? '#C0C0C0': '#1877F2'};
-        
         font-size: 20px;
         line-height: 23px;
         color: #FFFFFF;
@@ -125,6 +131,7 @@ const Div = styled.div`
         line-height: 18px;
         color: #FFFFFF;
         margin-top: 25px;
+        
     }
     h2:hover{
         color: grey;
@@ -162,5 +169,4 @@ const Main = styled.main`
         margin: 0;
     }
 `
-
-export default Register;
+export default Login;
