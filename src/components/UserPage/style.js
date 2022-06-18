@@ -65,3 +65,14 @@ export const Hastags = styled.div`
 
     margin-top: 135px;
 `;
+
+export const Text = styled.h1`
+    width: 100%;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 64px;
+    color: #FFFFFF;
+    text-align: center;
+`;

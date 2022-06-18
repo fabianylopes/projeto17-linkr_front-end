@@ -87,6 +87,12 @@ const User = styled.h1`
     font-size: 19px;
     line-height: 23px;
     color: #FFFFFF;
+
+    cursor: pointer;
+
+    &&:hover {
+        opacity: 0.8;
+    }
 `
 
 const Description = styled.div`

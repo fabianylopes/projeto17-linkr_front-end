@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
+import { TailSpin } from  'react-loader-spinner'
 
 import image from '../../img/image.png';
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
@@ -21,7 +22,8 @@ export default function UserPosts({ userData }) {
 
     return (
         <Container>
-            {userData.userPosts?.map(({id, description, url, likes}) => {
+            {!userData.userPosts && <TailSpin color="#ffffff" size={100}/>}
+            {userData.userPosts?.map(({id, userId, description, url, likes}) => {
                 return (
                     <Box key={id}>
                         <Image>
@@ -36,7 +38,7 @@ export default function UserPosts({ userData }) {
                             <Likes>{likes} likes</Likes>
                         </Image>
                         <Content>                                   
-                            <User>{userData.username}</User>
+                            <User  onClick={() => navigate(`/user/${userId}`)}>{userData.username}</User>
                             <Description>
 
                                 <ReactHashtag

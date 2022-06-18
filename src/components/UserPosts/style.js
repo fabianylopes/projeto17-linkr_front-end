@@ -11,8 +11,11 @@ const Hashtag = styled.span`
 `
 
 const Container = styled.div`
+    width: 100%;
+
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 16px;
 `
 
@@ -87,6 +90,12 @@ const User = styled.h1`
     font-size: 19px;
     line-height: 23px;
     color: #FFFFFF;
+    
+    cursor: pointer;
+
+    &&:hover {
+        opacity: 0.8;
+    }
 `
 
 const Description = styled.div`
