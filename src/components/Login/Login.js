@@ -47,7 +47,7 @@ function Login(){
 
                 .catch(error => { 
                     setButtonState({...buttonState, activate:true});
-                    alert(error.response.data);  
+                    console.log(error.response.data);  
             });
         } 
     }
