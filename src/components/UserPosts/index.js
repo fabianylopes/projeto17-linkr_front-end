@@ -1,28 +1,18 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 
-//import urlMetadata from 'url-metadata';
-
 import image from '../../img/image.png';
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
-import api from '../../services/api';
 import HashtagContext from '../utils/context/HashtagContext';
 
-export default function Posts() {
+export default function UserPosts({ userData }) {
     const navigate = useNavigate();
 
     const { setHash } = useContext(HashtagContext);
 
-    const [postsList, setPostList] = useState([]);
     const [liked, setliked] = useState(false);
-
-    useEffect(() => seePosts(), []);
-
-    function seePosts(){
-        api.getPosts().then((response) => setPostList(response.data.posts)).catch((error) => console.log(error));
-    }
 
     function seeHashtag(hash){
         setHash(hash);
@@ -31,12 +21,11 @@ export default function Posts() {
 
     return (
         <Container>
-            {postsList.map(({id, userId, username, picture, description, url, likes}) => {
+            {userData.userPosts?.map(({id, description, url, likes}) => {
                 return (
-
                     <Box key={id}>
                         <Image>
-                            <img src={picture} alt="Foto perfil"/>
+                            <img src={userData.picture} alt="Foto perfil"/>
 
                             {liked ? 
                             <IoMdHeart className="icon-liked" onClick={() => setliked(!liked)}/> 
@@ -47,7 +36,7 @@ export default function Posts() {
                             <Likes>{likes} likes</Likes>
                         </Image>
                         <Content>                                   
-                            <User onClick={() => navigate(`/user/${userId}`)}>{username}</User>
+                            <User>{userData.username}</User>
                             <Description>
 
                                 <ReactHashtag
@@ -71,5 +60,5 @@ export default function Posts() {
                 );
             })}
         </Container>
-  )
+    )
 }

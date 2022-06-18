@@ -17,7 +17,12 @@ function getPosts(){
     return promise;
 }
 
+function getPostsByUserId(id, token) {
+    const config = {headers: { Authorization: `Bearer ${token}`}};
+    const promise = axios.get(`${BASE_URL}/user/${id}`, config);
+    return promise;
+}
 
-const api = { getHashtags, getHashtag, getPosts };
+const api = { getHashtags, getHashtag, getPosts, getPostsByUserId };
 
 export default api;
