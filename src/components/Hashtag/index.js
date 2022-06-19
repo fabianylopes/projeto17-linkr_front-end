@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 
 import { Text, Boxes } from './style';
-import { Container } from '../TelaMain/style';
+import { Container, Body } from '../TelaMain/style';
 import HashtagContext from '../utils/context/HashtagContext';
 import api from '../../services/api';
 import Trending from '../Trending';
@@ -24,13 +24,13 @@ export default function Hashtag() {
     return (
         <Container>
             <Header/>
-            <Text>
-                <h1>#{hash}</h1>
-            </Text>
-            <Boxes>              
-                <Posts posts={hashtagPosts}/>
-                <Trending/>
-            </Boxes>
+            <Body>
+                <Text>#{hash}</Text>
+                <Boxes>              
+                    <Posts posts={hashtagPosts}/>
+                    <Trending/>
+                </Boxes>
+            </Body>    
         </Container>
     )
 }

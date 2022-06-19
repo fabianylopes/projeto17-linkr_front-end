@@ -9,7 +9,7 @@ import Posts from "../Posts/index.js";
 import TokenContext from "../utils/context/TokenContext";
 import { useNavigate } from "react-router-dom";
 
-import { Container, Title, Boxes, LeftColumn } from "./style.js";
+import { Container, Title, Boxes, LeftColumn, Body } from "./style.js";
 import Trending from "../Trending";
 
 function Timeline() {
@@ -35,14 +35,16 @@ function Timeline() {
         <>
             <Container>
                 <Header/>
-                <Title>timeline</Title>
-                <Boxes>
-                    <LeftColumn>
-                        <PostBox reload={(post)=> setPosts(post)}/>
-                        <Posts posts={posts}/>
-                    </LeftColumn>
-                    <Trending/>
-                </Boxes>
+                <Body>
+                    <Title>timeline</Title>
+                    <Boxes>
+                        <LeftColumn>
+                            <PostBox reload={(post)=> setPosts(post)}/>
+                            <Posts posts={posts}/>
+                        </LeftColumn>
+                        <Trending/>
+                    </Boxes>
+                </Body>
             </Container>
         </>
     );

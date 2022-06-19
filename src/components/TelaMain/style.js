@@ -7,6 +7,7 @@ export const Title = styled.h1`
     font-size: 43px;
     line-height: 64px;
     color: #FFFFFF;
+    margin-bottom: 40px;
 `
 
 export const Container = styled.section`
@@ -23,6 +24,11 @@ export const Container = styled.section`
     align-items: center;
     gap: 16px;
 
+`
+
+export const Body = styled.div`
+    display: flex;
+    flex-direction: column;
 `
 
 export const Boxes = styled.div`

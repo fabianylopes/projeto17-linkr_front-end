@@ -28,8 +28,9 @@ function Post({post}){
     const [liked, setliked] = useState(false);
 
     function seeHashtag(hash){
-        setHash(hash.substr(1));
-        navigate(`/hashtag/${hash.substr(1)}`)
+        const hashtag = hash.substr(1).toLowerCase();
+        setHash(hashtag);
+        navigate(`/hashtag/${hashtag}`)
     }
 
 
@@ -55,7 +56,7 @@ function Post({post}){
                             <ReactHashtag
                                 renderHashtag={
                                     (hashtagValue, i) => 
-                                    <Hashtag onClick={() => seeHashtag(hashtagValue)}>
+                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
                                         {hashtagValue}
                                     </Hashtag>
                                 }
