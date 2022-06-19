@@ -8,6 +8,7 @@ import Register from "./Register";
 import Timeline from "./TelaMain";
 import Trending from "./Trending";
 import Hashtag from "./Hashtag";
+import UserPage from "./UserPage";
 
 import TokenContext from "./utils/context/TokenContext";
 import HashtagContext from "./utils/context/HashtagContext";
@@ -15,7 +16,6 @@ import HashtagContext from "./utils/context/HashtagContext";
 function App(){
 
     const localToken = JSON.parse(localStorage.getItem('infoUsers'));
-    console.log(localToken);
     const [token, setToken] = useState(localToken);
 
 
@@ -31,6 +31,7 @@ function App(){
                         <Route path="/timeline" element={<Timeline/>} />
                         <Route path="/hashtag" element={<Trending/>} />
                         <Route path="/hashtag/:hashtag" element={<Hashtag/>} />
+                        <Route path="/user/:id" element={<UserPage/>}/>
                     </Routes>
                 </BrowserRouter>
             </HashtagContext.Provider>

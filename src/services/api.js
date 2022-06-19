@@ -27,7 +27,6 @@ function getPostsByUserId(id, token) {
     return promise;
 }
 
-
 const api = { getHashtags, getHashtag, getPosts, getPostsByUserId };
 
 export default api;

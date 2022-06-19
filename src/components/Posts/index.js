@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
-import ReactHashtag from '@mdnm/react-hashtag';
+import reactHashtag from '@mdnm/react-hashtag';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
@@ -26,7 +26,8 @@ export default function Posts(props) {
                         return (
                             <Box key={post.id}>
                                 <Image>
-                                    <img src={post.picture} alt="Foto perfil"/>
+                                    <img src={post.picture} alt="Foto perfil" 
+                                    onClick={() => navigate(`/user/${post.userId}`)}/>
         
                                     {liked ? 
                                     <IoMdHeart className="icon-liked" onClick={() => setliked(!liked)}/> 
@@ -37,9 +38,9 @@ export default function Posts(props) {
                                     <Likes>{post.likes} likes</Likes>
                                 </Image>
                                 <Content>                                   
-                                    <User>{post.username}</User>
+                                    <User onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</User>
                                     <Description>
-                                            {/* <ReactHashtag
+                                            <reactHashtag
                                                 renderHashtag={
                                                     (hashtagValue, i) => 
                                                     <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
@@ -48,7 +49,7 @@ export default function Posts(props) {
                                                 }
                                             >
                                                 {post.description}
-                                            </ReactHashtag> */}
+                                            </reactHashtag>
                                     </Description>
                                     <Link href={post.url} target="_blank">
                                         <Texts>
