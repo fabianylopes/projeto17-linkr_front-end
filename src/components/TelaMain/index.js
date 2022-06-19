@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext} from "react";
 import swal from "sweetalert";
 
 import api from "../utils/api/api";
@@ -6,13 +6,21 @@ import Header from "../Header/index.js";
 import PostBox from "../PostBox/index.js";
 import Posts from "../Posts/index.js";
 
+import TokenContext from "../utils/context/TokenContext";
+import { useNavigate } from "react-router-dom";
+
 import { Container, Title, Boxes } from "./style.js";
 import Trending from "../Trending";
 import { LeftColumn } from "../Hashtag/style";
 
 function Timeline() {
+    const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
 
+    const { token:localToken } = useContext(TokenContext);
+   
+
+    
     async function loadPosts() {
         try {
             const response = await api.get("/timeline");
@@ -23,6 +31,7 @@ function Timeline() {
     }
 
     useEffect(() => {
+        if(!localToken) navigate('/')
         loadPosts();
     }, []);
 
