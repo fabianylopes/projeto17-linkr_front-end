@@ -16,10 +16,7 @@ import { LeftColumn } from "../Hashtag/style";
 function Timeline() {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
-
     const { token:localToken } = useContext(TokenContext);
-   
-
     
     async function loadPosts() {
         try {

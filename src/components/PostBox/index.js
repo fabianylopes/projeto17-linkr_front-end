@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { useContext } from 'react';
 import swal from 'sweetalert';
 
 import api from '../utils/api/api';
-import TokenContext from '../utils/context/TokenContext';
 import { Box, Image, Texts, Text, Inputs, SmallInput, BigInput, Button } from './style';
 
 function PostBox(props) {
