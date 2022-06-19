@@ -2,6 +2,10 @@ import axios from "axios";
 
 const BASE_URL = 'http://localhost:4000';
 
+function getConfig(token){
+    return { headers: { Authorization: `Bearer ${token}` } };
+}
+
 function getHashtags(){
     const promise = axios.get(`${BASE_URL}/hashtag`);
     return promise;
@@ -18,7 +22,7 @@ function getPosts(){
 }
 
 function getPostsByUserId(id, token) {
-    const config = {headers: { Authorization: `Bearer ${token}`}};
+    const config = getConfig(token);
     const promise = axios.get(`${BASE_URL}/user/${id}`, config);
     return promise;
 }

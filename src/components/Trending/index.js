@@ -16,6 +16,7 @@ export default function Trending() {
 
   const [hashtagsList, setHastagList] = useState([]);
 
+
   useEffect(() => hashtags(), []);
 
   function hashtags(){

@@ -8,7 +8,6 @@ const Bar = styled.div`
     align-items: center;
     padding: 0 15px;
     background-color: #151515;
-
     position: fixed;
     top: 0;
     z-index: 2;
@@ -28,51 +27,56 @@ const Bar = styled.div`
         color: #FFFFFF;
     }
 
-        figure{
-            width: 30%;
-            height: 50px;
-            display: flex;
-            align-items: center;
-        
-            .icon{
-                font-size: 24px;
-                color: #FFFFFF;
-                font-weight: bold;
-                cursor: pointer;
-               
-            }
-            img{
-                width: 41px;
-                height: 41px;
-                margin-left: 14px;
-                border-radius: 50%;
-            }
-          
-   
+    figure{
+        width: 30%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    
+        .icon{
+            font-size: 24px;
+            color: #FFFFFF;
+            font-weight: bold;
+            cursor: pointer;
+            
         }
+        img{
+            width: 41px;
+            height: 41px;
+            margin-left: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+
+    }
     
 `
 
 const Menu = styled.div`
 
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: space-between;
-
-
+    align-items: center;
+    height: 12vh;
+    margin-top: 30px;
+    
     @keyframes logout {
         0% {opacity: 0%; top:30%;}
         100% {opacity:100%; top:40%}
     }
     nav{
         position: absolute;
-        left: 65%;
+        
         display: none;
         background-color: aliceblue;
         border-radius: 5px ;
-        margin-top: 20px;
+        margin-top: 65px;
         padding: 5px;
-        width: 90px ;
+        width: 100% ;
+        
     }
     
     &:hover nav{
@@ -80,6 +84,7 @@ const Menu = styled.div`
         animation-name: logout;
         animation-duration: 0.3s;
     }
+
     button{
         background-color: inherit;
         font-family: 'Oswald';
@@ -87,9 +92,7 @@ const Menu = styled.div`
         font-weight: 700;
         color: #363636;
         cursor: pointer;
-
-
     }
-
+    
 `
 export { Bar, Menu }
