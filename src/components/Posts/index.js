@@ -65,7 +65,7 @@ export default function Posts() {
                                 <Texts>
                                     <Title>Como aplicar o Material UI em um projeto React</Title>
                                     <Subtitle>Hey! I have moved this tutorial to my personal blog. Same content, new location. Sorry about making you click through to another page.</Subtitle>
-                                    <Url>{url}</Url>
+                                    <Url href={url} target="_blank">{url}</Url>
                                 </Texts>
 
                                 <img src={image} alt="Foto link"/>

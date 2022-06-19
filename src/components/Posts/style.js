@@ -125,13 +125,18 @@ const Subtitle = styled.div`
     color: #9B9595;
 `
 
-const Url = styled.div`
+const Url = styled.a`
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
     font-size: 11px;
     line-height: 13px;
     color: #CECECE;
+    
+    :hover {
+    color: #1877F2;
+    cursor: pointer;
+  }
 `
 
 const Texts = styled.div`

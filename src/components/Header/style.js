@@ -45,6 +45,7 @@ const Bar = styled.div`
             height: 41px;
             margin-left: 14px;
             border-radius: 50%;
+            object-fit: cover;
         }
         
 
