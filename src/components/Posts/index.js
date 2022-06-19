@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
-import reactHashtag from '@mdnm/react-hashtag';
+import ReactHashtag from '@mdnm/react-hashtag';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
@@ -39,18 +39,22 @@ export default function Posts(props) {
                                 </Image>
                                 <Content>                                   
                                     <User onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</User>
-                                    <Description>
-                                            <reactHashtag
-                                                renderHashtag={
-                                                    (hashtagValue, i) => 
-                                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
-                                                        {hashtagValue}
-                                                    </Hashtag>
-                                                }
-                                            >
-                                                {post.description}
-                                            </reactHashtag>
-                                    </Description>
+                                        {
+                                            post.description ? 
+                                            <Description>
+                                                <ReactHashtag
+                                                    renderHashtag={
+                                                        (hashtagValue, i) => 
+                                                        <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
+                                                            {hashtagValue}
+                                                        </Hashtag>
+                                                    }
+                                                >
+                                                    {!post.description ? '' : post.description}
+                                                </ReactHashtag>
+                                            </Description>
+                                            : <></>
+                                        }
                                     <Link href={post.url} target="_blank">
                                         <Texts>
                                             <Title>{post.title}</Title>
