@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Container, Title, Boxes, LeftColumn, Body } from "./style.js";
 import Trending from "../Trending";
+import SearchBar from "../SearchBar";
 
 function Timeline() {
     const navigate = useNavigate();
@@ -35,6 +36,7 @@ function Timeline() {
         <>
             <Container>
                 <Header/>
+                <SearchBar isHeader={false}/>
                 <Body>
                     <Title>timeline</Title>
                     <Boxes>
