@@ -13,6 +13,7 @@ const Hashtag = styled.div`
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 16px;
 `
 
@@ -55,6 +56,7 @@ const Image = styled.div`
         margin-bottom: 20px;
         border-radius: 50%;
         object-fit: cover;
+        cursor: pointer;
     }
 `
 
