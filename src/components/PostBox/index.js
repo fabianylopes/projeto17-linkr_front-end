@@ -1,13 +1,17 @@
 import { useState } from 'react';
+import { useContext } from 'react';
 import swal from 'sweetalert';
 
 import api from '../utils/api/api';
+import TokenContext from '../utils/context/TokenContext';
 import { Box, Image, Texts, Text, Inputs, SmallInput, BigInput, Button } from './style';
 
 function PostBox(props) {
     const { reload } = props;
+    let image = '';
+    let token = '';
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
-    const {image, token} = dadosStorage;
+    dadosStorage ?  { image, token } = dadosStorage: image = '';
     
     const [dadosPost, setDadosPost] = useState({
       url: '', description: ''
