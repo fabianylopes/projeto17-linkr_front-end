@@ -6,8 +6,10 @@ import { Box, Image, Texts, Text, Inputs, SmallInput, BigInput, Button } from '.
 
 function PostBox(props) {
     const { reload } = props;
+    let image = '';
+    let token = '';
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
-    const {image, token} = dadosStorage;
+    dadosStorage ?  { image, token } = dadosStorage: image = '';
     
     const [dadosPost, setDadosPost] = useState({
       url: '', description: ''
