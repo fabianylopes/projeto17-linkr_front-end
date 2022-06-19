@@ -50,7 +50,7 @@ export default function Posts(props) {
                                                         </Hashtag>
                                                     }
                                                 >
-                                                    {!post.description ? '' : post.description}
+                                                    {post.description}
                                                 </ReactHashtag>
                                             </Description>
                                             : <></>
