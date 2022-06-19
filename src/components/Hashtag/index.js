@@ -15,7 +15,7 @@ export default function Hashtag() {
 
     const [hashtagsList, setHastagList] = useState([]);
 
-    useEffect(() => hashtags(), []);
+    useEffect(() => hashtags(), []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
     function hashtags(){

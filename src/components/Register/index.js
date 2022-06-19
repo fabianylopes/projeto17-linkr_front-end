@@ -23,7 +23,7 @@ function Register(){
             setButtonState({...buttonState, activate:true});
         }else setButtonState({...buttonState, activate:false});
         
-    }, [userInfo]);
+    }, [userInfo]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function tryCadastrar(event){
         
