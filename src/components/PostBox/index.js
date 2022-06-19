@@ -4,8 +4,8 @@ import swal from 'sweetalert';
 import api from '../utils/api/api';
 import { Box, Image, Texts, Text, Inputs, SmallInput, BigInput, Button } from './style';
 
-function PostBox() {
-  
+function PostBox(props) {
+    const { reload } = props;
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
     const {image, token} = dadosStorage;
     
@@ -43,6 +43,8 @@ function PostBox() {
       try {
         await api.post('/timeline', obj, objConfig);
         sucessOrError();
+
+        reload((await api.get('/timeline')).data.posts);
       } catch (error) {
         swal(`Houve um erro ao publicar seu link! Status: ${error.response.status}`);
         sucessOrError();
@@ -86,7 +88,6 @@ function PostBox() {
             </Texts>
         </Box>
     );
-
 }
 
 export default PostBox;
