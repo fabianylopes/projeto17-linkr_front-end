@@ -18,7 +18,7 @@ export default function Header() {
 
   const { token, setToken } = useContext(TokenContext);
   
-  useEffect(()=> {if(!token) navigate('/')} , [token]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(()=> {if(!token.token) navigate('/')} , [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Bar>
