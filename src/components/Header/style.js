@@ -2,23 +2,22 @@ import styled from "styled-components";
 
 const Bar = styled.div`
     width: 100%;
-    height: 12vh;
+    height: 72px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px;
+    padding: 0 17px;
     background-color: #151515;
     position: fixed;
     top: 0;
     z-index: 2;
 
     p{
-        width: 40%;
         height: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: Passion One;
+        font-family: 'Passion One';
         font-size: 45px;
         font-weight: 700;
         line-height: 50px;
@@ -27,30 +26,26 @@ const Bar = styled.div`
         color: #FFFFFF;
     }
 
-    figure{
-        width: 30%;
-        height: 50px;
-        display: flex;
-        align-items: center;
-    
-        .icon{
-            font-size: 24px;
-            color: #FFFFFF;
-            font-weight: bold;
-            cursor: pointer;
-            
-        }
-        img{
-            width: 41px;
-            height: 41px;
-            margin-left: 14px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+        figure{
+            height: 50px;
+            display: flex;
+            align-items: center;
         
-
-    }
-    
+            .icon{
+                font-size: 24px;
+                color: #FFFFFF;
+                font-weight: bold;
+                cursor: pointer;
+            
+            }
+            img{
+                width: 41px;
+                height: 41px;
+                margin-left: 14px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }    
 `
 
 const Menu = styled.div`

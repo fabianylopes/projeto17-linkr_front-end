@@ -26,7 +26,8 @@ export default function Posts(props) {
                         return (
                             <Box key={post.id}>
                                 <Image>
-                                    <img src={post.picture} alt="Foto perfil"/>
+                                    <img src={post.picture} alt="Foto perfil" 
+                                    onClick={() => navigate(`/user/${post.userId}`)}/>
         
                                     {liked ? 
                                     <IoMdHeart className="icon-liked" onClick={() => setliked(!liked)}/> 
@@ -37,23 +38,23 @@ export default function Posts(props) {
                                     <Likes>{post.likes} likes</Likes>
                                 </Image>
                                 <Content>                                   
-                                    <User>{post.username}</User>
-                                    
-                                    {post.description !== null 
-                                    ?<Description>
-                                        {<ReactHashtag
-                                            renderHashtag={(hashtagValue, i) => 
-                                                <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
-                                                    {hashtagValue}
-                                                </Hashtag>
-                                            }
-                                        >
-                                            {post.description}
-                                        </ReactHashtag> }
-                                    </Description>
-                                    :<></>
-                                    }
-                                    
+                                    <User onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</User>
+                                        {
+                                            post.description ? 
+                                            <Description>
+                                                <ReactHashtag
+                                                    renderHashtag={
+                                                        (hashtagValue, i) => 
+                                                        <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
+                                                            {hashtagValue}
+                                                        </Hashtag>
+                                                    }
+                                                >
+                                                    {post.description}
+                                                </ReactHashtag>
+                                            </Description>
+                                            : <></>
+                                        }
                                     <Link href={post.url} target="_blank">
                                         <Texts>
                                             <Title>{post.title}</Title>
