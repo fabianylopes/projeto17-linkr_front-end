@@ -6,19 +6,33 @@ import api from '../../services/api';
 import Header from '../Header';
 import Posts from '../Posts';
 import HashtagContext from '../utils/context/HashtagContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Hashtag() {
+    const navigate = useNavigate();
 
-    const { hash } = useContext(HashtagContext);
+    const { hash, setHash } = useContext(HashtagContext);
 
     const [hashtagsList, setHastagList] = useState([]);
 
-    useEffect(() => hashtags(), []);
+    useEffect(() => hashtags(), []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
     function hashtags(){
-        api.getHashtags().then((response) => setHastagList(response.data)).catch((error) => console.log(error));
+        api.getHashtags().then(handleSuccess).catch((error) => console.log(error));
         
+    }
+
+    function handleSuccess(response){
+        const hashtags = response.data;
+  
+        setHastagList(hashtags.filter((h, i) => hashtags.indexOf(h) === i));
+  
+      }
+
+    function seeHashtag(hash){
+        setHash(hash);
+        navigate(`/hashtag/${hash.substr(1)}`)
     }
 
     return (
@@ -34,11 +48,11 @@ export default function Hashtag() {
                 <Line></Line>
                 <Hashtags>
                     
-                    {hashtagsList.map(({name, id}) => {
+                    {hashtagsList.map((name, i) => {
                     return (
-                        <a href={`/hashtag/${name.substr(1)}`}>
-                        <HashtagList key={id}>{name}</HashtagList>
-                        </a>
+                        <div onClick={() => seeHashtag(name)}>
+                            <HashtagList key={i}>{name}</HashtagList>
+                        </div>
                         );
                     })}
     

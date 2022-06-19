@@ -1,4 +1,5 @@
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IconContext } from "react-icons";
 
 import Paragrafo from "../utils/Paragrafo.js";
 import Imagem from "../utils/Imagem.js";
@@ -7,7 +8,7 @@ import imagemPerfil from '../../img/image-perfil.png';
 import { Bar, Menu } from "./style.js";
 import { useContext } from "react";
 import TokenContext from "../utils/context/TokenContext.js";
-import { useEffect} from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api/api.js";
 
@@ -17,20 +18,21 @@ export default function Header() {
 
   const { token, setToken } = useContext(TokenContext);
   
-  useEffect(()=> {if(!token) navigate('/')} , [token]);
+  useEffect(()=> {if(!token) navigate('/')} , [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Bar>
-        <Paragrafo conteudo="linkr"/>
+        <Paragrafo conteudo="linkr"  click={() => navigate("/timeline")} />
         <figure>
-            <Logout setToken={setToken} />
-            <Imagem imagem={token ? token.image: imagemPerfil} alt="Foto perfil"/>
+            <Logout setToken={setToken} token={token}/>
         </figure>
     </Bar>
   )
 }
 
-function Logout({setToken}){
+function Logout({setToken, token}){
+
+  const [down, setPosition] = useState(true);
 
   function logout(){
 
@@ -47,12 +49,15 @@ function Logout({setToken}){
       })
   }
 
+
   return(
     <>
-      <Menu className="menu" >
-
-        <IoIosArrowDown className="icon"/>
-
+      <Menu className="menu" onMouseEnter={() => setPosition(false)} onMouseLeave={() => setPosition(true)}  >
+        <div>
+          <Icon name={down ? IoIosArrowDown : IoIosArrowUp}  />
+          <Imagem imagem={token ? token.image: imagemPerfil} alt="Foto perfil"/>
+        </div>
+        
         <nav className="nav">
           <button onClick={()=>logout()}>logout</button>
         </nav>
@@ -61,4 +66,17 @@ function Logout({setToken}){
     </>
  
   )
+}
+
+function Icon ({ name }){
+
+  const IconCompenent = name;
+  
+  return(
+      
+      <IconContext.Provider value={{}}>
+          <IconCompenent className="icon" />
+      </IconContext.Provider>
+      
+  );
 }
