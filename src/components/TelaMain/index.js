@@ -6,9 +6,12 @@ import Header from "../Header/index.js";
 import PostBox from "../PostBox/index.js";
 import Posts from "../Posts/index.js";
 
-import { Container, Title } from "./style.js";
 import TokenContext from "../utils/context/TokenContext";
 import { useNavigate } from "react-router-dom";
+
+import { Container, Title, Boxes } from "./style.js";
+import Trending from "../Trending";
+import { LeftColumn } from "../Hashtag/style";
 
 function Timeline() {
     const navigate = useNavigate();
@@ -37,8 +40,13 @@ function Timeline() {
             <Container>
                 <Header/>
                 <Title>timeline</Title>
-                <PostBox reload={(post)=> setPosts(post)}/>
-                <Posts posts={posts}/>
+                <Boxes>
+                    <LeftColumn>
+                        <PostBox reload={(post)=> setPosts(post)}/>
+                        <Posts posts={posts}/>
+                    </LeftColumn>
+                    <Trending/>
+                </Boxes>
             </Container>
         </>
     );

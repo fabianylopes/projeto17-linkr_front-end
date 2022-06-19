@@ -12,8 +12,8 @@ export default function Posts(props) {
     return (
         <Container>
             {
-                posts.length > 0 
-                ?posts.map((post, i) => <Post key={i} post={post} />)
+                posts.length > 0 ?
+                  posts.map((post, i) => <Post key={i} post={post} />)
                 : <h1>Loading...</h1>
             }
         </Container>
