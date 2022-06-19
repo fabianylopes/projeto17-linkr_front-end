@@ -16,7 +16,7 @@ function Timeline() {
             const response = await api.get("/timeline");
             setPosts(response.data.posts);
         } catch (error) {
-            swal(`Erro ao carregar posts na tela!`);
+            swal("An error occured while trying to fetch the posts, please refresh the page");
         }
     }
 

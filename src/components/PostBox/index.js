@@ -60,7 +60,6 @@ function PostBox(props) {
       if(!url) return swal("O campo de url é obrigatório para publicar seu post");
       if(!token) return swal("Você precisa estar logado para publicar seu post");
 
-      console.log("createPostUser");
       enviarDados();
     }
 

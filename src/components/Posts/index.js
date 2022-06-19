@@ -10,7 +10,7 @@ export default function Posts(props) {
     const { posts } = props;
 
     const navigate = useNavigate();
-    const { setHash, hash } = useContext(HashtagContext);
+    const { setHash } = useContext(HashtagContext);
     const [liked, setliked] = useState(false);
 
     function seeHashtag(hash){
@@ -39,9 +39,7 @@ export default function Posts(props) {
                                 <Content>                                   
                                     <User>{post.username}</User>
                                     <Description>
-                                        {
-                                            hash ?
-                                            <ReactHashtag
+                                            {/* <ReactHashtag
                                                 renderHashtag={
                                                     (hashtagValue, i) => 
                                                     <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
@@ -50,9 +48,7 @@ export default function Posts(props) {
                                                 }
                                             >
                                                 {post.description}
-                                            </ReactHashtag>
-                                            : <></>
-                                        }
+                                            </ReactHashtag> */}
                                     </Description>
                                     <Link href={post.url} target="_blank">
                                         <Texts>
@@ -66,7 +62,7 @@ export default function Posts(props) {
                             </Box>
                         );
                     })
-                : <h1>Nenhum post encontrado</h1>
+                : <h1>Loading...</h1>
             }
         </Container>
     );
