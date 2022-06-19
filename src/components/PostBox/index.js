@@ -16,8 +16,6 @@ function PostBox() {
     const [disable, setDisable] = useState(false);
     const [sending, setSending] = useState(false);
 
-    console.log(dadosStorage, dadosPost, image, token, disable, sending);
-
     function limparDados(){
       setDadosPost({
         url: '', description: ''
@@ -29,7 +27,7 @@ function PostBox() {
         setSending(false);
         setDisable(false);
         limparDados();
-      }, 2000);
+      }, 1500);
     }
 
     async function enviarDados(){
@@ -44,12 +42,10 @@ function PostBox() {
       }
 
       try {
-        // await api.post('/timeline', obj, objConfig);
-        console.log(obj, objConfig);
+        await api.post('/timeline', obj, objConfig);
         sucessOrError();
       } catch (error) {
-        console.log(error);
-        swal(`Houve um erro ao publicar seu link! Status: ${error.status}`);
+        swal(`Houve um erro ao publicar seu link! Status: ${error.response.status}`);
         sucessOrError();
       }
     }
@@ -61,6 +57,7 @@ function PostBox() {
 
       const {url} = dadosPost;
       if(!url) return swal("O campo de url é obrigatório para publicar seu post");
+      if(!token) return swal("Você precisa estar logado para publicar seu post");
 
       console.log("createPostUser");
       enviarDados();
