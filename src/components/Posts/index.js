@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
-import ReactHashtag from '@mdnm/react-hashtag';
+//import ReactHashtag from '@mdnm/react-hashtag';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
@@ -51,11 +51,11 @@ export default function Posts() {
                             <User>{post.username}</User>
                             <Description>
 
-                                <ReactHashtag
-                                    renderHashtag={(hashtagValue, i) => <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>{hashtagValue}</Hashtag>}
+                                {/* <ReactHashtag
+                                    renderHashtag={(hashtagValue) => <Hashtag onClick={() => seeHashtag(hashtagValue)}>{hashtagValue}</Hashtag>}
                                 >
                                     {post.description}
-                                </ReactHashtag>
+                                </ReactHashtag> */}
                     
                             </Description>
                             <Link href={post.url} target="_blank">
