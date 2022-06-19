@@ -21,8 +21,8 @@ export default function Posts(props) {
     return (
         <Container>
             {
-                posts.length > 0 ?
-                    posts.map((post) => {
+                posts.length > 0 
+                ?posts.map((post) => {
                         return (
                             <Box key={post.id}>
                                 <Image>
@@ -38,18 +38,23 @@ export default function Posts(props) {
                                 </Image>
                                 <Content>                                   
                                     <User>{post.username}</User>
-                                    <Description>
-                                            {/* <ReactHashtag
-                                                renderHashtag={
-                                                    (hashtagValue, i) => 
-                                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
-                                                        {hashtagValue}
-                                                    </Hashtag>
-                                                }
-                                            >
-                                                {post.description}
-                                            </ReactHashtag> */}
+                                    
+                                    {post.description !== null 
+                                    ?<Description>
+                                                    {<ReactHashtag
+                                                        renderHashtag={(hashtagValue, i) => 
+                                                            <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
+                                                                {hashtagValue}
+                                                            </Hashtag>
+                                                        }
+                                                    >
+                                                        {post.description}
+                                                    </ReactHashtag> }
                                     </Description>
+                                    :<></>
+                                
+                                }
+                                    
                                     <Link href={post.url} target="_blank">
                                         <Texts>
                                             <Title>{post.title}</Title>
@@ -61,7 +66,7 @@ export default function Posts(props) {
                                 </Content>
                             </Box>
                         );
-                    })
+                })
                 : <h1>Loading...</h1>
             }
         </Container>
