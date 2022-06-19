@@ -52,7 +52,7 @@ export default function Posts() {
                             <Description>
 
                                 <ReactHashtag
-                                    renderHashtag={(hashtagValue) => <Hashtag onClick={() => seeHashtag(hashtagValue)}>{hashtagValue}</Hashtag>}
+                                    renderHashtag={(hashtagValue, i) => <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>{hashtagValue}</Hashtag>}
                                 >
                                     {post.description}
                                 </ReactHashtag>
