@@ -98,7 +98,7 @@ const Description = styled.div`
     color: #B7B7B7;
 `
 
-const Link = styled.div`
+const Link = styled.a`
     width: 503px;
     height: 155px;
     border: 1px solid #4D4D4D;
@@ -111,12 +111,15 @@ const Link = styled.div`
         height: 100%;
         object-fit: cover;
     }
+
+    :hover {
+        cursor: pointer;
+  }
 `
 
 const Texts = styled.div`
     margin: 24px 26px 22px 18px;
     
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -140,20 +143,14 @@ const Subtitle = styled.div`
     color: #9B9595;
 `
 
-const Url = styled.a`
+const Url = styled.h4`
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
     font-size: 11px;
     line-height: 13px;
     color: #CECECE;
-    
-    :hover {
-    color: #1877F2;
-    cursor: pointer;
-  }
 `
-
 
 export { 
     Hashtag,

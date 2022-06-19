@@ -58,11 +58,11 @@ export default function Posts() {
                                 </ReactHashtag>
                     
                             </Description>
-                            <Link>
+                            <Link href={post.url} target="_blank">
                                 <Texts>
                                     <Title>{post.title}</Title>
                                     <Subtitle>{post.descriptionMetadata}</Subtitle>
-                                    <Url href={post.url} target="_blank">{post.url}</Url>
+                                    <Url>{post.url}</Url>
                                 </Texts>
                                 <img src={post.image} alt="Foto link"/>
                             </Link>
