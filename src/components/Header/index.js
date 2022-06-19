@@ -21,7 +21,7 @@ export default function Header() {
 
   return (
     <Bar>
-        <Paragrafo conteudo="linkr"/>
+        <Paragrafo conteudo="linkr"  click={() => navigate("/timeline")} />
         <figure>
             <Logout setToken={setToken} />
             <Imagem imagem={token ? token.image: imagemPerfil} alt="Foto perfil"/>

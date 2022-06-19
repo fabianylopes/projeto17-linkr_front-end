@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const Container = styled.section`
     width: 100%;
     min-height: 100vh;
-    padding-top: 15vh;
-    padding-bottom: 10vh;
+    padding: 15vh 10px 10vh 10px;
     
     background-color: #333333;
 
@@ -12,11 +11,16 @@ export const Container = styled.section`
     justify-content: center;
     align-items: flex-start;
 
-    gap: 25px;
+    gap: 2vw;
+
+    @media (max-width: 650px) {
+        min-width: 375px;
+    }
 `;
 
 export const PostsContainer = styled.div`
-    min-width: 611px;
+    max-width: 611px;
+    width: 100vw;
     height: 100%;
 
     padding-top: 60px;
@@ -25,7 +29,12 @@ export const PostsContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    
+    @media (max-width: 650px) {
+        width: 611px;
+        min-width: 375px;
+    }
 `;
 
 export const Title = styled.div`
@@ -46,6 +55,10 @@ export const Username = styled.h1`
     font-size: 43px;
     line-height: 64px;
     color: #FFFFFF;
+
+    @media (max-width: 650px) {
+        font-size: 33px;
+    }
 `;
 
 export const Picture = styled.img`
@@ -54,16 +67,28 @@ export const Picture = styled.img`
 
     object-fit: cover;
     border-radius: 50%;
+
+    @media (max-width: 650px) {
+        width: 40px;
+        height: 40px;
+
+    }
 `;
 
 export const Hastags = styled.div`
     width: 301px;
+    min-width: 275px;
     height: 406px;
 
     background: #171717;
     border-radius: 16px;
 
     margin-top: 135px;
+
+    @media (max-width: 940px){
+        display: none;
+        
+    }
 `;
 
 export const Text = styled.h1`

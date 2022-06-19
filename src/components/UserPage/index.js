@@ -6,6 +6,7 @@ import TokenContext from "../utils/context/TokenContext.js";
 import { Container, Picture, Title, Username, PostsContainer, Hastags, Text } from "./style.js";
 import api from "../../services/api.js";
 import UserPosts from "../UserPosts/index.js";
+import { TailSpin } from "react-loader-spinner";
 
 export default function UserPage() {
     const navigate = useNavigate();
@@ -27,14 +28,22 @@ export default function UserPage() {
         <Container>
             <Header/>
             <PostsContainer>
-                <Title>
-                    <Picture src={userData.picture}/>
-                    <Username>{userData.username}'s posts</Username>
-                </Title>
-                {userData.userPosts?.length === 0 ? 
-                    <Text>{userData.username} has no posts yet...</Text>
-                : 
-                    <UserPosts userData={userData} />
+                {!userData.userPosts ?
+                <TailSpin color="#ffffff" size={50}/> :
+                <>
+                    <Title>
+                        <Picture src={userData.picture}/>
+                        <Username>{userData.username}'s posts</Username>
+                    </Title>
+                    {userData.userPosts?.length === 0 ? 
+                        <Text>{userData.username} has no posts yet...</Text>
+                    : 
+                        userData.userPosts?.map(post => 
+                            <UserPosts username={userData.username} picture={userData.picture} post={post}/>
+                        )
+                        
+                    }
+                </>
                 }
             </PostsContainer>
             <Hastags/>
