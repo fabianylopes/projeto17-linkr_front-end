@@ -41,19 +41,18 @@ export default function Posts(props) {
                                     
                                     {post.description !== null 
                                     ?<Description>
-                                                    {<ReactHashtag
-                                                        renderHashtag={(hashtagValue, i) => 
-                                                            <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
-                                                                {hashtagValue}
-                                                            </Hashtag>
-                                                        }
-                                                    >
-                                                        {post.description}
-                                                    </ReactHashtag> }
+                                        {<ReactHashtag
+                                            renderHashtag={(hashtagValue, i) => 
+                                                <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
+                                                    {hashtagValue}
+                                                </Hashtag>
+                                            }
+                                        >
+                                            {post.description}
+                                        </ReactHashtag> }
                                     </Description>
                                     :<></>
-                                
-                                }
+                                    }
                                     
                                     <Link href={post.url} target="_blank">
                                         <Texts>
