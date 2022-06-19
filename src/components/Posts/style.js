@@ -105,6 +105,21 @@ const Link = styled.div`
     border-radius: 11px;
 
     display: flex;
+
+    img{
+        width: 154px;
+        height: 100%;
+        object-fit: cover;
+    }
+`
+
+const Texts = styled.div`
+    margin: 24px 26px 22px 18px;
+    
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `
 
 const Title = styled.div`
@@ -139,13 +154,6 @@ const Url = styled.a`
   }
 `
 
-const Texts = styled.div`
-    margin: 24px 26px 22px 18px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-`
 
 export { 
     Hashtag,
