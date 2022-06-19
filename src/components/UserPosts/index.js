@@ -2,13 +2,10 @@ import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { TailSpin } from  'react-loader-spinner'
-
-import image from '../../img/image.png';
-import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
+import { Container, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import HashtagContext from '../utils/context/HashtagContext';
 
-export default function UserPosts({ userData }) {
+export default function UserPosts({ username, picture, post:{id, userId, description, likes, url, title, image, descriptionMetadata} }) {
     const navigate = useNavigate();
 
     const { setHash } = useContext(HashtagContext);
@@ -19,48 +16,43 @@ export default function UserPosts({ userData }) {
         setHash(hash);
         navigate(`/hashtag/${hash.substr(1)}`)
     }
+        
 
     return (
-        <Container>
-            {!userData.userPosts && <TailSpin color="#ffffff" size={100}/>}
-            {userData.userPosts?.map(({id, userId, description, url, likes}) => {
-                return (
-                    <Box key={id}>
-                        <Image>
-                            <img src={userData.picture} alt="Foto perfil"/>
+        <Container key={id}>
+            <Image>
+                <img src={picture} alt="Foto perfil"/>
 
-                            {liked ? 
-                            <IoMdHeart className="icon-liked" onClick={() => setliked(!liked)}/> 
-                            : 
-                            <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
-                            }
-                            
-                            <Likes>{likes} likes</Likes>
-                        </Image>
-                        <Content>                                   
-                            <User  onClick={() => navigate(`/user/${userId}`)}>{userData.username}</User>
-                            <Description>
+                {liked ? 
+                <IoMdHeart className="icon-liked" onClick={() => setliked(!liked)}/> 
+                : 
+                <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
+                }
+                
+                <Likes>{likes} likes</Likes>
+            </Image>
+            <Content>                                   
+                <User  onClick={() => navigate(`/user/${userId}`)}>{username}</User>
+                <Description>
 
-                                <ReactHashtag
-                                    renderHashtag={(hashtagValue) => <Hashtag onClick={() => seeHashtag(hashtagValue)}>{hashtagValue}</Hashtag>}
-                                >
-                                    {description}
-                                </ReactHashtag>
-                    
-                            </Description>
-                            <Link>
-                                <Texts>
-                                    <Title>Como aplicar o Material UI em um projeto React</Title>
-                                    <Subtitle>Hey! I have moved this tutorial to my personal blog. Same content, new location. Sorry about making you click through to another page.</Subtitle>
-                                    <Url>{url}</Url>
-                                </Texts>
+                    <ReactHashtag
+                        renderHashtag={(hashtagValue) => <Hashtag onClick={() => seeHashtag(hashtagValue)}>{hashtagValue}</Hashtag>}
+                    >
+                        {description}
+                    </ReactHashtag>
+        
+                </Description>
+                <Link>
+                    <Texts>
+                        <Title>{title}</Title>
+                        {console.log(descriptionMetadata.split(""))}
+                        <Subtitle>{descriptionMetadata}</Subtitle>
+                        <Url>{url}</Url>
+                    </Texts>
 
-                                <img src={image} alt="Foto link"/>
-                            </Link>
-                        </Content>
-                    </Box>
-                );
-            })}
+                    <img src={image} alt="Foto link"/>
+                </Link>
+            </Content>
         </Container>
-    )
+    );
 }
