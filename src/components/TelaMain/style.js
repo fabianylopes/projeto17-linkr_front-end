@@ -24,3 +24,8 @@ export const Container = styled.section`
     gap: 16px;
 
 `
+
+export const Boxes = styled.div`
+    display: flex;
+    gap: 24px;
+`

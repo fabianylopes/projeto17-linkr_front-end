@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Hashtag = styled.span`
+const Hashtag = styled.div`
     font-weight: 700;
     color: #FFFFFF;
 

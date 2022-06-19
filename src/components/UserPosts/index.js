@@ -33,15 +33,22 @@ export default function UserPosts({ username, picture, post:{id, userId, descrip
             </Image>
             <Content>                                   
                 <User  onClick={() => navigate(`/user/${userId}`)}>{username}</User>
-                <Description>
-
-                    <ReactHashtag
-                        renderHashtag={(hashtagValue) => <Hashtag onClick={() => seeHashtag(hashtagValue)}>{hashtagValue}</Hashtag>}
-                    >
-                        {description}
-                    </ReactHashtag>
-        
-                </Description>
+                {
+                    description ? 
+                    <Description>
+                        <ReactHashtag
+                            renderHashtag={
+                                (hashtagValue, i) => 
+                                <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
+                                    {hashtagValue}
+                                </Hashtag>
+                            }
+                        >
+                            {description}
+                        </ReactHashtag>
+                    </Description>
+                    : <></>
+                }
                 <Link>
                     <Texts>
                         <Title>{title}</Title>

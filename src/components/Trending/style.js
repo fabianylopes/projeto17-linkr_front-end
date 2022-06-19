@@ -1,26 +1,5 @@
 import styled from "styled-components";
 
-const Text = styled.h1`
-    font-family: 'Oswald';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 43px;
-    line-height: 64px;
-    color: #FFFFFF;
-`
-
-const Boxes = styled.div`
-    display: flex;
-    gap: 24px;
-
-`
-
-const LeftColumn = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-`
-
 const Box = styled.div`
     width: 301px;
     height: 406px;
@@ -69,9 +48,6 @@ const HashtagList = styled.h2`
 `
 
 export {
-    Text,
-    Boxes,
-    LeftColumn,
     Box,
     Title, 
     Line, 
