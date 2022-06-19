@@ -55,6 +55,7 @@ const Image = styled.div`
         margin-bottom: 20px;
         border-radius: 50%;
         object-fit: cover;
+        cursor: pointer;
     }
 `
 

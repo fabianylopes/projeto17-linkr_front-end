@@ -6,9 +6,8 @@ import Header from "../Header/index.js";
 import PostBox from "../PostBox/index.js";
 import Posts from "../Posts/index.js";
 
-import { Container, Title, Boxes } from "./style.js";
+import { Container, Title, Boxes, LeftColumn } from "./style.js";
 import Trending from "../Trending";
-import { LeftColumn } from "../Hashtag/style";
 
 function Timeline() {
     const [posts, setPosts] = useState([]);

@@ -29,3 +29,9 @@ export const Boxes = styled.div`
     display: flex;
     gap: 24px;
 `
+
+export const LeftColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+`
