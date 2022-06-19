@@ -21,7 +21,7 @@ export default function Trending() {
   }
 
   function seeHashtag(hash){
-    setHash(hash);
+    setHash(hash.substr(1));
     navigate(`/hashtag/${hash.substr(1)}`)
   }
 

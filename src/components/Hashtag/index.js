@@ -30,7 +30,7 @@ export default function Hashtag() {
     return (
         <Container>
             <Header/>
-            <Text>{hash}</Text>
+            <Text>#{hash}</Text>
             <Boxes>              
                 <Posts posts={hashtagPosts}/>
                 <Trending/>
