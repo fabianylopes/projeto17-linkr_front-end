@@ -8,7 +8,7 @@ import Posts from '../Posts';
 import HashtagContext from '../utils/context/HashtagContext';
 import { useNavigate } from 'react-router-dom';
 
-export default function Hashtag() {
+export default function Hashtag(props) {
     const navigate = useNavigate();
 
     const { hash, setHash } = useContext(HashtagContext);
