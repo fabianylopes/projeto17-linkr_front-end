@@ -1,8 +1,11 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
+
 import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/io";
 import swal from 'sweetalert';
+import { TailSpin } from "react-loader-spinner";
+
 
 import api from '../utils/api/api';
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
@@ -16,7 +19,7 @@ export default function Posts(props) {
             {
                 posts.length > 0 ?
                   posts.map((post, i) => <Post key={i} post={post} />)
-                : <h1>Loading...</h1>
+                : <TailSpin color="#ffffff" size={50}/>
             }
         </Container>
     );
@@ -32,8 +35,9 @@ function Post({post}){
     const { token } = dadosStorage;
 
     function seeHashtag(hash){
-        setHash(hash);
-        navigate(`/hashtag/${hash.substr(1)}`)
+        const hashtag = hash.substr(1).toLowerCase();
+        setHash(hashtag);
+        navigate(`/hashtag/${hashtag}`)
     }
 
     function sucessOrError(type){
@@ -106,7 +110,7 @@ function Post({post}){
                             <ReactHashtag
                                 renderHashtag={
                                     (hashtagValue, i) => 
-                                    <Hashtag onClick={() => seeHashtag(hashtagValue)}>
+                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
                                         {hashtagValue}
                                     </Hashtag>
                                 }
