@@ -3,9 +3,6 @@ import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 
-//import urlMetadata from 'url-metadata';
-
-import image from '../../img/image.png';
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import api from '../../services/api';
 import HashtagContext from '../utils/context/HashtagContext';
@@ -35,12 +32,12 @@ export default function Posts() {
     return (
         <Container>
    
-            {postsList.map(({id, username, picture, description, url, likes}) => {
+            {postsList.map((post) => {
                 return (
 
-                    <Box key={id}>
+                    <Box key={post.id}>
                         <Image>
-                            <img src={picture} alt="Foto perfil"/>
+                            <img src={post.picture} alt="Foto perfil"/>
 
                             {liked ? 
                             <IoMdHeart className="icon-liked" onClick={() => setliked(!liked)}/> 
@@ -48,27 +45,26 @@ export default function Posts() {
                             <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
                             }
                             
-                            <Likes>{likes} likes</Likes>
+                            <Likes>{post.likes} likes</Likes>
                         </Image>
                         <Content>                                   
-                            <User>{username}</User>
+                            <User>{post.username}</User>
                             <Description>
 
                                 <ReactHashtag
                                     renderHashtag={(hashtagValue) => <Hashtag onClick={() => seeHashtag(hashtagValue)}>{hashtagValue}</Hashtag>}
                                 >
-                                    {description}
+                                    {post.description}
                                 </ReactHashtag>
                     
                             </Description>
                             <Link>
                                 <Texts>
-                                    <Title>Como aplicar o Material UI em um projeto React</Title>
-                                    <Subtitle>Hey! I have moved this tutorial to my personal blog. Same content, new location. Sorry about making you click through to another page.</Subtitle>
-                                    <Url>{url}</Url>
+                                    <Title>{post.title}</Title>
+                                    <Subtitle>{post.descriptionMetadata}</Subtitle>
+                                    <Url href={post.url} target="_blank">{post.url}</Url>
                                 </Texts>
-
-                                <img src={image} alt="Foto link"/>
+                                <img src={post.image} alt="Foto link"/>
                             </Link>
                         </Content>
                     </Box>

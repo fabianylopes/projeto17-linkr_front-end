@@ -105,6 +105,21 @@ const Link = styled.div`
     border-radius: 11px;
 
     display: flex;
+
+    img{
+        width: 154px;
+        height: 100%;
+        object-fit: cover;
+    }
+`
+
+const Texts = styled.div`
+    margin: 24px 26px 22px 18px;
+    
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `
 
 const Title = styled.div`
@@ -125,22 +140,20 @@ const Subtitle = styled.div`
     color: #9B9595;
 `
 
-const Url = styled.div`
+const Url = styled.a`
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
     font-size: 11px;
     line-height: 13px;
     color: #CECECE;
+    
+    :hover {
+    color: #1877F2;
+    cursor: pointer;
+  }
 `
 
-const Texts = styled.div`
-    margin: 24px 26px 22px 18px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-`
 
 export { 
     Hashtag,

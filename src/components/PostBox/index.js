@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import swal from 'sweetalert';
 
 import api from '../utils/api/api';
-
+import TokenContext from '../utils/context/TokenContext';
 import { Box, Image, Texts, Text, Inputs, SmallInput, BigInput, Button } from './style';
-import imagemPerfil from '../../img/image-perfil.png';
 
 function PostBox() {
+    const { token } = useContext(TokenContext);
+  
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
     const {image, token} = dadosStorage;
     
@@ -66,7 +67,7 @@ function PostBox() {
     return (
         <Box>
             <Image>
-                <img src={imagemPerfil} alt="Foto perfil" />
+                <img src={token.image} alt="Foto perfil"/>
             </Image>
             <Texts>
                 <Text>What are you going to share today?</Text>
@@ -87,6 +88,6 @@ function PostBox() {
             </Texts>
         </Box>
     );
-}
+
 
 export default PostBox;

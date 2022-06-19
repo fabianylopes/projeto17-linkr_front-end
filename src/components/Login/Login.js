@@ -85,12 +85,10 @@ const Div = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     flex-direction: column;
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 700;
-
     input{
         margin-top: 15px;
         width: 300px;
@@ -111,7 +109,6 @@ const Div = styled.div`
         line-height: 50px;
         color: #FFFFFF;
     }
-
     button{
         margin-top: 15px;
         width: 310px;
@@ -142,7 +139,6 @@ const Div = styled.div`
         justify-content: center;
         flex-direction: column;
     }
-
     @media (max-width: 400px) {
         
         width: 100%;
@@ -153,16 +149,13 @@ const Div = styled.div`
             height: 35px;
         }
     }
-
 `
 const Main = styled.main`
-
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
     background-color: black;
-
     @media (max-width: 400px) {
         
         flex-direction: column;
