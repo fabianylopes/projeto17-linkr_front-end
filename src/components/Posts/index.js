@@ -15,15 +15,22 @@ import TokenContext from '../utils/context/TokenContext';
 export default function Posts(props) {
     const { posts } = props;
 
-    return (
-        <Container>
+    const { token } = useContext(TokenContext);
+
+    if(!token){
+        return <></>
+    }else{
+         return (
+            <Container>
             {
                 posts.length > 0 
                 ? posts.map((post, i) => <Post key={i} post={post} />)
                 : <TailSpin color="#ffffff" size={50}/>
             }
-        </Container>
-    );
+            </Container>
+        );
+    }
+   
 }
 
 function Post({post}){
@@ -40,7 +47,7 @@ function Post({post}){
 
     useEffect(()=>{
         const config ={headers: {Authorization: `Bearer ${token.token}`}};
-
+        if(!token) navigate('/')
         if (firstTime){
             api.get(`/like/${post.id}/${userId}`, config)
             .then(res => { 
@@ -77,7 +84,6 @@ function Post({post}){
 
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
     const { token: tokenStorage, id } = dadosStorage;
-    console.log(tokenStorage, id);
 
     function seeHashtag(hash){
         setHash(hash.substr(1));
@@ -227,51 +233,51 @@ function Post({post}){
                 <Likes>{qttLikes} likes</Likes>
             </Image>
             <Content>                                   
-                    {
-                        post.userId === parseInt(id) ? 
-                            <User>
-                                <p onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</p>
-                                <IoIosTrash className='icon lixeira' onClick={()=> setModalOpen(true)}/>
-                                    <Modal isOpen={modalOpen} style={customerStyle}
-                                    onRequestClose={() => setModalOpen(false)}>
-                                    <h1 style={h1}>Are you sure you want to delete this post?</h1>
-                                    <p style={p}>
-                                        <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, go back</button>
-                                        <button style={buttonNext} onClick={() => deletePost(post.id)}>Yes, delete it</button>
-                                    </p>
-                                    </Modal>
-                                <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
-                                    <Modal isOpen={modalEdit} style={customerStyle}
-                                    onRequestClose={() => setModalEdit(false)}>
-                                    <form onSubmit={updatePost}>
-                                        <input style={input} type="text" placeholder='Insira a nova descrição do posts'
-                                        value={url} onChange={e => setUrl(e.target.value)} required/>
-                                        <p style={paiButton}>
-                                            <button type="submit" style={buttonNext}>Update</button>
-                                        </p>
-                                    </form>
-                                    </Modal>
-                            </User>
-                        :   <User onClick={() => navigate(`/user/${post.userId}`)}>
-                                {post.username}
-                            </User>
-                    }
-                    {
-                        post.description ? 
-                        <Description>
-                            <ReactHashtag
-                                renderHashtag={
-                                    (hashtagValue, i) => 
-                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
-                                        {hashtagValue}
-                                    </Hashtag>
-                                }
-                            >
-                                {post.description}
-                            </ReactHashtag>
-                        </Description>
-                        : <></>
-                    }
+                {
+                post.userId === parseInt(id) 
+                ?   <User>
+                        <p onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</p>
+                        <IoIosTrash className='icon lixeira' onClick={()=> setModalOpen(true)}/>
+                            <Modal isOpen={modalOpen} style={customerStyle}
+                            onRequestClose={() => setModalOpen(false)}>
+                            <h1 style={h1}>Are you sure you want to delete this post?</h1>
+                            <p style={p}>
+                                <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, go back</button>
+                                <button style={buttonNext} onClick={() => deletePost(post.id)}>Yes, delete it</button>
+                            </p>
+                            </Modal>
+                        <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
+                            <Modal isOpen={modalEdit} style={customerStyle}
+                            onRequestClose={() => setModalEdit(false)}>
+                            <form onSubmit={updatePost}>
+                                <input style={input} type="text" placeholder='Insira a nova descrição do posts'
+                                value={url} onChange={e => setUrl(e.target.value)} required/>
+                                <p style={paiButton}>
+                                    <button type="submit" style={buttonNext}>Update</button>
+                                </p>
+                            </form>
+                            </Modal>
+                    </User>
+                :   <User onClick={() => navigate(`/user/${post.userId}`)}>
+                    {post.username}
+                    </User>
+                }
+                {
+                post.description 
+                ?   <Description>
+                    <ReactHashtag
+                        renderHashtag={
+                            (hashtagValue, i) => 
+                            <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
+                                {hashtagValue}
+                            </Hashtag>
+                        }
+                    >
+                        {post.description}
+                    </ReactHashtag>
+                    </Description>
+                :   <></>
+                }
                 <Link href={post.url} target="_blank">
                     <Texts>
                         <Title>{post.title}</Title>
@@ -282,5 +288,5 @@ function Post({post}){
                 </Link>
             </Content>
         </Box>
-    );
+    )
 }
