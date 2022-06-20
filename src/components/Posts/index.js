@@ -96,9 +96,6 @@ function Post({post}){
     }
 
     async function deletePost(id){
-        console.log('teste delete', id);
-        console.log(tokenStorage);
-
         const objConfig = {
             headers: {
                 Authorization: `Bearer ${tokenStorage}`
@@ -111,8 +108,7 @@ function Post({post}){
             setModalOpen(false);
             setTimeout(() => {
                 window.location.reload();
-            }, 2000);
-            window.location.reload();
+            }, 1500);
         } catch(error){
             swal(`Houve um erro ao deletar seu post! Status: ${error.response.status}`);
             setModalOpen(false);
@@ -122,20 +118,20 @@ function Post({post}){
     async function updatePost(e, id){
         e.preventDefault();
         alert('teste update', id);
-        const objConfig = {
-            headers: {
-                Authorization: `Bearer ${tokenStorage}`
-            }
-        }
+        // const objConfig = {
+        //     headers: {
+        //         Authorization: `Bearer ${tokenStorage}`
+        //     }
+        // }
 
-        try {
-            await api.put(`/timeline/${id}`, {url: url}, objConfig);
-            sucessOrError("update");
-            setModalEdit(false);
-        } catch (error) {
-            swal(`Houve um erro ao atualizar seu post! Status: ${error.response.status}`);
-            setModalEdit(false);
-        }
+        // try {
+        //     await api.put(`/timeline/${id}`, {url: url}, objConfig);
+        //     sucessOrError("update");
+        //     setModalEdit(false);
+        // } catch (error) {
+        //     swal(`Houve um erro ao atualizar seu post! Status: ${error.response.status}`);
+        //     setModalEdit(false);
+        // }
     }
 
     Modal.setAppElement('.root');
