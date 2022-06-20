@@ -3,10 +3,11 @@ import { useEffect, useState, useContext } from "react";
 import Header from "../Header/index.js";
 import TokenContext from "../utils/context/TokenContext.js";
 
-import { Container, Picture, Title, Username, PostsContainer, Hastags, Text } from "./style.js";
+import { Container, Picture, Title, Username, PostsContainer, Hastags, Text } from "./style";
 import api from "../../services/api.js";
-import UserPosts from "../UserPosts/index.js";
+import UserPosts from "../UserPosts/index.jsx";
 import { TailSpin } from "react-loader-spinner";
+import SearchBar from "../SearchBar/index.jsx";
 
 export default function UserPage() {
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ export default function UserPage() {
     return (  
         <Container>
             <Header/>
+            <SearchBar isHeader={false}/>
             <PostsContainer>
                 {!userData.userPosts ?
                 <TailSpin color="#ffffff" size={50}/> :

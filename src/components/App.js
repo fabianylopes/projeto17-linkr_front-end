@@ -16,8 +16,6 @@ function App(){
 
     const localToken = JSON.parse(localStorage.getItem('infoUsers'));
     const [token, setToken] = useState(localToken);
-
-
     const [hash, setHash] = useState('')
 
     return (
