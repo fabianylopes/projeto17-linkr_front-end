@@ -52,7 +52,6 @@ export default function UserPosts({ username, picture, post:{id, userId, descrip
                 <Link>
                     <Texts>
                         <Title>{title}</Title>
-                        {console.log(descriptionMetadata.split(""))}
                         <Subtitle>{descriptionMetadata}</Subtitle>
                         <Url>{url}</Url>
                     </Texts>
