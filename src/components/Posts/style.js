@@ -140,9 +140,12 @@ const Link = styled.a`
     display: flex;
 
     img{
-        width: 154px;
+        max-width: 154px;
+        width: 35vw;
         height: 100%;
         object-fit: cover;
+
+        border-radius: 0px 11px 11px 0px; 
     }
 
     :hover {
@@ -165,6 +168,7 @@ const Title = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #CECECE;
+    word-break: break-all;
 `
 
 const Subtitle = styled.div`
@@ -174,6 +178,7 @@ const Subtitle = styled.div`
     font-size: 11px;
     line-height: 13px;
     color: #9B9595;
+    word-break: break-all;
 `
 
 const Url = styled.h4`

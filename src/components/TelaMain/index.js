@@ -43,10 +43,10 @@ function Timeline() {
                     <Boxes>
                         <LeftColumn>
                             <PostBox reload={(post)=> setPosts(post)}/>
-                            {posts.length === 0 ? 
-                            <Text>There are no posts yet</Text>
-                            :
-                            <Posts posts={posts}/>
+                            {
+                            posts.length === 0 ? 
+                                <Text>There are no posts yet</Text>
+                            : <Posts posts={posts}/>
                             }
                         </LeftColumn>
                         <Trending/>

@@ -14,7 +14,6 @@ import TokenContext from '../utils/context/TokenContext';
 
 export default function Posts(props) {
     const { posts } = props;
-
     const { token } = useContext(TokenContext);
 
     if(!token){
@@ -30,10 +29,9 @@ export default function Posts(props) {
             </Container>
         );
     }
-   
 }
 
-function Post({post}){
+export function Post({post}){
     const navigate = useNavigate();
     const { setHash } = useContext(HashtagContext);
     const { token } = useContext(TokenContext);
@@ -304,53 +302,22 @@ function Post({post}){
                                 {post.username}
                             </User>
                     }
-                  
-
-                {
-                post.userId === parseInt(id) 
-                ?   <User>
-                        <p onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</p>
-                        <IoIosTrash className='icon lixeira' onClick={()=> setModalOpen(true)}/>
-                            <Modal isOpen={modalOpen} style={customerStyle}
-                            onRequestClose={() => setModalOpen(false)}>
-                            <h1 style={h1}>Are you sure you want to delete this post?</h1>
-                            <p style={p}>
-                                <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, go back</button>
-                                <button style={buttonNext} onClick={() => deletePost(post.id)}>Yes, delete it</button>
-                            </p>
-                            </Modal>
-                        <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
-                            <Modal isOpen={modalEdit} style={customerStyle}
-                            onRequestClose={() => setModalEdit(false)}>
-                            <form onSubmit={updatePost}>
-                                <input style={input} type="text" placeholder='Insira a nova descrição do posts'
-                                value={description} onChange={e => setDescription(e.target.value)} required/>
-                                <p style={paiButton}>
-                                    <button type="submit" style={buttonNext}>Update</button>
-                                </p>
-                            </form>
-                            </Modal>
-                    </User>
-                :   <User onClick={() => navigate(`/user/${post.userId}`)}>
-                    {post.username}
-                    </User>
-                }
-                {
-                post.description 
-                ?   <Description>
-                    <ReactHashtag
-                        renderHashtag={
-                            (hashtagValue, i) => 
-                            <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
-                                {hashtagValue}
-                            </Hashtag>
-                        }
-                    >
-                        {post.description}
-                    </ReactHashtag>
-                    </Description>
-                :   <></>
-                }
+                    {
+                        post.description ? 
+                        <Description>
+                            <ReactHashtag
+                                renderHashtag={
+                                    (hashtagValue, i) => 
+                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
+                                        {hashtagValue}
+                                    </Hashtag>
+                                }
+                            >
+                                {post.description}
+                            </ReactHashtag>
+                        </Description>
+                        : <></>
+                    }
                 <Link href={post.url} target="_blank">
                     <Texts>
                         <Title>{post.title}</Title>
