@@ -26,21 +26,19 @@ function Post({post}){
 
     const navigate = useNavigate();
 
-    const { token } = useContext(TokenContext);
-    const { id:userId, token:userToken} = token;
     const { setHash } = useContext(HashtagContext);
+    const { token } = useContext(TokenContext);
+
     const [liked, setliked] = useState(false);
     const [ firstTime, setFirstTime ] = useState(true);
     const [qttLikes, setQtt] = useState(parseInt(post.likes));
+    const [ buttonLike, setButtonLike ] = useState(true);
+    const { id:userId, token:userToken} = token;
 
-    console.log(post)
-    
- 
     useEffect(()=>{
-        console.log(qttLikes);
+       
         const config ={headers: {Authorization: `Bearer ${token.token}`}};
 
-        console.log(firstTime)
         if (firstTime){
             api.get(`/like/${post.id}/${userId}`, config)
             .then(res => { 
@@ -49,34 +47,36 @@ function Post({post}){
             })
             .catch(erro=>{console.log('erro ao obter likes: ', erro)});
         }else{
+            if(buttonLike){
 
-            if(liked){
+                setButtonLike(false); //desativa o botão de requisição e só reativa quando a requisição é respondida
+
+                if(liked){
                 api.post(`/like/${post.id}/${userId}`, {userToken})   
-                        .then(res => {
-                            setliked(true);
-                            setQtt(qttLikes+1);
-                        })
-                        .catch(error => console.log('não foi possivel dar deslike:', error))
+                    .then(res => {
+                        setliked(true);
+                        setQtt(qttLikes+1);
+                        setButtonLike(true);
+                    })
+                    .catch(error => console.log('não foi possivel dar deslike:', error))
                 
-            }else{
-                api.delete(`/dislike/${post.id}/${userId}`, {userToken})   
+                }else{
+                    api.delete(`/dislike/${post.id}/${userId}`, {userToken})   
                         .then(res => {
                             setliked(false);
                             setQtt(qttLikes-1);
+                            setButtonLike(true);
                         })
-                        .catch(error => console.log('não foi possivel dar deslike:', error))
+                        .catch(error => console.log('não foi possivel dar deslike:', error));
+                }
             }
         }
- 
-    },[liked])
-
+    },[liked]);
 
     function seeHashtag(hash){
         setHash(hash);
         navigate(`/hashtag/${hash.substr(1)}`)
-    }
-
-
+    };
 
     return (
         <Box >
@@ -85,7 +85,7 @@ function Post({post}){
                 onClick={() => navigate(`/user/${post.userId}`)}/>
 
                 {liked ? 
-                <IoMdHeart className="icon-liked" onClick={() => setliked(!liked)}/> 
+                <IoMdHeart className="icon-liked"  onClick={() => setliked(!liked)}/> 
                 : 
                 <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
                 }
