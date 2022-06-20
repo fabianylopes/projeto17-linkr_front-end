@@ -1,64 +1,36 @@
 import { useState, useEffect, useContext } from 'react';
 
-import { Text, Boxes, LeftColumn, Box, Title, Line, Hashtags, HashtagList } from './style';
-import { Container } from '../TelaMain/style';
+import { Text, Boxes } from './style';
+import { Container, Body } from '../TelaMain/style';
+import HashtagContext from '../utils/context/HashtagContext';
 import api from '../../services/api';
+import Trending from '../Trending';
 import Header from '../Header';
 import Posts from '../Posts';
-import HashtagContext from '../utils/context/HashtagContext';
-import { useNavigate } from 'react-router-dom';
 
-export default function Hashtag(props) {
-    const navigate = useNavigate();
+export default function Hashtag() {
 
-    const { hash, setHash } = useContext(HashtagContext);
+    const { hash } = useContext(HashtagContext);
 
-    const [hashtagsList, setHastagList] = useState([]);
+    const [hashtagPosts, setHashtagPosts] = useState([]);
 
-    useEffect(() => hashtags(), []); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(() => getHashtagPosts(), []); // eslint-disable-line react-hooks/exhaustive-deps
 
-
-    function hashtags(){
-        api.getHashtags().then(handleSuccess).catch((error) => console.log(error));
+    function getHashtagPosts(){
+        api.getPostsByHashtag(hash).then((response) => setHashtagPosts(response.data)).catch((error) => console.log(error));
         
-    }
-
-    function handleSuccess(response){
-        const hashtags = response.data;
-  
-        setHastagList(hashtags.filter((h, i) => hashtags.indexOf(h) === i));
-  
-      }
-
-    function seeHashtag(hash){
-        setHash(hash);
-        navigate(`/hashtag/${hash.substr(1)}`)
     }
 
     return (
         <Container>
             <Header/>
-            <Text>{hash}</Text>
-            <Boxes>
-            <LeftColumn>
-                <Posts/>
-            </LeftColumn>
-            <Box>
-                <Title>trending</Title>
-                <Line></Line>
-                <Hashtags>
-                    
-                    {hashtagsList.map((name, i) => {
-                    return (
-                        <div onClick={() => seeHashtag(name)}>
-                            <HashtagList key={i}>{name}</HashtagList>
-                        </div>
-                        );
-                    })}
-    
-                </Hashtags>
-            </Box>
-            </Boxes>
+            <Body>
+                <Text>#{hash}</Text>
+                <Boxes>              
+                    <Posts posts={hashtagPosts}/>
+                    <Trending/>
+                </Boxes>
+            </Body>    
         </Container>
     )
 }

@@ -13,6 +13,7 @@ const Hashtag = styled.div`
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 16px;
 `
 
@@ -55,6 +56,7 @@ const Image = styled.div`
         margin-bottom: 20px;
         border-radius: 50%;
         object-fit: cover;
+        cursor: pointer;
     }
 `
 
@@ -77,21 +79,43 @@ const Content = styled.div`
    display: flex;
    flex-direction: column;
    justify-content: space-between;
+
+    .userPost{
+        width: 100%;
+    }
    
 `
 
 const User = styled.h1`
+    width: 100%;
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
     font-size: 19px;
     line-height: 23px;
     color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    position: relative;
 
     cursor: pointer;
 
     &&:hover {
         opacity: 0.8;
+    }
+
+    .icon{
+        position: absolute;
+        font-size: 24px;
+    }
+
+    .lixeira{
+        right: 0;
+        top: 0;
+    }
+    .editar{
+        right: 24px;
+        top: 0;
     }
 `
 

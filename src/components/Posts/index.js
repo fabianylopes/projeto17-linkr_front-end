@@ -1,8 +1,13 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
-import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 
+import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/io";
+import swal from 'sweetalert';
+import { TailSpin } from "react-loader-spinner";
+
+
+import api from '../utils/api/api';
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import HashtagContext from '../utils/context/HashtagContext';
 import api from '../utils/api/api';
@@ -16,14 +21,14 @@ export default function Posts(props) {
             {
                 posts.length > 0 ?
                   posts.map((post, i) => <Post key={i} post={post} />)
-                : <h1>Loading...</h1>
+                : <TailSpin color="#ffffff" size={50}/>
             }
         </Container>
     );
 }
 
 function Post({post}){
-
+    console.log(post);
     const navigate = useNavigate();
 
     const { setHash } = useContext(HashtagContext);
@@ -73,13 +78,55 @@ function Post({post}){
         }
     },[liked]);
 
+    const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
+    const { token } = dadosStorage;
+
     function seeHashtag(hash){
-        setHash(hash);
-        navigate(`/hashtag/${hash.substr(1)}`)
-    };
+        const hashtag = hash.substr(1).toLowerCase();
+        setHash(hashtag);
+        navigate(`/hashtag/${hashtag}`)
+    }
+
+    function sucessOrError(type){
+        if(type === "delete"){
+            return swal("Post deletado com sucesso!");
+        }else{
+            if(type === "update") return swal("Post atualizado com sucesso!");
+        }
+    }
+
+    async function deletePost(id){
+        const objConfig = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        
+        try{
+            await api.delete(`/timeline/${id}`, objConfig);
+            sucessOrError("delete");
+        } catch(error){
+            swal(`Houve um erro ao deletar seu post! Status: ${error.response.status}`);
+        }
+    }
+
+    async function updatePost(id){
+        const objConfig = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            await api.put(`/timeline/${id}`, {url: 'alguma coisa'}, objConfig);
+            sucessOrError("update");
+        } catch (error) {
+            swal(`Houve um erro ao atualizar seu post! Status: ${error.response.status}`);
+        }
+    }
 
     return (
-        <Box >
+        <Box>
             <Image>
                 <img src={post.picture} alt="Foto perfil" 
                 onClick={() => navigate(`/user/${post.userId}`)}/>
@@ -93,14 +140,24 @@ function Post({post}){
                 <Likes>{qttLikes} likes</Likes>
             </Image>
             <Content>                                   
-                <User onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</User>
+                    {
+                        post.userId === 17 ? 
+                            <User onClick={() => navigate(`/user/${post.userId}`)}>
+                                {post.username}
+                                <IoIosTrash className='icon lixeira' onClick={()=> deletePost(post.id)}/>
+                                <IoMdCreate className='icon editar' onClick={()=> updatePost()}/>
+                            </User>
+                        :   <User onClick={() => navigate(`/user/${post.userId}`)}>
+                                {post.username}
+                            </User>
+                    }
                     {
                         post.description ? 
                         <Description>
                             <ReactHashtag
                                 renderHashtag={
                                     (hashtagValue, i) => 
-                                    <Hashtag onClick={() => seeHashtag(hashtagValue)}>
+                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
                                         {hashtagValue}
                                     </Hashtag>
                                 }

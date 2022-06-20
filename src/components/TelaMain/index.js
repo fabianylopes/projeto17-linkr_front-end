@@ -9,17 +9,13 @@ import Posts from "../Posts/index.js";
 import TokenContext from "../utils/context/TokenContext";
 import { useNavigate } from "react-router-dom";
 
-import { Container, Title, Boxes } from "./style.js";
+import { Container, Title, Boxes, LeftColumn, Body } from "./style.js";
 import Trending from "../Trending";
-import { LeftColumn } from "../Hashtag/style";
 
 function Timeline() {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
-
     const { token:localToken } = useContext(TokenContext);
-   
-
     
     async function loadPosts() {
         try {
@@ -33,20 +29,23 @@ function Timeline() {
     useEffect(() => {
         if(!localToken) navigate('/')
         loadPosts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (  
         <>
             <Container>
                 <Header/>
-                <Title>timeline</Title>
-                <Boxes>
-                    <LeftColumn>
-                        <PostBox reload={(post)=> setPosts(post)}/>
-                        <Posts posts={posts}/>
-                    </LeftColumn>
-                    <Trending/>
-                </Boxes>
+                <Body>
+                    <Title>timeline</Title>
+                    <Boxes>
+                        <LeftColumn>
+                            <PostBox reload={(post)=> setPosts(post)}/>
+                            <Posts posts={posts}/>
+                        </LeftColumn>
+                        <Trending/>
+                    </Boxes>
+                </Body>
             </Container>
         </>
     );
