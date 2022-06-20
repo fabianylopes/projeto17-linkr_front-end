@@ -278,6 +278,7 @@ export function Post({post}){
                                     </p>
                                     </Modal>
                                 <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
+                                    {/* Modal de edição como alternativa ao focus do input */}
                                     <Modal isOpen={modalEdit} style={customerStyle}
                                     onRequestClose={() => setModalEdit(false)}>
                                     <div>
