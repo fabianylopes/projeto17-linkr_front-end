@@ -79,6 +79,7 @@ function Post({post}){
                 }
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[liked]);
 
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
@@ -338,7 +339,7 @@ function Post({post}){
                             onRequestClose={() => setModalEdit(false)}>
                             <form onSubmit={updatePost}>
                                 <input style={input} type="text" placeholder='Insira a nova descrição do posts'
-                                value={url} onChange={e => setUrl(e.target.value)} required/>
+                                value={description} onChange={e => setDescription(e.target.value)} required/>
                                 <p style={paiButton}>
                                     <button type="submit" style={buttonNext}>Update</button>
                                 </p>
