@@ -27,7 +27,7 @@ export default function Posts(props) {
 }
 
 function Post({post}){
-    console.log(post);
+   
     const navigate = useNavigate();
 
     const { setHash } = useContext(HashtagContext);
