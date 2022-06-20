@@ -2,15 +2,16 @@ import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
 import Modal from 'react-modal';
-
 import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/io";
-import swal from 'sweetalert';
 import { TailSpin, ThreeDots } from "react-loader-spinner";
+import swal from 'sweetalert';
 
-import api from '../utils/api/api';
+
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
+import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
 import HashtagContext from '../utils/context/HashtagContext';
 import TokenContext from '../utils/context/TokenContext';
+import api from '../utils/api/api';
 
 export default function Posts(props) {
     const { posts } = props;
@@ -163,81 +164,7 @@ export function Post({post}){
     const [loadingDelete, setLoadingDelete] = useState(false);
     const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-    const customerStyle = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            width: '40%',
-            height: '40%',
-            backgroundColor: '#333333',
-            borderRadius: '10px',
-            padding: '20px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-around'
-        }
-    }
-
-    const h1 = {
-        'font-family': 'Lato',
-        'font-size': '34px',
-        'font-weight': '700',
-        'line-height': '41px',
-        'letter-spacing': '0em',
-        'text-align': 'center',
-        'color': '#FFFFFF'
-    }
-
-    const p = {
-        'width': '60%',
-        'font-family': 'Lato',
-        'font-size': '18px',
-        'font-weight': '700',
-        'line-height': '22px',
-        'letter-spacing': '0em',
-        'text-align': 'left',
-        'display': 'flex',
-        'justify-content': 'space-evenly',
-        'align-items': 'center'
-    }
-
-    const buttonCancel = {
-        'width': '40%',
-        'height': '40px',
-        'border-radius': '5px',
-        'background-color': '#FFFFFF',
-        'color': '#1877F2'
-    }
-
-    const buttonNext = {
-        'width': '40%',
-        'height': '40px',
-        'border-radius': '5px',
-        'color': '#FFFFFF',
-        'background-color': '#1877F2'
-    }
-
-    const input = {
-        'width': '100%',
-        'height': '35px',
-        'margin-bottom': '20px',
-        'padding': '15px',
-        'display': 'inline-block',
-        'justify-content': 'center',
-        'align-items': 'center'
-    }
-
-    const paiButton = {
-        'width': '100%',
-        'display': 'flex',
-        'justify-content': 'center',
-        'align-items': 'center'
-    }
+    
 
     return (
         <Box>
