@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'https://linkr-de.herokuapp.com/';
+const BASE_URL = 'https://linkr-de.herokuapp.com';
 
 function getConfig(token){
     return { headers: { Authorization: `Bearer ${token}` } };
