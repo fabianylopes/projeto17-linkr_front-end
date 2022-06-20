@@ -1,7 +1,7 @@
 import { Container, UserContainer } from "./style";
 import { IoSearchOutline } from 'react-icons/io5';
 import { useContext, useEffect, useState } from "react";
-import {DebounceInput} from 'react-debounce-input';
+import { DebounceInput } from "react-debounce-input";
 import { useNavigate } from "react-router-dom";
 import TokenContext from "../utils/context/TokenContext";
 import api from "../../services/api";

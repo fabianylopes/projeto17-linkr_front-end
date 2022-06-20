@@ -126,6 +126,9 @@ const Description = styled.div`
     font-size: 17px;
     line-height: 20px;
     color: #B7B7B7;
+
+    display: flex;
+    gap: 4px;
 `
 
 const Link = styled.a`
