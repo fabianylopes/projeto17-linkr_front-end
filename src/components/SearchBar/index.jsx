@@ -38,7 +38,12 @@ export default function SearchBar({isHeader}) {
     }
 
     return (
-        <Container isHeader={isHeader} isSearching={isSearching}>
+        <Container isHeader={isHeader} isSearching={isSearching}
+        onBlur={() => {
+            setIsSearching(false);
+            setSearchedUser("");
+            setUsersList([0]);
+        }}>
             <form>
                 <DebounceInput type="text" placeholder="Search for people" 
                 value={searchedUser} required
