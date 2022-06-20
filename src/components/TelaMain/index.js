@@ -30,6 +30,7 @@ function Timeline() {
     useEffect(() => {
         if(!localToken) navigate('/')
         loadPosts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (  
