@@ -2,8 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import Header from "../Header/index.js";
 import TokenContext from "../utils/context/TokenContext.js";
-
-import { Container, Picture, Title, Username, PostsContainer, Hastags, Text } from "./style";
+import Trending from "../Trending/index.js";
+import { Container, Picture, Title, Username, PostsContainer, Text, Hastags } from "./style";
 import api from "../../services/api.js";
 import UserPosts from "../UserPosts/index.jsx";
 import { TailSpin } from "react-loader-spinner";
@@ -16,9 +16,7 @@ export default function UserPage() {
     const [ userData, setUserData ] = useState({});
 
     useEffect(() => !token.token && navigate("/"), []);
-    console.log("1", id);
     useEffect(() => {
-        console.log("2", id);
     api.getPostsByUserId(id, token.token).then(response => setUserData(response.data)).catch(error => {
         console.log(error);
         alert("User does not exist.");
@@ -49,7 +47,9 @@ export default function UserPage() {
                 </>
                 }
             </PostsContainer>
-            <Hastags/>
+            <Hastags>
+                <Trending/>
+            </Hastags>
         </Container>
     );
 }
