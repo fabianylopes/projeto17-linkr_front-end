@@ -38,12 +38,7 @@ export default function SearchBar({isHeader}) {
     }
 
     return (
-        <Container isHeader={isHeader} isSearching={isSearching}
-        onBlur={() => {
-            setIsSearching(false);
-            setSearchedUser("");
-            setUsersList([0]);
-        }}>
+        <Container isHeader={isHeader} isSearching={isSearching}>
             <form>
                 <DebounceInput type="text" placeholder="Search for people" 
                 value={searchedUser} required
@@ -58,9 +53,9 @@ export default function SearchBar({isHeader}) {
             {isSearching ?
             <TailSpin color="#515151" height={20} width={20}/> :
             (usersList.length===0 ?
-            <p>Não existem usuários com esse username</p> :
+                <></> :
             (usersList[0] === 0 ?
-            <></>:
+            <></> :
             usersList?.map(user => <User key={user.id} user={user} redirectToUserPage={redirectToUserPage}/>)
             ))
             }
@@ -69,8 +64,6 @@ export default function SearchBar({isHeader}) {
 }
 
 function User({ user: {id, username, picture}, redirectToUserPage}) {
-    const navigate = useNavigate();
-
     return (
         <UserContainer onClick={() => redirectToUserPage(id)}>
             <img src={picture} alt="foto de perfil"/>
