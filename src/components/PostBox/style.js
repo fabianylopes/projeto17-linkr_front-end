@@ -82,6 +82,13 @@ const BigInput = styled.input`
     }
 `
 
+const ButtonBox = styled.div`
+    width: 503px;
+
+    display: flex;
+    justify-content: flex-end;
+`
+
 const Button = styled.button`
     width: 112px;
     height: 31px;
@@ -104,5 +111,6 @@ export {
     Inputs,
     SmallInput,
     BigInput,
+    ButtonBox,
     Button
 }

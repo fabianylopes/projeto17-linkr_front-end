@@ -2,7 +2,7 @@ import { useState } from 'react';
 import swal from 'sweetalert';
 
 import api from '../utils/api/api';
-import { Box, Image, Texts, Text, Inputs, SmallInput, BigInput, Button } from './style';
+import { Box, Image, Texts, Text, Inputs, SmallInput, BigInput, ButtonBox, Button } from './style';
 
 function PostBox(props) {
     const { reload } = props;
@@ -81,10 +81,12 @@ function PostBox(props) {
                       value={dadosPost.description} disabled={disable}
                       onChange={(e)=>setDadosPost({...dadosPost, description: e.target.value})}/>
                   </Inputs>
-                  {
-                    sending ? <Button disabled={disable}>Publishing...</Button> :
+                  <ButtonBox>
+                    {
+                      sending ? <Button disabled={disable}>Publishing...</Button> :
                       <Button type='submit' disabled={disable}>Publish</Button> 
-                  }
+                    }
+                    </ButtonBox>
                 </form>
             </Texts>
         </Box>
