@@ -1,10 +1,12 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import HashtagContext from '../utils/context/HashtagContext';
+import api from '../utils/api/api';
+import TokenContext from '../utils/context/TokenContext';
 
 export default function Posts(props) {
     const { posts } = props;
@@ -23,13 +25,57 @@ export default function Posts(props) {
 function Post({post}){
 
     const navigate = useNavigate();
+
+    const { token } = useContext(TokenContext);
+    const { id:userId, token:userToken} = token;
     const { setHash } = useContext(HashtagContext);
     const [liked, setliked] = useState(false);
+    const [ firstTime, setFirstTime ] = useState(true);
+    const [qttLikes, setQtt] = useState(parseInt(post.likes));
+
+    console.log(post)
+    
+ 
+    useEffect(()=>{
+        console.log(qttLikes);
+        const config ={headers: {Authorization: `Bearer ${token.token}`}};
+
+        console.log(firstTime)
+        if (firstTime){
+            api.get(`/like/${post.id}/${userId}`, config)
+            .then(res => { 
+                setliked(res.data);
+                setFirstTime(false);
+            })
+            .catch(erro=>{console.log('erro ao obter likes: ', erro)});
+        }else{
+
+            if(liked){
+                api.post(`/like/${post.id}/${userId}`, {userToken})   
+                        .then(res => {
+                            setliked(true);
+                            setQtt(qttLikes+1);
+                        })
+                        .catch(error => console.log('não foi possivel dar deslike:', error))
+                
+            }else{
+                api.delete(`/dislike/${post.id}/${userId}`, {userToken})   
+                        .then(res => {
+                            setliked(false);
+                            setQtt(qttLikes-1);
+                        })
+                        .catch(error => console.log('não foi possivel dar deslike:', error))
+            }
+        }
+ 
+    },[liked])
+
 
     function seeHashtag(hash){
         setHash(hash);
         navigate(`/hashtag/${hash.substr(1)}`)
     }
+
 
 
     return (
@@ -44,7 +90,7 @@ function Post({post}){
                 <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
                 }
                 
-                <Likes>{post.likes} likes</Likes>
+                <Likes>{qttLikes} likes</Likes>
             </Image>
             <Content>                                   
                 <User onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</User>
