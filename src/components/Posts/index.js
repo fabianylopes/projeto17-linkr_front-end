@@ -10,7 +10,6 @@ import { TailSpin } from "react-loader-spinner";
 import api from '../utils/api/api';
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import HashtagContext from '../utils/context/HashtagContext';
-import api from '../utils/api/api';
 import TokenContext from '../utils/context/TokenContext';
 
 export default function Posts(props) {
@@ -79,7 +78,7 @@ function Post({post}){
     },[liked]);
 
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
-    const { token } = dadosStorage;
+    const { token: tokenStorage } = dadosStorage;
 
     function seeHashtag(hash){
         const hashtag = hash.substr(1).toLowerCase();
@@ -98,7 +97,7 @@ function Post({post}){
     async function deletePost(id){
         const objConfig = {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${tokenStorage}`
             }
         }
         
@@ -113,7 +112,7 @@ function Post({post}){
     async function updatePost(id){
         const objConfig = {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${tokenStorage}`
             }
         }
 
