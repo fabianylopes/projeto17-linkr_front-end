@@ -27,7 +27,6 @@ export default function Posts(props) {
 }
 
 function Post({post}){
-   
     const navigate = useNavigate();
 
     const { setHash } = useContext(HashtagContext);
@@ -40,7 +39,6 @@ function Post({post}){
     const { id:userId, token:userToken} = token;
 
     useEffect(()=>{
-       
         const config ={headers: {Authorization: `Bearer ${token.token}`}};
 
         if (firstTime){
