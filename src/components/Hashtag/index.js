@@ -15,20 +15,14 @@ export default function Hashtag() {
 
     const { hash } = useContext(HashtagContext);
     const { token } = useContext(TokenContext);
-    console.log(token)
-
     const { hashtag } = useParams();
-    
     const [hashtagPosts, setHashtagPosts] = useState([]);
-    console.log(hashtagPosts);
 
     useEffect(() => getHashtagPosts(), [hashtag]); 
 
     function getHashtagPosts(){
-
         const config ={headers: {Authorization: `Bearer ${token.token}`}};
-        api.get(`/hashtag/${hashtag}`,config ).then((response) => setHashtagPosts(response.data)).catch((error) => console.log(error));
-        
+        api.get(`/hashtag/${hashtag}`,config ).then((response) => setHashtagPosts(response.data)).catch((error) => console.log(error)); 
     }
 
     return (

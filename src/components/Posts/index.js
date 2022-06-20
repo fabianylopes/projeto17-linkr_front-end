@@ -18,8 +18,8 @@ export default function Posts(props) {
     return (
         <Container>
             {
-                posts.length > 0 ?
-                  posts.map((post, i) => <Post key={i} post={post} />)
+                posts.length > 0 
+                ? posts.map((post, i) => <Post key={i} post={post} />)
                 : <TailSpin color="#ffffff" size={50}/>
             }
         </Container>
