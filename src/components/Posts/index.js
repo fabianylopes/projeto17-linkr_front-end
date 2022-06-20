@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 
 import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/io";
 import swal from 'sweetalert';
-import { TailSpin } from "react-loader-spinner";
+import { TailSpin, ThreeDots } from "react-loader-spinner";
 
 import api from '../utils/api/api';
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
@@ -27,7 +27,6 @@ export default function Posts(props) {
 }
 
 function Post({post}){
-
     const navigate = useNavigate();
     const { setHash } = useContext(HashtagContext);
     const { token } = useContext(TokenContext);
@@ -77,7 +76,6 @@ function Post({post}){
 
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
     const { token: tokenStorage, id } = dadosStorage;
-    console.log(tokenStorage, id);
 
     function seeHashtag(hash){
         const hashtag = hash.substr(1).toLowerCase();
@@ -102,40 +100,63 @@ function Post({post}){
         
         try{
             await api.delete(`/timeline/${id}`, objConfig);
-            sucessOrError("delete");
-            setModalOpen(false);
+            setTimeout(()=>{
+                sucessOrError("delete");
+                setModalOpen(false);
+            }, 1000);
             setTimeout(() => {
                 window.location.reload();
-            }, 1500);
+            }, 2500);
         } catch(error){
             swal(`Houve um erro ao deletar seu post! Status: ${error.response.status}`);
             setModalOpen(false);
+            setLoadingDelete(false);
         }
     }
 
-    async function updatePost(e, id){
-        e.preventDefault();
-        alert('teste update', id);
-        // const objConfig = {
-        //     headers: {
-        //         Authorization: `Bearer ${tokenStorage}`
-        //     }
-        // }
+    async function updatePost(id){
+        const objConfig = {
+            headers: {
+                Authorization: `Bearer ${tokenStorage}`
+            }
+        }
 
-        // try {
-        //     await api.put(`/timeline/${id}`, {url: url}, objConfig);
-        //     sucessOrError("update");
-        //     setModalEdit(false);
-        // } catch (error) {
-        //     swal(`Houve um erro ao atualizar seu post! Status: ${error.response.status}`);
-        //     setModalEdit(false);
-        // }
+        try {
+            await api.put(`/timeline/${id}`, {description: description}, objConfig);
+            setTimeout(()=>{
+                sucessOrError("update");
+                setModalEdit(false);
+            }, 1000);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2500);
+        } catch (error) {
+            swal(`Houve um erro ao atualizar seu post! Status: ${error.response.status}`);
+            setModalEdit(false);
+            setLoadingUpdate(false);
+        }
+    }
+
+    function enviarUpdate(id){
+        setLoadingUpdate(true);
+
+        if(!description){
+            setTimeout(()=>{
+                setLoadingUpdate(false);
+                swal("Insira uma descrição válida!");
+            }, 1500);
+            setDescription("");
+            return;
+        }
+        updatePost(id);
     }
 
     Modal.setAppElement('.root');
     const [modalOpen, setModalOpen] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
-    const [url, setUrl] = useState('');
+    const [description, setDescription] = useState('');
+    const [loadingDelete, setLoadingDelete] = useState(false);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
 
     const customerStyle = {
         content: {
@@ -238,19 +259,37 @@ function Post({post}){
                                     <h1 style={h1}>Are you sure you want to delete this post?</h1>
                                     <p style={p}>
                                         <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, go back</button>
-                                        <button style={buttonNext} onClick={() => deletePost(post.id)}>Yes, delete it</button>
+                                        {
+                                            loadingDelete ? <button style={buttonNext}>
+                                                <ThreeDots color="#fff" height={13} />
+                                            </button> 
+                                            :
+                                            <button style={buttonNext} 
+                                            onClick={() => { setLoadingDelete(true); deletePost(post.id);}}>
+                                                Yes, delete it
+                                            </button>
+                                        }
                                     </p>
                                     </Modal>
                                 <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
                                     <Modal isOpen={modalEdit} style={customerStyle}
                                     onRequestClose={() => setModalEdit(false)}>
-                                    <form onSubmit={updatePost}>
-                                        <input style={input} type="text" placeholder='Insira a nova descrição do posts'
-                                        value={url} onChange={e => setUrl(e.target.value)} required/>
+                                    <div>
+                                        <input style={input} type="text" placeholder='Insira a nova descrição do post'
+                                        value={description} onChange={e => setDescription(e.target.value)}/>
                                         <p style={paiButton}>
-                                            <button type="submit" style={buttonNext}>Update</button>
+                                            {
+                                                loadingUpdate ? <button style={buttonNext}>
+                                                    <ThreeDots color="#fff" height={13} />
+                                                </button>
+                                                :
+                                                <button type="submit" style={buttonNext}
+                                                onClick={()=> enviarUpdate(post.id)}>
+                                                    Update
+                                                </button>
+                                            }
                                         </p>
-                                    </form>
+                                    </div>
                                     </Modal>
                             </User>
                         :   <User onClick={() => navigate(`/user/${post.userId}`)}>
