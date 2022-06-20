@@ -303,22 +303,7 @@ function Post({post}){
                                 {post.username}
                             </User>
                     }
-                    {
-                        post.description ? 
-                        <Description>
-                            <ReactHashtag
-                                renderHashtag={
-                                    (hashtagValue, i) => 
-                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
-                                        {hashtagValue}
-                                    </Hashtag>
-                                }
-                            >
-                                {post.description}
-                            </ReactHashtag>
-                        </Description>
-                        : <></>
-                    }
+                  
 
                 {
                 post.userId === parseInt(id) 
