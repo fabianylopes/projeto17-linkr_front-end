@@ -33,7 +33,7 @@ export default function Posts(props) {
    
 }
 
-function Post({post}){
+export function Post({post}){
     const navigate = useNavigate();
     const { setHash } = useContext(HashtagContext);
     const { token } = useContext(TokenContext);

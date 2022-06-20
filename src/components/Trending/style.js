@@ -7,6 +7,11 @@ const Box = styled.div`
     border-radius: 16px;
 
     position: fixed;
+    
+    @media (max-width: 940px){
+        display: none;
+        
+    }
 `
 
 const Title = styled.h1`

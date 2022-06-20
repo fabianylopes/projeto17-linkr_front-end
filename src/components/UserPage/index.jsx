@@ -3,11 +3,11 @@ import { useEffect, useState, useContext } from "react";
 import Header from "../Header/index.js";
 import TokenContext from "../utils/context/TokenContext.js";
 import Trending from "../Trending/index.js";
-import { Container, Picture, Title, Username, PostsContainer, Text, Hastags } from "./style";
+import { Container, Picture, Title, Username, PostsContainer, Text, Box } from "./style";
 import api from "../../services/api.js";
-import UserPosts from "../UserPosts/index.jsx";
 import { TailSpin } from "react-loader-spinner";
 import SearchBar from "../SearchBar/index.jsx";
+import { Post } from "../Posts/index.js";
 
 export default function UserPage() {
     const navigate = useNavigate();
@@ -40,16 +40,16 @@ export default function UserPage() {
                         <Text>{userData.username} has no posts yet...</Text>
                     : 
                         userData.userPosts?.map(post => 
-                            <UserPosts username={userData.username} picture={userData.picture} post={post}/>
+                            <Post post={{...post, username: userData.username, picture: userData.picture}}/>
                         )
                         
                     }
                 </>
                 }
             </PostsContainer>
-            <Hastags>
+            <Box>
                 <Trending/>
-            </Hastags>
+            </Box>
         </Container>
     );
 }

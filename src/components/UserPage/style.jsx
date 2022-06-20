@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.section`
     width: 100%;
     min-height: 100vh;
-    padding: 15vh 10px 10vh 10px;
+    padding: 10vh 10px;
     
     background-color: #333333;
 
@@ -14,8 +14,9 @@ export const Container = styled.section`
 
     gap: 2vw;
 
-    @media (max-width: 650px) {
+    @media (max-width: 810px) {
         min-width: 375px;
+        padding: 0 10px 10vh 10px;
     }
 `;
 
@@ -76,13 +77,10 @@ export const Picture = styled.img`
     }
 `;
 
-export const Hastags = styled.div`
+export const Box = styled.div`
     width: 301px;
     min-width: 275px;
     height: 406px;
-
-    background: #171717;
-    border-radius: 16px;
 
     margin-top: 135px;
 

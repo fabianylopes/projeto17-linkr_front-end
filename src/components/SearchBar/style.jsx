@@ -15,14 +15,15 @@ export const Container = styled.div`
     margin: 0 15px;
     gap: 10px;
 
-    @media (max-width: 700px) {
+    @media (max-width: 810px) {
+        max-width: 563px;
         width: 90%;
         min-width: 350px;
         display: ${props => props.isHeader ? 'none' : 'flex'};
         margin-top: 82px;
     }
 
-    @media (min-width: 700px) {
+    @media (min-width: 810px) {
         position: fixed;
         top: 14px;
         left: calc((100vw/2) - 281.5px);
