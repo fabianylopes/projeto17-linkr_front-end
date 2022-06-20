@@ -8,6 +8,7 @@ export const Container = styled.section`
     background-color: #333333;
 
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
 
