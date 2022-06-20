@@ -10,6 +10,15 @@ export const Title = styled.h1`
     margin-bottom: 40px;
 `
 
+export const Text = styled.h2`
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    text-align: center;
+    color: #FFFFFF;
+`
+
 export const Container = styled.section`
     width: 100%;
     min-height: 100vh;

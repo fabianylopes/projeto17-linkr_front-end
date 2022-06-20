@@ -9,7 +9,7 @@ import Posts from "../Posts/index.js";
 import TokenContext from "../utils/context/TokenContext";
 import { useNavigate } from "react-router-dom";
 
-import { Container, Title, Boxes, LeftColumn, Body } from "./style.js";
+import { Container, Title, Boxes, LeftColumn, Body, Text } from "./style.js";
 import Trending from "../Trending";
 import SearchBar from "../SearchBar";
 
@@ -43,7 +43,11 @@ function Timeline() {
                     <Boxes>
                         <LeftColumn>
                             <PostBox reload={(post)=> setPosts(post)}/>
+                            {posts.length === 0 ? 
+                            <Text>There are no posts yet</Text>
+                            :
                             <Posts posts={posts}/>
+                            }
                         </LeftColumn>
                         <Trending/>
                     </Boxes>
