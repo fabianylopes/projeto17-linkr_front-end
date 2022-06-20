@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 export const Container = styled.div`
     width: 563px;
@@ -82,7 +81,7 @@ export const Container = styled.div`
     }
 `;
 
-export const UserContainer = styled(Link)`
+export const UserContainer = styled.div`
     width: 100%;
     height: 45px;
     

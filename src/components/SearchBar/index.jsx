@@ -16,6 +16,13 @@ export default function SearchBar({isHeader}) {
 
     useEffect(() => !token.token && navigate("/"), []);
 
+    function redirectToUserPage(id) {
+        navigate(`/user/${id}`);
+        setIsSearching(false);
+        setSearchedUser("");
+        setUsersList([0]);
+    }
+
     function searching(e) {
         e.preventDefault();
         setIsSearching(true);
@@ -49,18 +56,18 @@ export default function SearchBar({isHeader}) {
             <p>Não existem usuários com esse username</p> :
             (usersList[0] === 0 ?
             <></>:
-            usersList?.map(user => <User key={user.id} user={user}/>)
+            usersList?.map(user => <User key={user.id} user={user} redirectToUserPage={redirectToUserPage}/>)
             ))
             }
         </Container>
     );
 }
 
-function User({ user: {id, username, picture}}) {
+function User({ user: {id, username, picture}, redirectToUserPage}) {
     const navigate = useNavigate();
 
     return (
-        <UserContainer to={`/user/${id}`}>
+        <UserContainer onClick={() => redirectToUserPage(id)}>
             <img src={picture} alt="foto de perfil"/>
             <p>{username}</p>
         </UserContainer>

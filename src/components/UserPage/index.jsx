@@ -16,14 +16,15 @@ export default function UserPage() {
     const [ userData, setUserData ] = useState({});
 
     useEffect(() => !token.token && navigate("/"), []);
-    
+    console.log("1", id);
     useEffect(() => {
+        console.log("2", id);
     api.getPostsByUserId(id, token.token).then(response => setUserData(response.data)).catch(error => {
         console.log(error);
         alert("User does not exist.");
         navigate("/");
     });
-    }, []);
+    }, [id]);
 
     return (  
         <Container>
