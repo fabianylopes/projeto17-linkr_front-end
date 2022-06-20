@@ -58,8 +58,8 @@ const Menu = styled.div`
     margin-top: 30px;
     
     @keyframes logout {
-        0% {opacity: 0%; top:30%;}
-        100% {opacity:100%; top:40%}
+        0% {opacity: 0%; top:-30%;}
+        100% {opacity:100%; top:0%}
     }
     nav{
         position: absolute;
@@ -67,7 +67,7 @@ const Menu = styled.div`
         display: none;
         background-color: aliceblue;
         border-radius: 5px ;
-        margin-top: 65px;
+        margin-top: 60px;
         padding: 5px;
         width: 100% ;
         
