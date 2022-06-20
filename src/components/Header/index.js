@@ -1,3 +1,5 @@
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IconContext } from "react-icons";
 
@@ -6,10 +8,7 @@ import Imagem from "../utils/Imagem.js";
 import imagemPerfil from '../../img/image-perfil.png';
 
 import { Bar, Menu } from "./style.js";
-import { useContext } from "react";
 import TokenContext from "../utils/context/TokenContext.js";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../utils/api/api.js";
 import SearchBar from "../SearchBar/index.jsx";
 

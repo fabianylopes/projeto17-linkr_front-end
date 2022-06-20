@@ -1,10 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Box, Title, Line, Hashtags, HashtagList } from './style';
-import api from '../../services/api';
-
 import HashtagContext from '../utils/context/HashtagContext';
-import { useNavigate } from 'react-router-dom';
+import api from '../../services/api';
 
 export default function Trending() {
   const navigate = useNavigate()
@@ -12,7 +11,6 @@ export default function Trending() {
   const { setHash } = useContext(HashtagContext);
 
   const [hashtagsList, setHastagList] = useState([]);
-
 
   useEffect(() => hashtags(), []);
 
@@ -34,8 +32,8 @@ export default function Trending() {
             
             {hashtagsList.map(({name, id}) => {
               return (
-                <div onClick={() => seeHashtag(name)}>
-                  <HashtagList key={id}>{name}</HashtagList>
+                <div key={id} onClick={() => seeHashtag(name)}>
+                  <HashtagList>{name}</HashtagList>
                 </div>
                 );
               })}
