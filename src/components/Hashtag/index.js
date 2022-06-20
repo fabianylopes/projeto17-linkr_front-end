@@ -17,7 +17,7 @@ export default function Hashtag() {
     const { hashtag } = useParams();
     const [hashtagPosts, setHashtagPosts] = useState([]);
 
-    useEffect(() => getHashtagPosts(), [hashtag]); 
+    useEffect(() => getHashtagPosts(), [hashtag]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function getHashtagPosts(){
         const config ={headers: {Authorization: `Bearer ${token.token}`}};

@@ -14,7 +14,7 @@ export default function SearchBar({isHeader}) {
     const { token } = useContext(TokenContext);
     const navigate = useNavigate();
 
-    useEffect(() => !token.token && navigate("/"), []);
+    useEffect(() => !token.token && navigate("/"), []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function redirectToUserPage(id) {
         navigate(`/user/${id}`);

@@ -15,14 +15,14 @@ export default function UserPage() {
     const { token } = useContext(TokenContext);
     const [ userData, setUserData ] = useState({});
 
-    useEffect(() => !token.token && navigate("/"), []);
+    useEffect(() => !token.token && navigate("/"), []); // eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
     api.getPostsByUserId(id, token.token).then(response => setUserData(response.data)).catch(error => {
         console.log(error);
         alert("User does not exist.");
         navigate("/");
     });
-    }, [id]);
+    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (  
         <Container>
