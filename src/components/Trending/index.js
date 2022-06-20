@@ -26,20 +26,22 @@ export default function Trending() {
   }
 
   return (
-    <Box>
-        <Title>trending</Title>
-        <Line></Line>
-        <Hashtags>
-          
-          {hashtagsList.map(({name, id}) => {
-            return (
-              <div onClick={() => seeHashtag(name)}>
-                <HashtagList key={id}>{name}</HashtagList>
-              </div>
-              );
-            })}
+    <div>
+      <Box>
+          <Title>trending</Title>
+          <Line></Line>
+          <Hashtags>
+            
+            {hashtagsList.map(({name, id}) => {
+              return (
+                <div onClick={() => seeHashtag(name)}>
+                  <HashtagList key={id}>{name}</HashtagList>
+                </div>
+                );
+              })}
 
-        </Hashtags>
-    </Box>
+          </Hashtags>
+      </Box>
+    </div>
   )
 }

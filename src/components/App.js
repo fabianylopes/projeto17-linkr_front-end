@@ -16,8 +16,7 @@ function App(){
 
     const localToken = JSON.parse(localStorage.getItem('infoUsers'));
     const [token, setToken] = useState(localToken);
-
-    const [hash, setHash] = useState('');
+    const [hash, setHash] = useState('')
 
     return (
         <TokenContext.Provider value={{token, setToken}} >

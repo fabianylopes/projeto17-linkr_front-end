@@ -6,9 +6,7 @@ const Box = styled.div`
     background-color: #171717;
     border-radius: 16px;
 
-    //position: sticky;
-  
-    
+    position: fixed;
 `
 
 const Title = styled.h1`

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Container, Title, Boxes, LeftColumn, Body } from "./style.js";
 import Trending from "../Trending";
+import SearchBar from "../SearchBar";
 
 function Timeline() {
     const navigate = useNavigate();
@@ -29,12 +30,14 @@ function Timeline() {
     useEffect(() => {
         if(!localToken) navigate('/')
         loadPosts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (  
         <>
             <Container>
                 <Header/>
+                <SearchBar isHeader={false}/>
                 <Body>
                     <Title>timeline</Title>
                     <Boxes>

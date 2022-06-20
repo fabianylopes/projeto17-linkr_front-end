@@ -27,7 +27,6 @@ const Bar = styled.div`
     }
 
         figure{
-            height: 50px;
             display: flex;
             align-items: center;
         

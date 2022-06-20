@@ -11,6 +11,7 @@ import TokenContext from "../utils/context/TokenContext.js";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api/api.js";
+import SearchBar from "../SearchBar/index.jsx";
 
 export default function Header() {
 
@@ -23,6 +24,7 @@ export default function Header() {
   return (
     <Bar>
         <Paragrafo conteudo="linkr"  click={() => navigate("/timeline")} />
+        <SearchBar isHeader={true}/>
         <figure>
             <Logout setToken={setToken} token={token}/>
         </figure>

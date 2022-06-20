@@ -16,13 +16,17 @@ export const Container = styled.section`
     padding-top: 15vh;
     padding-bottom: 10vh;
     
-    background-color: #333333;
+    background-color: #333333; 
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 16px;
+
+    @media (max-width: 700px){
+        padding-top: 0;
+    }
 
 `
 
