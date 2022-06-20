@@ -96,20 +96,27 @@ function Post({post}){
     }
 
     async function deletePost(id){
-        alert('teste delete', id);
-        setModalOpen(false);
-        // const objConfig = {
-        //     headers: {
-        //         Authorization: `Bearer ${tokenStorage}`
-        //     }
-        // }
+        console.log('teste delete', id);
+        console.log(tokenStorage);
+
+        const objConfig = {
+            headers: {
+                Authorization: `Bearer ${tokenStorage}`
+            }
+        }
         
-        // try{
-        //     await api.delete(`/timeline/${id}`, objConfig);
-        //     sucessOrError("delete");
-        // } catch(error){
-        //     swal(`Houve um erro ao deletar seu post! Status: ${error.response.status}`);
-        // }
+        try{
+            await api.delete(`/timeline/${id}`, objConfig);
+            sucessOrError("delete");
+            setModalOpen(false);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+            window.location.reload();
+        } catch(error){
+            swal(`Houve um erro ao deletar seu post! Status: ${error.response.status}`);
+            setModalOpen(false);
+        }
     }
 
     async function updatePost(e, id){
