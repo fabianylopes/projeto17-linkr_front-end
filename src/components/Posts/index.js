@@ -28,9 +28,8 @@ function Post({post}){
     const [liked, setliked] = useState(false);
 
     function seeHashtag(hash){
-        const hashtag = hash.substr(1).toLowerCase();
-        setHash(hashtag);
-        navigate(`/hashtag/${hashtag}`)
+        setHash(hash.substr(1));
+        navigate(`/hashtag/${hash.substr(1)}`)
     }
 
 
