@@ -8,7 +8,7 @@ import { TailSpin, ThreeDots } from "react-loader-spinner";
 import { AiOutlineComment } from 'react-icons/ai';
 import { BiRepost } from 'react-icons/bi';
 
-import { Container, Box, Image, Actions, Action, Text, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
+import { Container, BoxReposted, Box, Image, Actions, Action, Text, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
 import HashtagContext from '../utils/context/HashtagContext';
 import TokenContext from '../utils/context/TokenContext';
@@ -122,13 +122,13 @@ export function Post({post}){
         }
     }
 
-    async function sharePost(id){
+    async function sharePost(id, body){
         const objConfig = {
             headers: {Authorization: `Bearer ${tokenStorage}`}
         }
         
         try{
-            await api.put(`/post/${id}`, objConfig);
+            await api.put(`/post/${id}`, body, objConfig);
             setTimeout(()=>{
                 sucessOrError("share");
                 setModalOpen(false);
@@ -188,126 +188,132 @@ export function Post({post}){
     const [loadingUpdate, setLoadingUpdate] = useState(false);
 
     return (
-        <Box>
-            <Image>
-                <img src={post.picture} alt="Foto perfil" 
-                onClick={() => navigate(`/user/${post.userId}`)}/>
-                <Actions>
-                    <Action>
-                        {liked ? 
-                        <IoMdHeart className="icon-liked"  onClick={() => setliked(!liked)}/> 
-                        : 
-                        <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
-                        }                    
-                        <Text>{qttLikes} likes</Text>
-                    </Action>
+        <BoxReposted>
+            <div className='reposted-div'>
+                <BiRepost className="icon"/>
+                <h4>Re-posted by <span>{token.username}</span></h4>
+            </div>
+            <Box>
+                <Image>
+                    <img src={post.picture} alt="Foto perfil" 
+                    onClick={() => navigate(`/user/${post.userId}`)}/>
+                    <Actions>
+                        <Action>
+                            {liked ? 
+                            <IoMdHeart className="icon-liked"  onClick={() => setliked(!liked)}/> 
+                            : 
+                            <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
+                            }                    
+                            <Text>{qttLikes} likes</Text>
+                        </Action>
 
-                    <Action>
-                        <AiOutlineComment className="icon"/>
-                        <Text>comments</Text>
-                    </Action>
+                        <Action>
+                            <AiOutlineComment className="icon"/>
+                            <Text>comments</Text>
+                        </Action>
 
-                    <Action>
-                        <BiRepost className="icon" onClick={()=> setModalOpen(true)}/>
+                        <Action>
+                            <BiRepost className="icon" onClick={()=> setModalOpen(true)}/>
 
-                        <Modal isOpen={modalOpen} style={customerStyle}
-                                onRequestClose={() => setModalOpen(false)}>
-                                <h1 style={h1}>Do you want to re-post this link?</h1>
-                                <p style={p}>
-                                    <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, cancel</button>
-                                    {
-                                        loadingDelete ? <button style={buttonNext}>
-                                            <ThreeDots color="#fff" height={13} />
-                                        </button> 
-                                        :
-                                        <button style={buttonNext} 
-                                        onClick={() => { setLoadingDelete(true); sharePost(post.id);}}>
-                                            Yes, share!
-                                        </button>
-                                    }
-                                </p>
-                        </Modal>
-
-                        <Text>re-posts</Text>
-                    </Action>   
-                </Actions>
-
-            </Image>
-            <Content>                                   
-
-                    {
-                        post.userId === parseInt(id) ? 
-                            <User>
-                                <p onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</p>
-                                <IoIosTrash className='icon lixeira' onClick={()=> setModalOpen(true)}/>
-                                    <Modal isOpen={modalOpen} style={customerStyle}
+                            <Modal isOpen={modalOpen} style={customerStyle}
                                     onRequestClose={() => setModalOpen(false)}>
-                                    <h1 style={h1}>Are you sure you want to delete this post?</h1>
+                                    <h1 style={h1}>Do you want to re-post this link?</h1>
                                     <p style={p}>
-                                        <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, go back</button>
+                                        <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, cancel</button>
                                         {
                                             loadingDelete ? <button style={buttonNext}>
                                                 <ThreeDots color="#fff" height={13} />
                                             </button> 
                                             :
                                             <button style={buttonNext} 
-                                            onClick={() => { setLoadingDelete(true); deletePost(post.id);}}>
-                                                Yes, delete it
+                                            onClick={() => { setLoadingDelete(true); sharePost(post.id, token.username);}}>
+                                                Yes, share!
                                             </button>
                                         }
                                     </p>
-                                    </Modal>
-                                <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
-                                    {/* Modal de edição como alternativa ao focus do input */}
-                                    <Modal isOpen={modalEdit} style={customerStyle}
-                                    onRequestClose={() => {setModalEdit(false); setDescription('')}}>
-                                    <div>
-                                        <input style={input} type="text" placeholder='Insira a nova descrição do post'
-                                        value={description} onChange={e => setDescription(e.target.value)}/>
-                                        <p style={paiButton}>
+                            </Modal>
+
+                            <Text>re-posts</Text>
+                        </Action>   
+                    </Actions>
+
+                </Image>
+                <Content>                                   
+
+                        {
+                            post.userId === parseInt(id) ? 
+                                <User>
+                                    <p onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</p>
+                                    <IoIosTrash className='icon lixeira' onClick={()=> setModalOpen(true)}/>
+                                        <Modal isOpen={modalOpen} style={customerStyle}
+                                        onRequestClose={() => setModalOpen(false)}>
+                                        <h1 style={h1}>Are you sure you want to delete this post?</h1>
+                                        <p style={p}>
+                                            <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, go back</button>
                                             {
-                                                loadingUpdate ? <button style={buttonNext}>
+                                                loadingDelete ? <button style={buttonNext}>
                                                     <ThreeDots color="#fff" height={13} />
-                                                </button>
+                                                </button> 
                                                 :
-                                                <button type="submit" style={buttonNext}
-                                                onClick={()=> enviarUpdate(post.id)}>
-                                                    Update
+                                                <button style={buttonNext} 
+                                                onClick={() => { setLoadingDelete(true); deletePost(post.id);}}>
+                                                    Yes, delete it
                                                 </button>
                                             }
                                         </p>
-                                    </div>
-                                    </Modal>
-                            </User>
-                        :   <User onClick={() => navigate(`/user/${post.userId}`)}>
-                                {post.username}
-                            </User>
-                    }
-                    {
-                        post.description ? 
-                        <Description>
-                            <ReactHashtag
-                                renderHashtag={
-                                    (hashtagValue, i) => 
-                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
-                                        {hashtagValue}
-                                    </Hashtag>
-                                }
-                            >
-                                {post.description}
-                            </ReactHashtag>
-                        </Description>
-                        : <></>
-                    }
-                <Link href={post.url} target="_blank">
-                    <Texts>
-                        <Title>{post.title}</Title>
-                        <Subtitle>{post.descriptionMetadata}</Subtitle>
-                        <Url>{post.url}</Url>
-                    </Texts>
-                    <img src={post.image} alt="Foto link"/>
-                </Link>
-            </Content>
-        </Box>
+                                        </Modal>
+                                    <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
+                                        {/* Modal de edição como alternativa ao focus do input */}
+                                        <Modal isOpen={modalEdit} style={customerStyle}
+                                        onRequestClose={() => {setModalEdit(false); setDescription('')}}>
+                                        <div>
+                                            <input style={input} type="text" placeholder='Insira a nova descrição do post'
+                                            value={description} onChange={e => setDescription(e.target.value)}/>
+                                            <p style={paiButton}>
+                                                {
+                                                    loadingUpdate ? <button style={buttonNext}>
+                                                        <ThreeDots color="#fff" height={13} />
+                                                    </button>
+                                                    :
+                                                    <button type="submit" style={buttonNext}
+                                                    onClick={()=> enviarUpdate(post.id)}>
+                                                        Update
+                                                    </button>
+                                                }
+                                            </p>
+                                        </div>
+                                        </Modal>
+                                </User>
+                            :   <User onClick={() => navigate(`/user/${post.userId}`)}>
+                                    {post.username}
+                                </User>
+                        }
+                        {
+                            post.description ? 
+                            <Description>
+                                <ReactHashtag
+                                    renderHashtag={
+                                        (hashtagValue, i) => 
+                                        <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
+                                            {hashtagValue}
+                                        </Hashtag>
+                                    }
+                                >
+                                    {post.description}
+                                </ReactHashtag>
+                            </Description>
+                            : <></>
+                        }
+                    <Link href={post.url} target="_blank">
+                        <Texts>
+                            <Title>{post.title}</Title>
+                            <Subtitle>{post.descriptionMetadata}</Subtitle>
+                            <Url>{post.url}</Url>
+                        </Texts>
+                        <img src={post.image} alt="Foto link"/>
+                    </Link>
+                </Content>
+            </Box>
+        </BoxReposted>
     )
 }
