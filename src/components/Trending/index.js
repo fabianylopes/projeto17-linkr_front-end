@@ -28,11 +28,8 @@ export default function Trending() {
       <Box>
           <Title>trending</Title>
           <Line></Line>
-          <Hashtags>
-            
-            {hashtagsList.map(({id, name}) => {
-              return <HashtagList key={id} onClick={() => seeHashtag(name)}>{name}</HashtagList>
-            })}
+          <Hashtags>            
+            {hashtagsList.map(({id, name}) => <HashtagList key={id} onClick={() => seeHashtag(name)}>{name}</HashtagList>)}
           </Hashtags>
       </Box>
     </div>
