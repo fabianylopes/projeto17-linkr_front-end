@@ -6,7 +6,6 @@ import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/i
 import { TailSpin, ThreeDots } from "react-loader-spinner";
 import swal from 'sweetalert';
 
-
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
 import HashtagContext from '../utils/context/HashtagContext';
@@ -164,8 +163,6 @@ export function Post({post}){
     const [loadingDelete, setLoadingDelete] = useState(false);
     const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-    
-
     return (
         <Box>
             <Image>
@@ -207,7 +204,7 @@ export function Post({post}){
                                 <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
                                     {/* Modal de edição como alternativa ao focus do input */}
                                     <Modal isOpen={modalEdit} style={customerStyle}
-                                    onRequestClose={() => setModalEdit(false)}>
+                                    onRequestClose={() => {setModalEdit(false); setDescription('')}}>
                                     <div>
                                         <input style={input} type="text" placeholder='Insira a nova descrição do post'
                                         value={description} onChange={e => setDescription(e.target.value)}/>
