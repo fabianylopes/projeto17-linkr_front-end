@@ -17,12 +17,14 @@ import SearchBar from "../SearchBar";
 function Timeline() {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
+    const [likes, setLikes] = useState([]);
     const { token:localToken } = useContext(TokenContext);
     
     async function loadPosts() {
         try {
             const response = await api.get("/timeline");
             setPosts(response.data.posts);
+            setLikes(response.data.usersLikes);
         } catch (error) {
             swal("An error occured while trying to fetch the posts, please refresh the page");
         }
@@ -48,7 +50,7 @@ function Timeline() {
                             {
                             posts.length === 0 ? 
                                 <Text>There are no posts yet</Text>
-                            :   <Posts posts={posts}/>
+                            : <Posts posts={posts} likes={likes}/>
                             }
                         </LeftColumn>
                         <Trending/>

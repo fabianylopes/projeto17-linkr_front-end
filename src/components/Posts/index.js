@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
@@ -5,6 +6,7 @@ import Modal from 'react-modal';
 import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/io";
 import { TailSpin, ThreeDots } from "react-loader-spinner";
 import swal from 'sweetalert';
+import ReactTooltip from 'react-tooltip';
 
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
@@ -13,8 +15,12 @@ import TokenContext from '../utils/context/TokenContext';
 import api from '../utils/api/api';
 
 export default function Posts(props) {
-    const { posts } = props;
+    const { posts, likes } = props;
     const { token } = useContext(TokenContext);
+
+    function likesPostId(likes, post){
+        return likes.filter(like => parseInt(like.postId) === parseInt(post.id));
+    }
 
     if(!token){
         return <></>
@@ -23,7 +29,7 @@ export default function Posts(props) {
             <Container>
             {
                 posts.length > 0 
-                ? posts.map((post, i) => <Post key={i} post={post} />)
+                ? posts.map((post, i) => <Post key={i} post={post} like={likesPostId(likes, post)}/>)
                 : <TailSpin color="#ffffff" size={50}/>
             }
             </Container>
@@ -31,7 +37,7 @@ export default function Posts(props) {
     }
 }
 
-export function Post({post}){
+export function Post({post, like}){
     const navigate = useNavigate();
     const { setHash } = useContext(HashtagContext);
     const { token } = useContext(TokenContext);
@@ -156,6 +162,14 @@ export function Post({post}){
         updatePost(id);
     }
 
+    function createMessageLike(){
+        if(like.length === 0) return `Este post não possui likes até o momento...`
+
+        const userLikes = like.map(item => item.username);
+        return userLikes.join(', ');
+    }
+    const message = createMessageLike();
+
     Modal.setAppElement('.root');
     const [modalOpen, setModalOpen] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
@@ -169,12 +183,17 @@ export function Post({post}){
                 <img src={post.picture} alt="Foto perfil" 
                 onClick={() => navigate(`/user/${post.userId}`)}/>
 
-                {liked ? 
-                <IoMdHeart className="icon-liked"  onClick={() => setliked(!liked)}/> 
-                : 
-                <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
-                }
-                
+                    <a data-tip data-for='likes-user'>
+                        {liked ? 
+                            <IoMdHeart className="icon-liked" onClick={() => setliked(!liked)}/>
+                        : 
+                            <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
+                        }
+                    </a>
+                    <ReactTooltip id='likes-user'>
+                        <span>{message}</span>
+                    </ReactTooltip>
+
                 <Likes>{qttLikes} likes</Likes>
             </Image>
             <Content>                                   
