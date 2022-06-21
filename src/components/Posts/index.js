@@ -2,17 +2,17 @@ import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
 import Modal from 'react-modal';
+import swal from 'sweetalert';
 import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/io";
 import { TailSpin, ThreeDots } from "react-loader-spinner";
-import swal from 'sweetalert';
+import { AiOutlineComment } from 'react-icons/ai';
+import { BiRepost } from 'react-icons/bi';
 
 import { Container, Box, Image, Actions, Action, Text, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
 import HashtagContext from '../utils/context/HashtagContext';
 import TokenContext from '../utils/context/TokenContext';
 import api from '../utils/api/api';
-import { BiRepost } from 'react-icons/bi';
-import { AiOutlineComment } from 'react-icons/ai';
 
 
 export default function Posts(props) {
@@ -122,6 +122,27 @@ export function Post({post}){
         }
     }
 
+    async function sharePost(id){
+        const objConfig = {
+            headers: {Authorization: `Bearer ${tokenStorage}`}
+        }
+        
+        try{
+            await api.put(`/post/${id}`, objConfig);
+            setTimeout(()=>{
+                sucessOrError("share");
+                setModalOpen(false);
+            }, 1000);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2500);
+        } catch(error){
+            swal(`Houve um erro ao compartilhar seu post! Status: ${error.response.status}`);
+            setModalOpen(false);
+            setLoadingDelete(false);
+        }
+    }
+
     async function updatePost(id){
         const objConfig = {
             headers: {
@@ -187,7 +208,26 @@ export function Post({post}){
                     </Action>
 
                     <Action>
-                        <BiRepost className="icon"/>
+                        <BiRepost className="icon" onClick={()=> setModalOpen(true)}/>
+
+                        <Modal isOpen={modalOpen} style={customerStyle}
+                                onRequestClose={() => setModalOpen(false)}>
+                                <h1 style={h1}>Do you want to re-post this link?</h1>
+                                <p style={p}>
+                                    <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, cancel</button>
+                                    {
+                                        loadingDelete ? <button style={buttonNext}>
+                                            <ThreeDots color="#fff" height={13} />
+                                        </button> 
+                                        :
+                                        <button style={buttonNext} 
+                                        onClick={() => { setLoadingDelete(true); sharePost(post.id);}}>
+                                            Yes, share!
+                                        </button>
+                                    }
+                                </p>
+                        </Modal>
+
                         <Text>re-posts</Text>
                     </Action>   
                 </Actions>
