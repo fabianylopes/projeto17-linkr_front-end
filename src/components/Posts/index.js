@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/io";
 import { TailSpin, ThreeDots } from "react-loader-spinner";
 import swal from 'sweetalert';
+import ReactTooltip from 'react-tooltip';
 
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
@@ -169,11 +170,15 @@ export function Post({post}){
                 <img src={post.picture} alt="Foto perfil" 
                 onClick={() => navigate(`/user/${post.userId}`)}/>
 
-                {liked ? 
-                <IoMdHeart className="icon-liked"  onClick={() => setliked(!liked)}/> 
-                : 
-                <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
-                }
+                    {liked ? 
+                        <IoMdHeart className="icon-liked"  onClick={() => setliked(!liked)}>
+                            <ReactTooltip></ReactTooltip>
+                        </IoMdHeart> 
+                    : 
+                    <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}>
+                            <ReactTooltip></ReactTooltip>
+                        </IoMdHeartEmpty>
+                    }
                 
                 <Likes>{qttLikes} likes</Likes>
             </Image>

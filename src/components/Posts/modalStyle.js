@@ -1,4 +1,3 @@
-
 const customerStyle = {
     content: {
         top: '50%',
@@ -84,4 +83,3 @@ export {
     input,
     paiButton
 }
-
