@@ -6,12 +6,14 @@ import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/i
 import { TailSpin, ThreeDots } from "react-loader-spinner";
 import swal from 'sweetalert';
 
-
-import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
+import { Container, Box, Image, Actions, Action, Text, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
 import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
 import HashtagContext from '../utils/context/HashtagContext';
 import TokenContext from '../utils/context/TokenContext';
 import api from '../utils/api/api';
+import { BiRepost } from 'react-icons/bi';
+import { AiOutlineComment } from 'react-icons/ai';
+
 
 export default function Posts(props) {
     const { posts } = props;
@@ -164,20 +166,32 @@ export function Post({post}){
     const [loadingDelete, setLoadingDelete] = useState(false);
     const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-    
     return (
         <Box>
             <Image>
                 <img src={post.picture} alt="Foto perfil" 
                 onClick={() => navigate(`/user/${post.userId}`)}/>
+                <Actions>
+                    <Action>
+                        {liked ? 
+                        <IoMdHeart className="icon-liked"  onClick={() => setliked(!liked)}/> 
+                        : 
+                        <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
+                        }                    
+                        <Text>{qttLikes} likes</Text>
+                    </Action>
 
-                {liked ? 
-                <IoMdHeart className="icon-liked"  onClick={() => setliked(!liked)}/> 
-                : 
-                <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
-                }
-                
-                <Likes>{qttLikes} likes</Likes>
+                    <Action>
+                        <AiOutlineComment className="icon"/>
+                        <Text>comments</Text>
+                    </Action>
+
+                    <Action>
+                        <BiRepost className="icon"/>
+                        <Text>re-posts</Text>
+                    </Action>   
+                </Actions>
+
             </Image>
             <Content>                                   
 
@@ -206,7 +220,7 @@ export function Post({post}){
                                 <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
                                     {/* Modal de edição como alternativa ao focus do input */}
                                     <Modal isOpen={modalEdit} style={customerStyle}
-                                    onRequestClose={() => setModalEdit(false)}>
+                                    onRequestClose={() => {setModalEdit(false); setDescription('')}}>
                                     <div>
                                         <input style={input} type="text" placeholder='Insira a nova descrição do post'
                                         value={description} onChange={e => setDescription(e.target.value)}/>

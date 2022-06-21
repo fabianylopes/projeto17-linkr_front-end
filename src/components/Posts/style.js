@@ -33,11 +33,11 @@ const Image = styled.div`
     flex-direction: column;
     align-items: center;
 
+
     .icon{
         font-size: 20px;
         color: #FFFFFF;
         font-weight: 700;
-        margin-bottom: 4px;
         cursor: pointer;
 
     }  
@@ -45,7 +45,6 @@ const Image = styled.div`
         font-size: 20px;
         color: #AC0000;
         font-weight: 700;
-        margin-bottom: 4px;
         cursor: pointer;
     
     }
@@ -60,7 +59,22 @@ const Image = styled.div`
     }
 `
 
-const Likes = styled.h4`
+const Actions = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+`
+
+const Action = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+`
+
+const Text = styled.h4`
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
@@ -195,7 +209,9 @@ export {
     Container,
     Box, 
     Icon,
-    Likes,
+    Actions,
+    Action,
+    Text,
     Image, 
     Content, 
     User, 
@@ -204,5 +220,5 @@ export {
     Title, 
     Subtitle, 
     Url,
-    Texts  
+    Texts,
 }
