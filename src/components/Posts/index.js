@@ -190,10 +190,10 @@ export function Post({post, like}){
                             <IoMdHeartEmpty className="icon" onClick={() => setliked(!liked)}/>
                         }
                     </a>
-                    <ReactTooltip id='likes-user'>
+                    <ReactTooltip id='likes-user' place="bottom" backgroundColor="#333333" textColor="#FFFFFF" effect="solid">
                         <span>{message}</span>
                     </ReactTooltip>
-
+                    
                 <Likes>{qttLikes} likes</Likes>
             </Image>
             <Content>                                   
