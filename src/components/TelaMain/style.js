@@ -54,3 +54,19 @@ export const LeftColumn = styled.div`
     flex-direction: column;
     gap: 24px;
 `
+
+export const Button = styled.button`
+    width: 611px;
+    height: 61px;
+    background-color: #1877F2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    cursor: pointer;
+
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #FFFFFF;
+`

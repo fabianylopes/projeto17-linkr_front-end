@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import { Text, Boxes } from './style';
 import { Container, Body } from '../TelaMain/style';
@@ -30,7 +31,16 @@ export default function Hashtag() {
             <Body>
                 <Text>#{hash}</Text>
                 <Boxes>              
+
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={getHashtagPosts}
+                    hasMore={true || false}
+                    loader={<div className="loader" key={0}>Loading ...</div>}
+                >
                     <Posts posts={hashtagPosts}/>
+                </InfiniteScroll>
+
                     <Trending/>
                 </Boxes>
             </Body>    
