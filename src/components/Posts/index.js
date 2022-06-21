@@ -165,7 +165,6 @@ export function Post({post}){
     const [loadingUpdate, setLoadingUpdate] = useState(false);
 
     
-
     return (
         <Box>
             <Image>
