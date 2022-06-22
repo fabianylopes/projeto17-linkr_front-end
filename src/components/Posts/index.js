@@ -10,7 +10,6 @@ import ReactTooltip from 'react-tooltip';
 
 import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag, EditUserPost } from './style';
 import { customerStyle, h1, p, buttonCancel, buttonNext } from './modalStyle';
-// import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
 import HashtagContext from '../utils/context/HashtagContext';
 import TokenContext from '../utils/context/TokenContext';
 import api from '../utils/api/api';
@@ -65,7 +64,6 @@ export function Post({post, like, reloadPosts}){
             setDisabled(true);
             updatePost(post.id, inputUserPost);    
         }
-
         if (e.keyCode === 27) {
             setInputUserPost(post.description);
             setEditUserPost(false);
@@ -122,6 +120,9 @@ export function Post({post, like, reloadPosts}){
         if(type === "delete"){
             return swal("Post deletado com sucesso!");
         }
+        if(type === "update"){
+            return swal("Post atualizado com sucesso!");
+        }
     }
 
     async function deletePost(id){
@@ -159,27 +160,15 @@ export function Post({post, like, reloadPosts}){
             await reloadPosts();
             setEditUserPost(false);
             setDisabled(false);
+            sucessOrError("update");
+            setTimeout(()=>{
+                window.location.reload()
+            }, 1000);
         } catch (error) {
             setDisabled(false);
             swal(`Houve um erro ao atualizar seu post! Status: ${error}`);
-            // setModalEdit(false);
-            // setLoadingUpdate(false);
         }
     }
-
-    // function enviarUpdate(id){
-    //     setLoadingUpdate(true);
-
-    //     if(!description){
-    //         setTimeout(()=>{
-    //             setLoadingUpdate(false);
-    //             swal("Insira uma descrição válida!");
-    //         }, 1500);
-    //         setDescription("");
-    //         return;
-    //     }
-    //     updatePost(id);
-    // }
 
     function createMessageLike(){
         if(like.length === 0) return `Este post não possui likes até o momento...`
@@ -191,10 +180,7 @@ export function Post({post, like, reloadPosts}){
 
     Modal.setAppElement('.root');
     const [modalOpen, setModalOpen] = useState(false);
-    // const [modalEdit, setModalEdit] = useState(false);
-    // const [description, setDescription] = useState('');
     const [loadingDelete, setLoadingDelete] = useState(false);
-    // const [loadingUpdate, setLoadingUpdate] = useState(false);
 
     return (
         <Box>
@@ -241,27 +227,6 @@ export function Post({post, like, reloadPosts}){
                                     </Modal>
                                 <IoMdCreate className='icon editar' 
                                 onClick={() => setEditUserPost(true)}/>
-                                {/* onClick={()=> setModalEdit(true)}/> */}
-                                    {/* Modal de edição como alternativa ao focus do input */}
-                                    {/* <Modal isOpen={modalEdit} style={customerStyle}
-                                    onRequestClose={() => {setModalEdit(false); setDescription('')}}>
-                                    <div>
-                                        <input style={input} type="text" placeholder='Insira a nova descrição do post'
-                                        value={description} onChange={e => setDescription(e.target.value)}/>
-                                        <p style={paiButton}>
-                                            {
-                                                loadingUpdate ? <button style={buttonNext}>
-                                                    <ThreeDots color="#fff" height={13} />
-                                                </button>
-                                                :
-                                                <button type="submit" style={buttonNext}
-                                                onClick={()=> enviarUpdate(post.id)}>
-                                                    Update
-                                                </button>
-                                            }
-                                        </p>
-                                    </div>
-                                    </Modal> */}
                             </User>
                         :   <User onClick={() => navigate(`/user/${post.userId}`)}>
                                 {post.username}
