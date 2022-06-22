@@ -47,7 +47,8 @@ const buttonCancel = {
     'height': '40px',
     'border-radius': '5px',
     'background-color': '#FFFFFF',
-    'color': '#1877F2'
+    'color': '#1877F2',
+    'cursor': 'pointer'
 }
 
 const buttonNext = {
