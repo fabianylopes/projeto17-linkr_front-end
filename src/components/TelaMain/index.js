@@ -16,25 +16,29 @@ import SearchBar from "../SearchBar";
 
 function Timeline() {
     const navigate = useNavigate();
-    const [posts, setPosts] = useState([]);
-    const [likes, setLikes] = useState([]);
-    const { token:localToken } = useContext(TokenContext);
+    // const [posts, setPosts] = useState([]);
+    // const [likes, setLikes] = useState([]);
+    const { token } = useContext(TokenContext);
+    const [ posts, setPosts ] = useState([])
+
+    console.log(posts);
     
     async function loadPosts() {
         try {
-            const response = await api.get("/timeline");
-            console.log(response);
-            setPosts(response.data.posts);
-            setLikes(response.data.usersLikes);
+            const response = await api.get(`/timeline/${token.id}`);
+            
+            setPosts(response.data);
+            // setPosts(response.data.posts);
+            // setLikes(response.data.usersLikes);
         } catch (error) {
             swal("An error occured while trying to fetch the posts, please refresh the page");
         }
     }
 
     useEffect(() => {
-        if(!localToken) navigate('/')
+        if(!token) navigate('/')
         loadPosts();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+       
     }, []);
 
     return (  
@@ -46,12 +50,12 @@ function Timeline() {
                     <Title>timeline</Title>
                     <Boxes>
                         <LeftColumn>
-                            <PostBox reload={(post)=> setPosts(post)}/>
+                            <PostBox/>
                             <Button>12 new posts, load more! <BiRefresh/></Button>
                             {
                             posts.length === 0 ? 
                                 <Text>There are no posts yet</Text>
-                            : <Posts posts={posts} likes={likes} reloadPosts={loadPosts}/>
+                            : <Posts posts={posts} />
                             }
                         </LeftColumn>
                         <Trending/>
