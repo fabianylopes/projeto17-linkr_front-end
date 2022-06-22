@@ -50,7 +50,7 @@ function Timeline() {
                     <Title>timeline</Title>
                     <Boxes>
                         <LeftColumn>
-                            <PostBox reload={(post)=> setPosts(post)}/>
+                            <PostBox/>
                             <Button>12 new posts, load more! <BiRefresh/></Button>
                             {
                             posts.length === 0 ? 

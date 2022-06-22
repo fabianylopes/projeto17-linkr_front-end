@@ -31,7 +31,7 @@ export default function Hashtag() {
     useEffect(() => {
         if(!token.token) navigate('/')
         getHashtagPosts()
-    }, [hashtagPosts]);
+    }, []);
 
     return (
         <Container>
