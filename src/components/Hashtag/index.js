@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import InfiniteScroll from 'react-infinite-scroller';
+import { useNavigate, useParams } from 'react-router-dom';
+import swal from 'sweetalert';
+//import InfiniteScroll from 'react-infinite-scroller';
 
 import { Text, Boxes } from './style';
 import { Container, Body } from '../TelaMain/style';
@@ -12,11 +13,13 @@ import Posts from '../Posts';
 import api from '../utils/api/api';
 
 export default function Hashtag() {
+    const navigate = useNavigate();
 
     const { hash } = useContext(HashtagContext);
     const { token } = useContext(TokenContext);
     const { hashtag } = useParams();
     const [hashtagPosts, setHashtagPosts] = useState([]);
+    const [likes, setLikes] = useState([]);
 
     useEffect(() => getHashtagPosts(), [hashtag]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -25,22 +28,29 @@ export default function Hashtag() {
         api.get(`/hashtag/${hashtag}`,config ).then((response) => setHashtagPosts(response.data)).catch((error) => console.log(error)); 
     }
 
+    async function loadPosts() {
+        try {
+            const response = await api.get("/timeline");
+            setHashtagPosts(response.data.posts);
+            setLikes(response.data.usersLikes);
+        } catch (error) {
+            swal("An error occured while trying to fetch the posts, please refresh the page");
+        }
+    }
+
+    useEffect(() => {
+        if(!token.token) navigate('/')
+        loadPosts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <Container>
             <Header/>
             <Body>
                 <Text>#{hash}</Text>
                 <Boxes>              
-
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={getHashtagPosts}
-                    hasMore={true || false}
-                    loader={<div className="loader" key={0}>Loading ...</div>}
-                >
-                    <Posts posts={hashtagPosts}/>
-                </InfiniteScroll>
-
+                    <Posts posts={hashtagPosts} likes={likes}/>
                     <Trending/>
                 </Boxes>
             </Body>    

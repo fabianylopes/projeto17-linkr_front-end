@@ -22,6 +22,8 @@ export default function Posts(props) {
         return likes.filter(like => parseInt(like.postId) === parseInt(post.id));
     }
 
+    console.log(likes)
+
     if(!token){
         return <></>
     }else{
