@@ -5,7 +5,7 @@ import api from '../utils/api/api';
 import { Box, Image, Texts, Text, Inputs, SmallInput, BigInput, ButtonBox, Button } from './style';
 
 function PostBox(props) {
-    const { reload } = props;
+    // const { reload } = props;
     let image = '';
     let token = '';
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
@@ -45,8 +45,11 @@ function PostBox(props) {
       try {
         await api.post('/timeline', obj, objConfig);
         sucessOrError();
-
-        reload((await api.get('/timeline')).data.posts);
+        // reload((await api.get('/timeline')).data.posts);
+        swal("Post inserido com sucesso");
+        setTimeout(()=>{
+          window.location.reload();
+        }, 1200);
       } catch (error) {
         swal(`Houve um erro ao publicar seu link! Status: ${error.response.status}`);
         sucessOrError();

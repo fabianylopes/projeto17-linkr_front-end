@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import InfiniteScroll from 'react-infinite-scroller';
+import { useNavigate, useParams } from 'react-router-dom';
+import swal from 'sweetalert';
+//import InfiniteScroll from 'react-infinite-scroller';
 
 import { Text, Boxes } from './style';
 import { Container, Body } from '../TelaMain/style';
@@ -12,18 +13,25 @@ import Posts from '../Posts';
 import api from '../utils/api/api';
 
 export default function Hashtag() {
+    const navigate = useNavigate();
 
     const { hash } = useContext(HashtagContext);
     const { token } = useContext(TokenContext);
     const { hashtag } = useParams();
     const [hashtagPosts, setHashtagPosts] = useState([]);
-
-    useEffect(() => getHashtagPosts(), [hashtag]); // eslint-disable-line react-hooks/exhaustive-deps
+  
+   
+    //useEffect(() => getHashtagPosts(), [hashtag]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function getHashtagPosts(){
         const config ={headers: {Authorization: `Bearer ${token.token}`}};
         api.get(`/hashtag/${hashtag}`,config ).then((response) => setHashtagPosts(response.data)).catch((error) => console.log(error)); 
     }
+
+    useEffect(() => {
+        if(!token.token) navigate('/')
+        getHashtagPosts()
+    }, []);
 
     return (
         <Container>
@@ -31,16 +39,7 @@ export default function Hashtag() {
             <Body>
                 <Text>#{hash}</Text>
                 <Boxes>              
-
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={getHashtagPosts}
-                    hasMore={true || false}
-                    loader={<div className="loader" key={0}>Loading ...</div>}
-                >
                     <Posts posts={hashtagPosts}/>
-                </InfiniteScroll>
-
                     <Trending/>
                 </Boxes>
             </Body>    

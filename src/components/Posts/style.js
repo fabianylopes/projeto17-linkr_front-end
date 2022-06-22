@@ -246,6 +246,15 @@ const Url = styled.h4`
     line-height: 13px;
     color: #CECECE;
 `
+const EditUserPost = styled.input`
+    width: 100%;
+    height: 44px;
+
+    background-color: #FFFFFF;
+
+    border-radius: 7px;
+    border: none;
+`;
 
 export { 
     Hashtag,
@@ -265,4 +274,5 @@ export {
     Subtitle, 
     Url,
     Texts,
+    EditUserPost
 }
