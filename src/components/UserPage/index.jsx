@@ -45,7 +45,8 @@ export default function UserPage() {
                     : 
                         userData.userPosts?.map(post => 
                             <Post like={likes} 
-                            post={{...post, username: userData.username, picture: userData.picture}}/>
+                            post={{...post, username: userData.username,
+                                    picture: userData.picture}}/>
                         )
                         
                     }
