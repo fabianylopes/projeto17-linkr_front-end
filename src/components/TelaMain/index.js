@@ -23,6 +23,7 @@ function Timeline() {
     async function loadPosts() {
         try {
             const response = await api.get("/timeline");
+            console.log(response);
             setPosts(response.data.posts);
             setLikes(response.data.usersLikes);
         } catch (error) {
@@ -50,7 +51,7 @@ function Timeline() {
                             {
                             posts.length === 0 ? 
                                 <Text>There are no posts yet</Text>
-                            : <Posts posts={posts} likes={likes}/>
+                            : <Posts posts={posts} likes={likes} reloadPosts={loadPosts}/>
                             }
                         </LeftColumn>
                         <Trending/>

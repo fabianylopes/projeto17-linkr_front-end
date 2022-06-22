@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import ReactHashtag from '@mdnm/react-hashtag';
 import Modal from 'react-modal';
@@ -8,16 +8,16 @@ import { TailSpin, ThreeDots } from "react-loader-spinner";
 import swal from 'sweetalert';
 import ReactTooltip from 'react-tooltip';
 
-import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag } from './style';
-import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
+import { Container, Box, Image, Likes, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag, EditUserPost } from './style';
+import { customerStyle, h1, p, buttonCancel, buttonNext } from './modalStyle';
+// import { customerStyle, h1, p, buttonCancel, buttonNext, input, paiButton } from './modalStyle';
 import HashtagContext from '../utils/context/HashtagContext';
 import TokenContext from '../utils/context/TokenContext';
 import api from '../utils/api/api';
 
 export default function Posts(props) {
-    const { posts, likes } = props;
+    const { posts, likes, reloadPosts } = props;
     const { token } = useContext(TokenContext);
-
     function likesPostId(likes, post){
         return likes.filter(like => parseInt(like.postId) === parseInt(post.id));
     }
@@ -31,7 +31,7 @@ export default function Posts(props) {
             <Container>
             {
                 posts.length > 0 
-                ? posts.map((post, i) => <Post key={i} post={post} like={likesPostId(likes, post)}/>)
+                ? posts.map((post, i) => <Post key={i} post={post} reloadPosts={reloadPosts} like={likesPostId(likes, post)}/>)
                 : <TailSpin color="#ffffff" size={50}/>
             }
             </Container>
@@ -39,7 +39,7 @@ export default function Posts(props) {
     }
 }
 
-export function Post({post, like}){
+export function Post({post, like, reloadPosts}){
     const navigate = useNavigate();
     const { setHash } = useContext(HashtagContext);
     const { token } = useContext(TokenContext);
@@ -49,6 +49,28 @@ export function Post({post, like}){
     const [qttLikes, setQtt] = useState(parseInt(post.likes));
     const [ buttonLike, setButtonLike ] = useState(true);
     const { id:userId, token:userToken} = token;
+
+    const previousInputUserPost = useRef(null);
+    const [ inputUserPost, setInputUserPost ] = useState(post.description);
+    const [ disabled, setDisabled ] = useState(false);
+    const [editUserPost, setEditUserPost] = useState(false);
+
+    useEffect(() => {
+        previousInputUserPost.current = inputUserPost;
+    }, [inputUserPost]);
+
+    function updateUserPost(e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            setDisabled(true);
+            updatePost(post.id, inputUserPost);    
+        }
+
+        if (e.keyCode === 27) {
+            setInputUserPost(post.description);
+            setEditUserPost(false);
+        }
+    }
 
     useEffect(()=>{
         const config ={headers: {Authorization: `Bearer ${token.token}`}};
@@ -99,8 +121,6 @@ export function Post({post, like}){
     function sucessOrError(type){
         if(type === "delete"){
             return swal("Post deletado com sucesso!");
-        }else{
-            if(type === "update") return swal("Post atualizado com sucesso!");
         }
     }
 
@@ -127,7 +147,7 @@ export function Post({post, like}){
         }
     }
 
-    async function updatePost(id){
+    async function updatePost(id, description){
         const objConfig = {
             headers: {
                 Authorization: `Bearer ${tokenStorage}`
@@ -136,33 +156,30 @@ export function Post({post, like}){
 
         try {
             await api.put(`/timeline/${id}`, {description: description}, objConfig);
-            setTimeout(()=>{
-                sucessOrError("update");
-                setModalEdit(false);
-            }, 1000);
-            setTimeout(() => {
-                window.location.reload();
-            }, 2500);
+            await reloadPosts();
+            setEditUserPost(false);
+            setDisabled(false);
         } catch (error) {
-            swal(`Houve um erro ao atualizar seu post! Status: ${error.response.status}`);
-            setModalEdit(false);
-            setLoadingUpdate(false);
+            setDisabled(false);
+            swal(`Houve um erro ao atualizar seu post! Status: ${error}`);
+            // setModalEdit(false);
+            // setLoadingUpdate(false);
         }
     }
 
-    function enviarUpdate(id){
-        setLoadingUpdate(true);
+    // function enviarUpdate(id){
+    //     setLoadingUpdate(true);
 
-        if(!description){
-            setTimeout(()=>{
-                setLoadingUpdate(false);
-                swal("Insira uma descrição válida!");
-            }, 1500);
-            setDescription("");
-            return;
-        }
-        updatePost(id);
-    }
+    //     if(!description){
+    //         setTimeout(()=>{
+    //             setLoadingUpdate(false);
+    //             swal("Insira uma descrição válida!");
+    //         }, 1500);
+    //         setDescription("");
+    //         return;
+    //     }
+    //     updatePost(id);
+    // }
 
     function createMessageLike(){
         if(like.length === 0) return `Este post não possui likes até o momento...`
@@ -174,10 +191,10 @@ export function Post({post, like}){
 
     Modal.setAppElement('.root');
     const [modalOpen, setModalOpen] = useState(false);
-    const [modalEdit, setModalEdit] = useState(false);
-    const [description, setDescription] = useState('');
+    // const [modalEdit, setModalEdit] = useState(false);
+    // const [description, setDescription] = useState('');
     const [loadingDelete, setLoadingDelete] = useState(false);
-    const [loadingUpdate, setLoadingUpdate] = useState(false);
+    // const [loadingUpdate, setLoadingUpdate] = useState(false);
 
     return (
         <Box>
@@ -222,9 +239,11 @@ export function Post({post, like}){
                                         }
                                     </p>
                                     </Modal>
-                                <IoMdCreate className='icon editar' onClick={()=> setModalEdit(true)}/>
+                                <IoMdCreate className='icon editar' 
+                                onClick={() => setEditUserPost(true)}/>
+                                {/* onClick={()=> setModalEdit(true)}/> */}
                                     {/* Modal de edição como alternativa ao focus do input */}
-                                    <Modal isOpen={modalEdit} style={customerStyle}
+                                    {/* <Modal isOpen={modalEdit} style={customerStyle}
                                     onRequestClose={() => {setModalEdit(false); setDescription('')}}>
                                     <div>
                                         <input style={input} type="text" placeholder='Insira a nova descrição do post'
@@ -242,14 +261,23 @@ export function Post({post, like}){
                                             }
                                         </p>
                                     </div>
-                                    </Modal>
+                                    </Modal> */}
                             </User>
                         :   <User onClick={() => navigate(`/user/${post.userId}`)}>
                                 {post.username}
                             </User>
                     }
-                    {
-                        post.description ? 
+                    {   editUserPost ?
+                        <EditUserPost
+                            type="text"
+                            autoFocus
+                            ref={previousInputUserPost}
+                            value={inputUserPost}
+                            onChange={e => setInputUserPost(e.target.value)}
+                            onKeyDown={e => updateUserPost(e)}
+                            disabled={disabled}
+                        /> :
+                        (post.description ? 
                         <Description>
                             <ReactHashtag
                                 renderHashtag={
@@ -262,7 +290,7 @@ export function Post({post, like}){
                                 {post.description}
                             </ReactHashtag>
                         </Description>
-                        : <></>
+                        : <></>)
                     }
                 <Link href={post.url} target="_blank">
                     <Texts>
