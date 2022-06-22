@@ -118,19 +118,21 @@ export function Post({post}){
         } catch(error){
             swal(`Houve um erro ao deletar seu post! Status: ${error.response.status}`);
             setModalOpen(false);
-            setLoadingDelete(false);
+            setLoading(false);
         }
     }
 
-    async function sharePost(id, body){
+    async function sharePost(postId, userId){
+        const body = { postId, userId }
+
         const objConfig = {
             headers: {Authorization: `Bearer ${tokenStorage}`}
         }
         
         try{
-            await api.put(`/post/${id}`, body, objConfig);
+            await api.post(`/post/${postId}`, body, objConfig);
             setTimeout(()=>{
-                sucessOrError("share");
+                swal("Post compartilhado com sucesso!");
                 setModalOpen(false);
             }, 1000);
             setTimeout(() => {
@@ -139,7 +141,7 @@ export function Post({post}){
         } catch(error){
             swal(`Houve um erro ao compartilhar seu post! Status: ${error.response.status}`);
             setModalOpen(false);
-            setLoadingDelete(false);
+            setLoading(false);
         }
     }
 
@@ -162,16 +164,16 @@ export function Post({post}){
         } catch (error) {
             swal(`Houve um erro ao atualizar seu post! Status: ${error.response.status}`);
             setModalEdit(false);
-            setLoadingUpdate(false);
+            setLoading(false);
         }
     }
 
     function enviarUpdate(id){
-        setLoadingUpdate(true);
+        setLoading(true);
 
         if(!description){
             setTimeout(()=>{
-                setLoadingUpdate(false);
+                setLoading(false);
                 swal("Insira uma descrição válida!");
             }, 1500);
             setDescription("");
@@ -184,8 +186,7 @@ export function Post({post}){
     const [modalOpen, setModalOpen] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
     const [description, setDescription] = useState('');
-    const [loadingDelete, setLoadingDelete] = useState(false);
-    const [loadingUpdate, setLoadingUpdate] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     return (
         <BoxReposted>
@@ -221,12 +222,12 @@ export function Post({post}){
                                     <p style={p}>
                                         <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, cancel</button>
                                         {
-                                            loadingDelete ? <button style={buttonNext}>
+                                            loading ? <button style={buttonNext}>
                                                 <ThreeDots color="#fff" height={13} />
                                             </button> 
                                             :
                                             <button style={buttonNext} 
-                                            onClick={() => { setLoadingDelete(true); sharePost(post.id, token.username);}}>
+                                            onClick={() => { setLoading(true); sharePost(post.id, post.userId);}}>
                                                 Yes, share!
                                             </button>
                                         }
@@ -251,12 +252,12 @@ export function Post({post}){
                                         <p style={p}>
                                             <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, go back</button>
                                             {
-                                                loadingDelete ? <button style={buttonNext}>
+                                                loading ? <button style={buttonNext}>
                                                     <ThreeDots color="#fff" height={13} />
                                                 </button> 
                                                 :
                                                 <button style={buttonNext} 
-                                                onClick={() => { setLoadingDelete(true); deletePost(post.id);}}>
+                                                onClick={() => { setLoading(true); deletePost(post.id);}}>
                                                     Yes, delete it
                                                 </button>
                                             }
@@ -271,7 +272,7 @@ export function Post({post}){
                                             value={description} onChange={e => setDescription(e.target.value)}/>
                                             <p style={paiButton}>
                                                 {
-                                                    loadingUpdate ? <button style={buttonNext}>
+                                                    loading ? <button style={buttonNext}>
                                                         <ThreeDots color="#fff" height={13} />
                                                     </button>
                                                     :

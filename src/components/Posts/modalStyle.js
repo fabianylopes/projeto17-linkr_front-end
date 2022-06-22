@@ -55,7 +55,8 @@ const buttonNext = {
     'height': '40px',
     'border-radius': '5px',
     'color': '#FFFFFF',
-    'background-color': '#1877F2'
+    'background-color': '#1877F2',
+    'cursor': 'pointer'
 }
 
 const input = {
@@ -72,7 +73,8 @@ const paiButton = {
     'width': '100%',
     'display': 'flex',
     'justify-content': 'center',
-    'align-items': 'center'
+    'align-items': 'center',
+    'cursor': 'pointer'
 }
 
 export {
