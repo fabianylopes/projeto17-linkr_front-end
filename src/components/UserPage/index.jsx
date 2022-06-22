@@ -17,15 +17,20 @@ export default function UserPage() {
     const [likes, setLikes] = useState([]);
 
     useEffect(() => !token.token && navigate("/"), []); // eslint-disable-line react-hooks/exhaustive-deps
+    
+    function reloadPosts() {
+        api.getPostsByUserId(id, token.token).then(response => {
+            setUserData(response.data.posts);
+            setLikes(response.data.usersLikes);
+        }).catch(error => {
+            console.log(error);
+            alert("User does not exist.");
+            navigate("/");
+        });
+    }
+    
     useEffect(() => {
-    api.getPostsByUserId(id, token.token).then(response => {
-        setUserData(response.data.posts);
-        setLikes(response.data.usersLikes);
-    }).catch(error => {
-        console.log(error);
-        alert("User does not exist.");
-        navigate("/");
-    });
+        reloadPosts();
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (  
@@ -45,6 +50,7 @@ export default function UserPage() {
                     : 
                         userData.userPosts?.map(post => 
                             <Post like={likes} 
+                            reloadPosts={reloadPosts}
                             post={{...post, username: userData.username,
                                     picture: userData.picture}}/>
                         )
