@@ -15,7 +15,7 @@ import TokenContext from '../utils/context/TokenContext';
 import api from '../utils/api/api';
 
 export default function Posts(props) {
-const { posts /*, likes*/ } = props;
+    const { posts /*, likes*/ } = props;
     const { token } = useContext(TokenContext);
     function likesPostId(likes, post){
         return likes.filter(like => parseInt(like.postId) === parseInt(post.id));
