@@ -51,7 +51,7 @@ function Timeline() {
                             {
                             posts.length === 0 ? 
                                 <Text>There are no posts yet</Text>
-                            : <Posts posts={posts} likes={likes} reloadPosts={loadPosts}/>
+                            : <Posts posts={posts} likes={likes}/>
                             }
                         </LeftColumn>
                         <Trending/>
