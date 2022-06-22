@@ -55,7 +55,7 @@ const Image = styled.div`
     }
 `
 
-const Actions = styled.div`
+/* const Actions = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,9 +68,9 @@ const Action = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-`
+`*/
 
-const Text = styled.h4`
+const Likes = styled.h4`
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
@@ -78,7 +78,7 @@ const Text = styled.h4`
     line-height: 13px;
     text-align: center;
     color: #FFFFFF;
-`
+` 
 
 const Icon = styled.img`
     width: 20px;
@@ -199,16 +199,23 @@ const Url = styled.h4`
     line-height: 13px;
     color: #CECECE;
 `
+const EditUserPost = styled.input`
+    width: 100%;
+    height: 44px;
+
+    background-color: #FFFFFF;
+
+    border-radius: 7px;
+    border: none;
+`;
 
 export { 
     Hashtag,
     Container,
     Box, 
     Icon,
-    Actions,
-    Action,
-    Text,
     Image, 
+    Likes,
     Content, 
     User, 
     Description, 
@@ -216,5 +223,6 @@ export {
     Title, 
     Subtitle, 
     Url,
-    Texts  
+    Texts,
+    EditUserPost
 }

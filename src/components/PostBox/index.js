@@ -45,8 +45,11 @@ function PostBox(props) {
       try {
         await api.post('/timeline', obj, objConfig);
         sucessOrError();
-
         reload((await api.get('/timeline')).data.posts);
+        swal("Post inserido com sucesso");
+        setTimeout(()=>{
+          window.location.reload();
+        }, 1200);
       } catch (error) {
         swal(`Houve um erro ao publicar seu link! Status: ${error.response.status}`);
         sucessOrError();
