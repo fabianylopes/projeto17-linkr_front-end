@@ -14,47 +14,39 @@ export default function UserPage() {
     const { id } = useParams();
     const { token } = useContext(TokenContext);
     const [ userData, setUserData ] = useState({});
-    const [likes, setLikes] = useState([]);
+    const [ userPosts, setUserPosts ] = useState([]);
 
-    useEffect(() => !token.token && navigate("/"), []); // eslint-disable-line react-hooks/exhaustive-deps
-    
-    function reloadPosts() {
+    useEffect(() => !token.token && navigate("/"), []); 
+
+    useEffect(() => {
         api.getPostsByUserId(id, token.token).then(response => {
-            setUserData(response.data.posts);
-            setLikes(response.data.usersLikes);
+            setUserData(response.data.userData);
+            setUserPosts(response.data.posts);
         }).catch(error => {
             console.log(error);
             alert("User does not exist.");
             navigate("/");
         });
-    }
-    
-    useEffect(() => {
-        reloadPosts();
-    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [id]);
 
     return (  
         <Container>
             <Header/>
             <SearchBar isHeader={false}/>
             <PostsContainer>
-                {!userData.userPosts ?
+                {!userPosts ?
                 <TailSpin color="#ffffff" size={50}/> :
                 <>
                     <Title>
                         <Picture src={userData.picture}/>
                         <Username>{userData.username}'s posts</Username>
                     </Title>
-                    {userData.userPosts?.length === 0 ? 
+                    {userPosts?.length === 0 ? 
                         <Text>{userData.username} has no posts yet...</Text>
                     : 
-                        userData.userPosts?.map(post => 
-                            <Post like={likes} 
-                            reloadPosts={reloadPosts}
-                            post={{...post, username: userData.username,
-                                    picture: userData.picture}}/>
+                        userPosts?.map((post, i) => 
+                            <Post key={i} infoPost={post}/>
                         )
-                        
                     }
                 </>
                 }
