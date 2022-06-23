@@ -16,8 +16,6 @@ import SearchBar from "../SearchBar";
 
 function Timeline() {
     const navigate = useNavigate();
-    // const [posts, setPosts] = useState([]);
-    // const [likes, setLikes] = useState([]);
     const { token } = useContext(TokenContext);
     const [ posts, setPosts ] = useState([])
 
@@ -26,10 +24,7 @@ function Timeline() {
     async function loadPosts() {
         try {
             const response = await api.get(`/timeline/${token.id}`);
-            
             setPosts(response.data);
-            // setPosts(response.data.posts);
-            // setLikes(response.data.usersLikes);
         } catch (error) {
             swal("An error occured while trying to fetch the posts, please refresh the page");
         }
@@ -38,7 +33,7 @@ function Timeline() {
     useEffect(() => {
         if(!token) navigate('/')
         loadPosts();
-       
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (  
@@ -50,7 +45,7 @@ function Timeline() {
                     <Title>timeline</Title>
                     <Boxes>
                         <LeftColumn>
-                            <PostBox/>
+                            <PostBox reload={(post)=> setPosts(post)}/>
                             <Button>12 new posts, load more! <BiRefresh/></Button>
                             {
                             posts.length === 0 ? 

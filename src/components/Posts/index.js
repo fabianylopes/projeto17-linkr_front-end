@@ -37,10 +37,9 @@ export default function Posts(props) {
 
 export function Post({infoPost}){
     const navigate = useNavigate();
-
     const { token } = useContext(TokenContext);
 
-    const [ post, setPost ] = useState(infoPost.post);
+    const post = infoPost.post;
     const [liked, setliked] = useState(infoPost.iLiked);
     const [qttLikes, setQtt] = useState(infoPost.whoLiked.length);
 
@@ -195,10 +194,7 @@ export function Post({infoPost}){
 
     Modal.setAppElement('.root');
     const [modalOpen, setModalOpen] = useState(false);
-    // const [modalEdit, setModalEdit] = useState(false);
-    // const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
-    // const [loadingDelete, setLoadingDelete] = useState(false);
 
     return (
         <BoxReposted>

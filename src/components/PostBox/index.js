@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import swal from 'sweetalert';
 
+import TokenContext from '../utils/context/TokenContext';
 import api from '../utils/api/api';
 import { Box, Image, Texts, Text, Inputs, SmallInput, BigInput, ButtonBox, Button } from './style';
 
 function PostBox(props) {
-    // const { reload } = props;
+    const { reload } = props;
+    const { token: tokenGet } = useContext(TokenContext);
+
     let image = '';
     let token = '';
     const dadosStorage = JSON.parse(localStorage.getItem("infoUsers"));
@@ -45,11 +48,8 @@ function PostBox(props) {
       try {
         await api.post('/timeline', obj, objConfig);
         sucessOrError();
-        // reload((await api.get('/timeline')).data.posts);
+        reload((await api.get(`/timeline/${tokenGet.id}`)).data);
         swal("Post inserido com sucesso");
-        setTimeout(()=>{
-          window.location.reload();
-        }, 1200);
       } catch (error) {
         swal(`Houve um erro ao publicar seu link! Status: ${error.response.status}`);
         sucessOrError();

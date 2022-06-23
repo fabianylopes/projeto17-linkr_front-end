@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import swal from 'sweetalert';
 //import InfiniteScroll from 'react-infinite-scroller';
 
 import { Text, Boxes } from './style';
