@@ -103,7 +103,8 @@ export function Post({infoPost}){
 
     function seeHashtag(hash){
         setHash(hash.substr(1));
-        navigate(`/hashtag/${hash.substr(1)}`)
+        navigate(`/hashtag/${hash.substr(1)}`);
+        window.location.reload();
     }
 
     function sucessOrError(type){
