@@ -40,6 +40,7 @@ export function Post({infoPost}){
 
     const { token } = useContext(TokenContext);
 
+    // eslint-disable-next-line no-unused-vars
     const [ post, setPost ] = useState(infoPost.post);
     const [liked, setliked] = useState(infoPost.iLiked);
     const [qttLikes, setQtt] = useState(infoPost.whoLiked.length);

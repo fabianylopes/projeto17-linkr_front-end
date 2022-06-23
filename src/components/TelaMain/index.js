@@ -1,23 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext} from "react";
-import swal from "sweetalert";
 import { BiRefresh } from 'react-icons/bi'
+import swal from "sweetalert";
+import useInterval from "use-interval";
 
 import api from "../utils/api/api";
 import Header from "../Header/index.js";
 import PostBox from "../PostBox/index.js";
 import Posts from "../Posts/index.js";
-
-import TokenContext from "../utils/context/TokenContext";
-import { useNavigate } from "react-router-dom";
-
-import { Container, Title, Boxes, LeftColumn, Button, Body, Text } from "./style.js";
 import Trending from "../Trending";
 import SearchBar from "../SearchBar";
+import TokenContext from "../utils/context/TokenContext";
+
+import { Container, Title, Boxes, LeftColumn, Button, Body, Text } from "./style.js";
 
 function Timeline() {
     const navigate = useNavigate();
-    // const [posts, setPosts] = useState([]);
-    // const [likes, setLikes] = useState([]);
     const { token } = useContext(TokenContext);
     const [ posts, setPosts ] = useState([])
 
@@ -26,10 +24,7 @@ function Timeline() {
     async function loadPosts() {
         try {
             const response = await api.get(`/timeline/${token.id}`);
-            
             setPosts(response.data);
-            // setPosts(response.data.posts);
-            // setLikes(response.data.usersLikes);
         } catch (error) {
             swal("An error occured while trying to fetch the posts, please refresh the page");
         }
@@ -38,8 +33,16 @@ function Timeline() {
     useEffect(() => {
         if(!token) navigate('/')
         loadPosts();
-       
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useInterval(async ()=>{
+        try {
+            console.log('lib funcionando');
+        } catch (error) {
+            console.log('error')
+        }
+    }, 5000);
 
     return (  
         <>
