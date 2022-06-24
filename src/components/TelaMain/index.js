@@ -22,6 +22,7 @@ function Timeline() {
     const [postsIniciais, setPostsIniciais] = useState([]);
     const [postsAtuais, setPostsAtuais] = useState([]);
     const [diff, setDiff] = useState(0);
+    const [following, setFollowing] = useState([]);
 
     console.log('posts iniciais', postsIniciais);
     console.log('posts atuais', postsAtuais);
@@ -34,6 +35,14 @@ function Timeline() {
             const posts = await api.get('/timelineall');
             setPostsIniciais(posts.data);
             setPostsAtuais(posts.data);
+
+            const objConfig = {
+                headers: {
+                    Authorization: `Bearer ${token.token}`
+                }
+            }
+            const following = await api.get('/following', objConfig);
+            setFollowing(following.data);
         } catch (error) {
             swal("An error occured while trying to fetch the posts, please refresh the page");
         }
@@ -53,11 +62,9 @@ function Timeline() {
             setPostsAtuais(response.data);
 
             if(postsIniciais.length === postsAtuais.length){
-                console.log('Os posts atuais e iniciais possuem o mesmo length');
                 return;
             }else{
                 setDiff(postsAtuais.length - postsIniciais.length)
-                console.log(`A diferença de posts está em ${diff}`);
                 return;
             }
         } catch (error) {
@@ -94,9 +101,9 @@ function Timeline() {
                                 </Button>
                             }
                             {
-                                posts.length === 0 ? 
-                                    <Text>There are no posts yet</Text>
-                                : <Posts posts={posts} />
+                                following.length === 0 ? 
+                                    <Text>You don't follow anyone yet. Search for new friends!</Text>
+                                : <Posts posts={posts}/>
                             }
                         </LeftColumn>
                         <Trending/>
