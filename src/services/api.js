@@ -27,6 +27,13 @@ function getPostsByUserId(id, token) {
     return promise;
 }
 
+function postComment(token, postId, comment) {
+    const config = getConfig(token);
+    const body = {postId, comment}
+    const promise = axios.post(`${BASE_URL}/comment`, body, config);
+    return promise;
+}
+
 function getSearchedUsers(username, token) {
     const config = getConfig(token);
     const promise = axios.get(`${BASE_URL}/user/list/${username}`, config);
@@ -39,6 +46,6 @@ function getPostsByHashtag(hash, token){
     return promise;
 }
 
-const api = { getHashtags, getHashtag, getPosts, getPostsByUserId, getPostsByHashtag, getSearchedUsers };
+const api = { getHashtags, getHashtag, getPosts, getPostsByUserId, postComment, getPostsByHashtag, getSearchedUsers };
 
 export default api;

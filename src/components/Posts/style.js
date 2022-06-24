@@ -25,6 +25,10 @@ const Container = styled.div`
     align-items: center;
     gap: 20px;
 `
+const PostContainer = styled.div`
+    width: 100%;
+    height: 100%;
+`;
 
 const BoxReposted = styled.div`
     width: 611px;
@@ -77,6 +81,8 @@ const Box = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
+
+    z-index: 1;
 `
 
 const Image = styled.div`
@@ -124,6 +130,8 @@ const Action = styled.div`
 `
 
 const Text = styled.h4`
+    width: 60px;
+
     font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
@@ -281,5 +289,5 @@ export {
     Url,
     Texts,
     EditUserPost,
-    Message
+    Message, PostContainer
 }

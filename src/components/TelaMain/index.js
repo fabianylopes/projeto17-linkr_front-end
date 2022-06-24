@@ -103,7 +103,7 @@ function Timeline() {
                             {
                                 following.length === 0 ? 
                                     <Text>You don't follow anyone yet. Search for new friends!</Text>
-                                : <Posts posts={posts}/>
+                                : <Posts posts={posts} getPost={loadPosts}/>
                             }
                         </LeftColumn>
                         <Trending/>
