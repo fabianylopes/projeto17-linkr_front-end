@@ -82,8 +82,16 @@ function Timeline() {
                         <LeftColumn>
                             <PostBox reload={(post)=> setPosts(post)}/>
                             {
-                                Math.abs(diff) === 0 ? <></> 
-                                : <Button>{Math.abs(diff)} new posts, load more! <BiRefresh onClick={()=>reload()}/></Button>
+                                diff === 0 ? <></> 
+                                : 
+                                <Button>
+                                    { 
+                                        diff > 0 ? 
+                                        `${Math.abs(diff)} new posts, load more!` 
+                                        : `${Math.abs(diff)} posts removed, load more!` 
+                                    } 
+                                    <BiRefresh onClick={()=>reload()}/>
+                                </Button>
                             }
                             {
                                 posts.length === 0 ? 
