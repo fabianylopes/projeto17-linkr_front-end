@@ -1,11 +1,13 @@
 import { Container, UserContainer } from "./style";
 import { IoSearchOutline } from 'react-icons/io5';
+import {HiOutlineBadgeCheck} from 'react-icons/hi'
 import { useContext, useEffect, useState } from "react";
 import { DebounceInput } from "react-debounce-input";
 import { useNavigate } from "react-router-dom";
 import TokenContext from "../utils/context/TokenContext";
 import api from "../../services/api";
 import { TailSpin } from "react-loader-spinner";
+import ImFollowButton from "../utils/ImFollowButton";
 
 export default function SearchBar({isHeader}) {
     const [isSearching, setIsSearching] = useState(false);
@@ -13,6 +15,8 @@ export default function SearchBar({isHeader}) {
     const [ usersList, setUsersList ] = useState([0]);
     const { token } = useContext(TokenContext);
     const navigate = useNavigate();
+
+    console.log("userlist:",usersList)
 
     useEffect(() => !token.token && navigate("/"), []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -30,7 +34,7 @@ export default function SearchBar({isHeader}) {
 
         if (e.target.value==="") return;
 
-        api.getSearchedUsers(e.target.value, token.token).then(response => {
+        api.getSearchedUsers(token.id, e.target.value, token.token).then(response => {
             setUsersList(response.data);
             setIsSearching(false);
         }).catch(error => console.log(error));
@@ -63,11 +67,15 @@ export default function SearchBar({isHeader}) {
     );
 }
 
-function User({ user: {id, username, picture}, redirectToUserPage}) {
+function User({ user: {id, username, picture, following}, redirectToUserPage }) {
     return (
         <UserContainer onClick={() => redirectToUserPage(id)}>
-            <img src={picture} alt="foto de perfil"/>
-            <p>{username}</p>
+            <div>
+                <img src={picture} alt="foto de perfil"/>
+                <p>{username}</p>
+            </div>
+            
+            <ImFollowButton imFollower={following}/> 
         </UserContainer>
     );
 }
