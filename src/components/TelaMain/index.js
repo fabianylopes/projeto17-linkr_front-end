@@ -24,8 +24,8 @@ function Timeline() {
     const [diff, setDiff] = useState(0);
     const [following, setFollowing] = useState([]);
 
-    console.log('posts iniciais', postsIniciais);
-    console.log('posts atuais', postsAtuais);
+    //console.log('posts iniciais', postsIniciais);
+    //console.log('posts atuais', postsAtuais);
     
     async function loadPosts() {
         try {
@@ -56,7 +56,7 @@ function Timeline() {
 
     useInterval(async ()=>{
         try {
-            console.log('lib funcionando');
+            //console.log('lib funcionando');
             const response = await api.get('/timelineall');
             console.log('response all', response);
             setPostsAtuais(response.data);

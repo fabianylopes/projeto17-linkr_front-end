@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-//import InfiniteScroll from 'react-infinite-scroller';
 
 import { Text, Boxes } from './style';
 import { Container, Body } from '../TelaMain/style';
@@ -16,9 +15,6 @@ export default function Hashtag() {
     const { hashtag } = useParams();
     const { token } = useContext(TokenContext);
     const [hashtagPosts, setHashtagPosts] = useState([]);
-  
-   
-    //useEffect(() => getHashtagPosts(), [hashtag]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function getHashtagPosts(){
         const config ={headers: {Authorization: `Bearer ${token.token}`}};
@@ -28,7 +24,7 @@ export default function Hashtag() {
     useEffect(() => {
         if(!token.token) navigate('/')
         getHashtagPosts()
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <Container>

@@ -32,7 +32,7 @@ export default function UserPage() {
             swal("User does not exist.");
             navigate("/");
         });
-    }, [id]);
+    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (  
         <Container>

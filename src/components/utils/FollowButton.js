@@ -47,7 +47,7 @@ export default function FollowButton({imFollowing, setImFollowing, id:toUnfllw, 
             }
         }
  
-    }, [sendAction])
+    }, [sendAction]) // eslint-disable-line react-hooks/exhaustive-deps
 
     if(imFollowing === null){
         return <Button disabled={false}>{<ThreeDots height={'10px'} color={'#FFF'} />}</Button>
@@ -68,6 +68,7 @@ const Button = styled.button`
     color: ${(props)=> props.bckclr ? '#1877F2':'#FFFFFF'};
     border-radius:5px;
     margin-top:10px;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     
