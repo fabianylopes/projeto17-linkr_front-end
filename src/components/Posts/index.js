@@ -204,15 +204,7 @@ export function Post({infoPost, getPost}){
             <BoxReposted reposted={infoPost.whoShared.length}>
                 <div className='reposted-div'>
                     <BiRepost className="icon"/>
-                    <h4>Re-posted by 
-                        {infoPost.whoShared.map(({username}) => 
-                            username === token.username ?
-                                <span> You</span> 
-                            :
-                                <span> {username}</span>
-                            )}
-                                
-                    </h4>
+                    <h4>Re-posted by <span> {users}</span></h4>
                 </div>
                 <Box>
                     <Image>
