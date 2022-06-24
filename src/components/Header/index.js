@@ -22,9 +22,9 @@ export default function Header() {
 
   return (
     <Bar>
-        <Paragrafo conteudo="linkr"  click={() => navigate("/timeline")} />
+        <Paragrafo conteudo="linkr" click={() => navigate("/timeline")} />
         <SearchBar isHeader={true}/>
-        <figure>
+        <figure onClick={() => navigate(`/user/${token?.id}`)}>
             <Logout setToken={setToken} token={token}/>
         </figure>
     </Bar>
@@ -34,6 +34,7 @@ export default function Header() {
 function Logout({setToken, token}){
 
   const [down, setPosition] = useState(true);
+  const navigate = useNavigate();
 
   function logout(){
 

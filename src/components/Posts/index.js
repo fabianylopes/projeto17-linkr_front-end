@@ -11,24 +11,24 @@ import { BiRepost } from 'react-icons/bi';
 import ReactTooltip from 'react-tooltip';
 
 import { Container, BoxReposted, Box, Image, Actions, Action, Text, Content, User, Description, Link, 
-    Title, Subtitle, Url, Texts, Hashtag, EditUserPost, Message } from './style';
+    Title, Subtitle, Url, Texts, Hashtag, EditUserPost, Message, PostContainer } from './style';
 import { customerStyle, h1, p, buttonCancel, buttonNext } from './modalStyle';
 import HashtagContext from '../utils/context/HashtagContext';
 import TokenContext from '../utils/context/TokenContext';
 import api from '../utils/api/api';
+import Comments from '../Comments';
 
 export default function Posts(props) {
-    const { posts } = props;
+    const { posts, getPost } = props;
     const { token } = useContext(TokenContext);
-
     if(!token){
         return <></>
     }else{
-         return (
+        return (
             <Container>
             {
                 posts.length > 0 
-                ? posts.map((post, i) => <Post key={i} infoPost={post}/>)
+                ? posts.map((post, i) => <Post key={i} infoPost={post} getPost={getPost}/>)
                 : <Message>No posts found from your friends</Message>
             }
             </Container>
@@ -36,7 +36,8 @@ export default function Posts(props) {
     }
 }
 
-export function Post({infoPost}){
+export function Post({infoPost, getPost}){
+    console.log("aquiii", getPost)
     const navigate = useNavigate();
     const { token } = useContext(TokenContext);
 
@@ -196,134 +197,141 @@ export function Post({infoPost}){
     Modal.setAppElement('.root');
     const [modalOpen, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [ userComments, setUserComments ] = useState(false); 
 
     return (
-        <BoxReposted reposted={infoPost.whoShared.length}>
-            <div className='reposted-div'>
-                <BiRepost className="icon"/>
-                <h4>Re-posted by 
-                    {infoPost.whoShared.map(({username}) => 
-                        username === token.username ?
-                            <span> You</span> 
-                        :
-                            <span> {username}</span>
-                        )}
+        <PostContainer>
+            <BoxReposted reposted={infoPost.whoShared.length}>
+                <div className='reposted-div'>
+                    <BiRepost className="icon"/>
+                    <h4>Re-posted by 
+                        {infoPost.whoShared.map(({username}) => 
+                            username === token.username ?
+                                <span> You</span> 
+                            :
+                                <span> {username}</span>
+                            )}
+                                
+                    </h4>
+                </div>
+                <Box>
+                    <Image>
+                        <img src={post.picture} alt="Foto perfil" 
+                        onClick={() => navigate(`/user/${post.userId}`)}/>
+                        <Actions>
+                            <Action>
+                                <a data-tip data-for='likes-user'>
+                                    {liked ? 
+                                        <IoMdHeart className="icon-liked" onClick={() => likeAndDislike()}/>
+                                    : 
+                                        <IoMdHeartEmpty className="icon" onClick={() => likeAndDislike()}/>
+                                    }
+                                </a>
+                                <ReactTooltip id='likes-user'>
+                                    <span>{message}</span>
+                                </ReactTooltip>                    
+                                <Text>{qttLikes} likes</Text>
+                            </Action>
+                            <Action>
+                                <AiOutlineComment className="icon" onClick={() => setUserComments(!userComments)}/>
+                                <Text>{infoPost.comments.length} comments</Text>
+                            </Action>                               
                             
-                </h4>
-            </div>
-            <Box>
-                <Image>
-                    <img src={post.picture} alt="Foto perfil" 
-                    onClick={() => navigate(`/user/${post.userId}`)}/>
-                    <Actions>
-                        <Action>
-                            <a data-tip data-for='likes-user'>
-                                {liked ? 
-                                    <IoMdHeart className="icon-liked" onClick={() => likeAndDislike()}/>
-                                : 
-                                    <IoMdHeartEmpty className="icon" onClick={() => likeAndDislike()}/>
-                                }
-                            </a>
-                            <ReactTooltip id='likes-user'>
-                                <span>{message}</span>
-                            </ReactTooltip>                    
-                            <Text>{qttLikes} likes</Text>
-                        </Action>
-                        <Action>
-                            <AiOutlineComment className="icon"/>
-                            <Text>comments</Text>
-                        </Action>                               
-                        
-                        <Action>
-                            <BiRepost className="icon" onClick={()=> setModalOpen(true)}/>
-                            <Modal isOpen={modalOpen} style={customerStyle}
-                                    onRequestClose={() => setModalOpen(false)}>
-                                    <h1 style={h1}>Do you want to re-post this link?</h1>
-                                    <p style={p}>
-                                        <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, cancel</button>
-                                        {
-                                            loading ? <button style={buttonNext}>
-                                                <ThreeDots color="#fff" height={13} />
-                                            </button> 
-                                            :
-                                            <button style={buttonNext} 
-                                            onClick={() => { setLoading(true); sharePost(post.id, post.userId);}}>
-                                                Yes, share!
-                                            </button>
-                                        }
-                                    </p>
-                            </Modal>
-                            <Text>{infoPost.whoShared.length} re-posts</Text>
-                        </Action>   
-                    </Actions>
-
-
-                </Image>
-                <Content>                                   
-
-                        {
-                            post.userId === parseInt(id) ? 
-                                <User>
-                                    <p onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</p>
-                                    <IoIosTrash className='icon lixeira' onClick={()=> setModalOpen(true)}/>
-                                        <Modal isOpen={modalOpen} style={customerStyle}
+                            <Action>
+                                <BiRepost className="icon" onClick={()=> setModalOpen(true)}/>
+                                <Modal isOpen={modalOpen} style={customerStyle}
                                         onRequestClose={() => setModalOpen(false)}>
-                                        <h1 style={h1}>Are you sure you want to delete this post?</h1>
+                                        <h1 style={h1}>Do you want to re-post this link?</h1>
                                         <p style={p}>
-                                            <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, go back</button>
+                                            <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, cancel</button>
                                             {
                                                 loading ? <button style={buttonNext}>
                                                     <ThreeDots color="#fff" height={13} />
                                                 </button> 
                                                 :
                                                 <button style={buttonNext} 
-                                                onClick={() => { setLoading(true); deletePost(post.id);}}>
-                                                    Yes, delete it
+                                                onClick={() => { setLoading(true); sharePost(post.id, post.userId);}}>
+                                                    Yes, share!
                                                 </button>
                                             }
                                         </p>
-                                        </Modal>
-                                        <IoMdCreate className='icon editar' onClick={() => setEditUserPost(!editUserPost)}/>
-                                </User>
-                            :   <User onClick={() => navigate(`/user/${post.userId}`)}>
-                                {post.username}
-                                </User>
-                    }
-                    {   editUserPost ?
-                        <EditUserPost
-                            type="text"
-                            autoFocus
-                            ref={previousInputUserPost}
-                            value={inputUserPost}
-                            onChange={e => setInputUserPost(e.target.value)}
-                            onKeyDown={e => updateUserPost(e)}
-                            disabled={disabled}
-                        /> :
-                        (post.description ? 
-                        <Description>
-                            <ReactHashtag
-                                renderHashtag={
-                                    (hashtagValue, i) => 
-                                    <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
-                                        {hashtagValue}
-                                    </Hashtag>
-                                }
-                            >
-                                {post.description}
-                            </ReactHashtag>
-                        </Description>
-                        : <></>)
-                    }
-                    <Link href={post.url} target="_blank">
-                        <Texts>
-                            <Title>{post.title}</Title>
-                            <Subtitle>{post.descriptionMetadata}</Subtitle>
-                            <Url>{post.url}</Url>
-                        </Texts>
-                        <img src={post.image} alt="Foto link"/>
-                    </Link>
-                </Content>
-            </Box>
-        </BoxReposted>
+                                </Modal>
+                                <Text>{infoPost.whoShared.length} re-posts</Text>
+                            </Action>   
+                        </Actions>
+
+
+                    </Image>
+                    <Content>                                   
+
+                            {
+                                post.userId === parseInt(id) ? 
+                                    <User>
+                                        <p onClick={() => navigate(`/user/${post.userId}`)}>{post.username}</p>
+                                        <IoIosTrash className='icon lixeira' onClick={()=> setModalOpen(true)}/>
+                                            <Modal isOpen={modalOpen} style={customerStyle}
+                                            onRequestClose={() => setModalOpen(false)}>
+                                            <h1 style={h1}>Are you sure you want to delete this post?</h1>
+                                            <p style={p}>
+                                                <button style={buttonCancel} onClick={() => setModalOpen(false)}>No, go back</button>
+                                                {
+                                                    loading ? <button style={buttonNext}>
+                                                        <ThreeDots color="#fff" height={13} />
+                                                    </button> 
+                                                    :
+                                                    <button style={buttonNext} 
+                                                    onClick={() => { setLoading(true); deletePost(post.id);}}>
+                                                        Yes, delete it
+                                                    </button>
+                                                }
+                                            </p>
+                                            </Modal>
+                                            <IoMdCreate className='icon editar' onClick={() => setEditUserPost(!editUserPost)}/>
+                                    </User>
+                                :   <User onClick={() => navigate(`/user/${post.userId}`)}>
+                                    {post.username}
+                                    </User>
+                        }
+                        {   editUserPost ?
+                            <EditUserPost
+                                type="text"
+                                autoFocus
+                                ref={previousInputUserPost}
+                                value={inputUserPost}
+                                onChange={e => setInputUserPost(e.target.value)}
+                                onKeyDown={e => updateUserPost(e)}
+                                disabled={disabled}
+                            /> :
+                            (post.description ? 
+                            <Description>
+                                <ReactHashtag
+                                    renderHashtag={
+                                        (hashtagValue, i) => 
+                                        <Hashtag key={i} onClick={() => seeHashtag(hashtagValue)}>
+                                            {hashtagValue}
+                                        </Hashtag>
+                                    }
+                                >
+                                    {post.description}
+                                </ReactHashtag>
+                            </Description>
+                            : <></>)
+                        }
+                        <Link href={post.url} target="_blank">
+                            <Texts>
+                                <Title>{post.title}</Title>
+                                <Subtitle>{post.descriptionMetadata}</Subtitle>
+                                <Url>{post.url}</Url>
+                            </Texts>
+                            <img src={post.image} alt="Foto link"/>
+                        </Link>
+                    </Content>
+                </Box>
+            </BoxReposted>
+            {userComments ?
+                <Comments infoPost={infoPost} getPost={getPost} setUserComments={setUserComments}/> :
+                <></>
+            }
+        </ PostContainer>
     )
 }

@@ -15,7 +15,8 @@ const customerStyle = {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around'
-    }
+    },
+    overlay: {zIndex: 1000}
 }
 
 const h1 = {
