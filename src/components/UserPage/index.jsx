@@ -8,6 +8,8 @@ import api from "../../services/api.js";
 import { TailSpin } from "react-loader-spinner";
 import SearchBar from "../SearchBar/index.jsx";
 import { Post } from "../Posts/index.js";
+import FollowButton from "../utils/FollowButton.js";
+import swal from "sweetalert";
 
 export default function UserPage() {
     const navigate = useNavigate();
@@ -15,16 +17,19 @@ export default function UserPage() {
     const { token } = useContext(TokenContext);
     const [ userData, setUserData ] = useState({});
     const [ userPosts, setUserPosts ] = useState([]);
-
-    useEffect(() => !token.token && navigate("/"), []); 
+    const [imFollowing, setImFollowing] = useState(null);
 
     useEffect(() => {
+        if(!token.token) navigate("/");
+
         api.getPostsByUserId(id, token.token).then(response => {
+           
             setUserData(response.data.userData);
             setUserPosts(response.data.posts);
+            setImFollowing(response.data.imFollowing);
         }).catch(error => {
             console.log(error);
-            alert("User does not exist.");
+            swal("User does not exist.");
             navigate("/");
         });
     }, [id]);
@@ -40,6 +45,10 @@ export default function UserPage() {
                     <Title>
                         <Picture src={userData.picture}/>
                         <Username>{userData.username}'s posts</Username>
+                        {userData.id !== token.id
+                        ?<FollowButton imFollowing={imFollowing} setImFollowing={setImFollowing} id={id}/>
+                        :<></>
+                        }
                     </Title>
                     {userPosts?.length === 0 ? 
                         <Text>{userData.username} has no posts yet...</Text>
@@ -57,3 +66,4 @@ export default function UserPage() {
         </Container>
     );
 }
+
