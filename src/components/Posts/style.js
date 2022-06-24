@@ -10,6 +10,15 @@ const Hashtag = styled.div`
   }
 `
 
+const Message = styled.h2`
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    text-align: center;
+    color: #FFFFFF;
+`
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -271,5 +280,6 @@ export {
     Subtitle, 
     Url,
     Texts,
-    EditUserPost
+    EditUserPost,
+    Message
 }

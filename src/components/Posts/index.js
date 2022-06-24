@@ -5,12 +5,13 @@ import ReactHashtag from '@mdnm/react-hashtag';
 import Modal from 'react-modal';
 import swal from 'sweetalert';
 import { IoMdHeartEmpty, IoMdHeart, IoIosTrash, IoMdCreate } from "react-icons/io";
-import { TailSpin, ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 import { AiOutlineComment } from 'react-icons/ai';
 import { BiRepost } from 'react-icons/bi';
 import ReactTooltip from 'react-tooltip';
 
-import { Container, BoxReposted, Box, Image, Actions, Action, Text, Content, User, Description, Link, Title, Subtitle, Url, Texts, Hashtag, EditUserPost } from './style';
+import { Container, BoxReposted, Box, Image, Actions, Action, Text, Content, User, Description, Link, 
+    Title, Subtitle, Url, Texts, Hashtag, EditUserPost, Message } from './style';
 import { customerStyle, h1, p, buttonCancel, buttonNext } from './modalStyle';
 import HashtagContext from '../utils/context/HashtagContext';
 import TokenContext from '../utils/context/TokenContext';
@@ -28,7 +29,7 @@ export default function Posts(props) {
             {
                 posts.length > 0 
                 ? posts.map((post, i) => <Post key={i} infoPost={post}/>)
-                : <TailSpin color="#ffffff" size={50}/>
+                : <Message>No posts found from your friends</Message>
             }
             </Container>
         );
