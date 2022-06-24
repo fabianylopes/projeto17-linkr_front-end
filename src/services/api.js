@@ -34,9 +34,9 @@ function postComment(token, postId, comment) {
     return promise;
 }
 
-function getSearchedUsers(username, token) {
+function getSearchedUsers( userId, username, token ) {
     const config = getConfig(token);
-    const promise = axios.get(`${BASE_URL}/user/list/${username}`, config);
+    const promise = axios.get(`${BASE_URL}/user/list/${userId}/${username}`, config);
     return promise;
 }
 
