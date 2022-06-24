@@ -196,19 +196,22 @@ export function Post({infoPost}){
     const [modalOpen, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    function whoShared(){
+        if(infoPost.whoShared.length === 1){
+            return infoPost.whoShared.map(u => u.username === token.username ? 'You': u.username);
+        }else{
+            const users = infoPost.whoShared.map(u => u.username === token.username ? 'You': u.username);
+            return users.join(', ');
+        }
+    }
+
+    const users = whoShared();
+
     return (
         <BoxReposted reposted={infoPost.whoShared.length}>
             <div className='reposted-div'>
                 <BiRepost className="icon"/>
-                <h4>Re-posted by 
-                    {infoPost.whoShared.map(({username}) => 
-                        username === token.username ?
-                            <span> You</span> 
-                        :
-                            <span> {username}</span>
-                        )}
-                            
-                </h4>
+                <h4>Re-posted by <span>{users}</span></h4>
             </div>
             <Box>
                 <Image>
