@@ -24,6 +24,7 @@ const Bar = styled.div`
         letter-spacing: 0.05em;
         text-align: left;
         color: #FFFFFF;
+        cursor: pointer;
     }
 
         figure{

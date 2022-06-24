@@ -34,7 +34,6 @@ export default function Header() {
 function Logout({setToken, token}){
 
   const [down, setPosition] = useState(true);
-  const navigate = useNavigate();
 
   function logout(){
 

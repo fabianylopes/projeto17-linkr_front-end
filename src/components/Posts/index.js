@@ -37,7 +37,6 @@ export default function Posts(props) {
 }
 
 export function Post({infoPost, getPost}){
-    console.log("aquiii", getPost)
     const navigate = useNavigate();
     const { token } = useContext(TokenContext);
 
@@ -142,6 +141,7 @@ export function Post({infoPost, getPost}){
 
     async function sharePost(postId, userId){
         const body = { postId, userId }
+        console.log(body)
 
         const objConfig = {
             headers: {Authorization: `Bearer ${tokenStorage}`}

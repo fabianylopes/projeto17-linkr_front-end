@@ -16,8 +16,6 @@ export default function SearchBar({isHeader}) {
     const { token } = useContext(TokenContext);
     const navigate = useNavigate();
 
-    console.log("userlist:",usersList)
-
     useEffect(() => !token.token && navigate("/"), []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function redirectToUserPage(id) {
@@ -37,7 +35,7 @@ export default function SearchBar({isHeader}) {
         api.getSearchedUsers(token.id, e.target.value, token.token).then(response => {
             setUsersList(response.data);
             setIsSearching(false);
-        }).catch(error => console.log(error));
+        }).catch(error => console.log(error)); 
     
     }
 

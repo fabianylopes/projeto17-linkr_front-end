@@ -56,7 +56,7 @@ function Timeline() {
 
     useInterval(async ()=>{
         try {
-            //console.log('lib funcionando');
+            
             const response = await api.get('/timelineall');
             console.log('response all', response);
             setPostsAtuais(response.data);
