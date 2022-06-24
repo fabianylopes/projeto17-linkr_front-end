@@ -21,9 +21,12 @@ export default function UserPage() {
 
     useEffect(() => {
         if(!token.token) navigate("/");
+        getPost();
+    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    function getPost() {
         api.getPostsByUserId(id, token.token).then(response => {
-           
+        
             setUserData(response.data.userData);
             setUserPosts(response.data.posts);
             setImFollowing(response.data.imFollowing);
@@ -32,7 +35,7 @@ export default function UserPage() {
             swal("User does not exist.");
             navigate("/");
         });
-    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+    }
 
     return (  
         <Container>
@@ -54,7 +57,7 @@ export default function UserPage() {
                         <Text>{userData.username} has no posts yet...</Text>
                     : 
                         userPosts?.map((post, i) => 
-                            <Post key={i} infoPost={post}/>
+                            <Post key={i} infoPost={post} getPost={getPost}/>
                         )
                     }
                 </>

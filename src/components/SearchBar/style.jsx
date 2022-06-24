@@ -90,8 +90,15 @@ export const UserContainer = styled.div`
     gap: 12px;
 
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
+
     align-items: center;
+
+    div{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+    }
 
     &&:hover {
         opacity: 0.5;
@@ -114,6 +121,7 @@ export const UserContainer = styled.div`
         font-size: 19px;
         line-height: 23px;
         color: #515151;
+        margin-left: 10px;
     }
 
     &&:last-child {

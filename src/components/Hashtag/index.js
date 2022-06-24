@@ -32,7 +32,7 @@ export default function Hashtag() {
             <Body>
                 <Text>#{hashtag}</Text>
                 <Boxes>              
-                    <Posts posts={hashtagPosts}/>
+                    <Posts posts={hashtagPosts} getPost={getHashtagPosts}/>
                     <Trending/>
                 </Boxes>
             </Body>    
