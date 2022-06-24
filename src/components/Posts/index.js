@@ -37,7 +37,7 @@ export default function Posts(props) {
 }
 
 export function Post({infoPost, getPost}){
-    console.log("aquiii", getPost)
+    console.log("aquiii", infoPost)
     const navigate = useNavigate();
     const { token } = useContext(TokenContext);
 
