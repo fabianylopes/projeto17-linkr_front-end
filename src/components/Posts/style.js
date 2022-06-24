@@ -14,12 +14,12 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
 `
 
 const BoxReposted = styled.div`
     width: 611px;
-    height: 309px;
+    height: ${({reposted}) => reposted === 0 ? '276px' : '309px'};
     padding: 11px 0 0 13px;
     background-color: #1E1E1E;
     border-radius: 16px;

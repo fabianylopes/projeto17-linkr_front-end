@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Text, Boxes } from './style';
 import { Container, Body } from '../TelaMain/style';
-import HashtagContext from '../utils/context/HashtagContext';
 import TokenContext from '../utils/context/TokenContext';
 import Trending from '../Trending';
 import Header from '../Header';

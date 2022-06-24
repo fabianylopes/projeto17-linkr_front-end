@@ -197,10 +197,13 @@ export function Post({infoPost}){
     const [loading, setLoading] = useState(false);
 
     return (
-        <BoxReposted>
+        <BoxReposted reposted={infoPost.whoShared.length}>
             <div className='reposted-div'>
                 <BiRepost className="icon"/>
-                <h4>Re-posted by <span>{token.username}</span></h4>
+                <h4>Re-posted by 
+                    {infoPost.whoShared.map(({username}) => <span> {username}</span>)}
+                            
+                </h4>
             </div>
             <Box>
                 <Image>
@@ -244,7 +247,7 @@ export function Post({infoPost}){
                                         }
                                     </p>
                             </Modal>
-                            <Text>re-posts</Text>
+                            <Text>{infoPost.whoShared.length} re-posts</Text>
                         </Action>   
                     </Actions>
 
